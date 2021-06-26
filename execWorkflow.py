@@ -1,12 +1,30 @@
-#from .readWorkflow import lstConnection
-import os, sys , inspect
-
-sys.path.append(os.getcwd())
-from VGLGui.readWorkflow import *
+from readWorkflow import *
+from benchmark_clnd import *
 
 # IMPORTING METHODS FROM VISIONGL
 #sys.path.insert(0,'VisionGL/src/py')
 #from VisionGL.src.py import benchmark_clnd
+
+import os
+os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
+
+import pyopencl as cl
+
+# VGL LIBRARYS
+import vgl_lib as vl
+
+# TO WORK WITH MAIN
+import numpy as np
+
+# IMPORTING METHODS
+from cl2py_ND import * 
+
+# IMPORTING METHODS FROM VGLGui
+import sys
+
+import time as t
+
+vl.vglClInit()     #inicio das estruturas vgl
 
 #Show info
 def procShowInfo():
@@ -32,13 +50,49 @@ def procShowInfo():
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
 
+#IMAGE INPUT
+img_input = vl.VglImage(sys.argv[1], None, vl.VGL_IMAGE_2D_IMAGE(), vl.IMAGE_ND_ARRAY())
+vl.vglLoadImage(img_input)
+vl.vglClUpload(img_input)
+
+#IMAGE OUTPUT
+img_output = vl.create_blank_image_as(img_input)
+img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
+
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
 
     if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == False:
 
         #Glyph execute
-        # xxxxxxxxx
+        if vGlyph.func == 'in': #imagem de entrada
+            print("")
+        
+        elif vGlyph.func == 'vstrflat': #elementro estruturante 
+            window = vl.VglStrEl()
+            window.constructorFromTypeNdim(vl.VGL_STREL_CROSS(), 2)
+        
+        elif vGlyph.func == 'out': #imagem de saida
+            print("")
+
+        elif vGlyph.func == 'kmul': #funcao copy
+            inicio = t.time()
+            vglClNdCopy(img_input, img_output)
+            fim = t.time()
+            vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
+            vl.vglSaveImage("img-vglNdCopy.jpg", img_output)
+            msg = msg + "Tempo de execução do método vglClNdCopy:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
+            print(msg)
+
+        elif vGlyph.func == 'vero': #funcao erosion
+            inicio = t.time()
+            vglClNdDilate(img_input, img_output, window)
+            fim = t.time()
+            vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
+            vl.vglSaveImage("img-vglNdDilate.jpg", img_output)
+            msg = msg + "Tempo de execução do método vglClNdDilate:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
+            print(msg)
 
         #Sets all glyph outputs as executed 
         vGlyph.setGlyphOutputAll(True)
@@ -51,5 +105,3 @@ for vGlyph in lstGlyph:
 
 # Shows the content of the Glyphs
 procShowInfo()
-
-

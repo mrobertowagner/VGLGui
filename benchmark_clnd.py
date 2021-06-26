@@ -51,39 +51,11 @@ if __name__ == "__main__":
 	msg = msg + "Tempo de execução do método vglClNdCopy:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
 
 	inicio = t.time()
-	vglClNdConvolution(img_input, img_output, window)
-	fim = t.time()
-	vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
-	vl.vglSaveImage("img-vglNdConvolution.jpg", img_output)
-	msg = msg + "Tempo de execução do método vglClNdConvolution:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
-
-	inicio = t.time()
 	vglClNdDilate(img_input, img_output, window)
 	fim = t.time()
 	vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
 	vl.vglSaveImage("img-vglNdDilate.jpg", img_output)
 	msg = msg + "Tempo de execução do método vglClNdDilate:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
-
-	inicio = t.time()
-	vglClNdErode(img_input, img_output, window)
-	fim = t.time()
-	vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
-	vl.vglSaveImage("img-vglNdErode.jpg", img_output)
-	msg = msg + "Tempo de execução do método vglClNdErode:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
-
-	inicio = t.time()
-	vglClNdNot(img_input, img_output)
-	fim = t.time()
-	vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
-	vl.vglSaveImage("img-vglNdNot.jpg", img_output)
-	msg = msg + "Tempo de execução do método vglClNdNot:\t\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
-
-	inicio = t.time()
-	vglClNdThreshold(img_input, img_output, np.uint8(120), np.uint8(190))
-	fim = t.time()
-	vl.vglCheckContext(img_output, vl.VGL_RAM_CONTEXT())
-	vl.vglSaveImage("img-vglNdThreshold.jpg", img_output)
-	msg = msg + "Tempo de execução do método vglClNdThreshold:\t" +str( round( (fim-inicio), 9 ) ) +"s\n"
 
 	print("-------------------------------------------------------------")
 	print(msg)

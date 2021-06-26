@@ -273,7 +273,7 @@ def procCreateConnection(contentCon, count):
         print("Connections indices not found",{f},"on line ",{count}," of the file")
 
 # File to be read
-vfile = 'VGLGui/data.wksp'
+vfile = 'VGLGui/VGLGuiData.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters

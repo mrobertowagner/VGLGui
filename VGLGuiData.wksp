@@ -31,10 +31,10 @@ Glyph:MMACH:vclohole::localhost:5:642:162::
 Glyph:MMACH:vnero::localhost:7:762:102:: -n '5' 
 
 #  ExtPort 'External Output (1)'
-ExtPort:out:External Output (1):o1:9:1142:142:
+ExtPort:out:External Output (1):o1:9:1142:142: -path 'VGLGui/' -name 'lena_1024_new.tif'
 
 #  ExtPort 'External Input (2)'
-ExtPort:in:External Input (2):i1:11:522:182:
+ExtPort:in:External Input (2):i1:11:522:182: -path 'VGLGui/' -name 'lena_1024.tif'
 
 #  Glyph 'Erosion'
 Glyph:MMACH:vero::localhost:13:1022:222:: 

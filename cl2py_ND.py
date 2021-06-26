@@ -14,7 +14,7 @@
 import pyopencl as cl
 
 # VGL LIBRARYS
-import vgl_lib as vl
+#import vgl_lib as vl
 
 #TO WORK WITH MAIN
 import numpy as np

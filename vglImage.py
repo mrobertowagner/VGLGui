@@ -4,7 +4,7 @@ import numpy as np
 import sys
 
 # VISIONGL IMPORTS
-import vgl_lib as vl
+#import vgl_lib as vl
 
 """
 	img:

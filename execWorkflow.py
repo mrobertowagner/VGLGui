@@ -1,5 +1,4 @@
 from readWorkflow import *
-from benchmark_clnd import *
 
 # IMPORTING METHODS FROM VISIONGL
 #sys.path.insert(0,'VisionGL/src/py')
@@ -11,7 +10,7 @@ os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 import pyopencl as cl
 
 # VGL LIBRARYS
-import vgl_lib as vl
+import vglImage as vl
 
 # TO WORK WITH MAIN
 import numpy as np
@@ -24,7 +23,7 @@ import sys
 
 import time as t
 
-vl.vglClInit()     #inicio das estruturas vgl
+#vl.vglClInit()     #inicio das estruturas vgl
 
 #Show info
 def procShowInfo():

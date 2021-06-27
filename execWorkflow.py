@@ -7,16 +7,16 @@ from readWorkflow import *
 import os
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 
-import pyopencl as cl
+#import pyopencl as cl
 
 # VGL LIBRARYS
-import vglImage as vl
+#import vglImage as vl
 
 # TO WORK WITH MAIN
 import numpy as np
 
 # IMPORTING METHODS
-from cl2py_ND import * 
+#from cl2py_ND import * 
 
 # IMPORTING METHODS FROM VGLGui
 import sys

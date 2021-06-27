@@ -234,22 +234,50 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
 #Create Glyph
 def procCreateGlyph(contentGly, count):
     try:
-        #Create the Glyph
-        vGlyph = objGlyph(contentGly[1], contentGly[2], contentGly[4], contentGly[5], contentGly[6], contentGly[7])
+        
+        vBlib = ''
+        vFunc = ''
+        vLoc = ''
+        vIdGlyh = ''
+        vPosX = ''
+        vPosY = ''            
+        vGlyphPar = ''
 
-        #Image type parameter
-        if 'image' in contentGly[9]:
-            contentGly[9] = contentGly[9].replace('image', '-image')
-            contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+        if len(contentGly) == 8:  #Image Input/Outpu type Glyph
+            vBlib = contentGly[1]
+            vFunc = contentGly[2]
+            vLoc = ''
+            vIdGlyh = contentGly[4]
+            vPosX = contentGly[5]
+            vPosY = contentGly[6]            
+            vGlyphPar = contentGly[7].split(' ')
+
+        elif len(contentGly) > 9: #Image type parameter
+            vBlib = contentGly[1]
+            vFunc = contentGly[2]
+            vLoc = contentGly[4]
+            vIdGlyh = contentGly[5]
+            vPosX = contentGly[6]
+            vPosY = contentGly[7]
+            vGlyphPar = contentGly[9].split(' ')            
+
+            if 'image' in contentGly[9]:
+                contentGly[9] = contentGly[9].replace('image', '-image')
+                contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+                vGlyphPar = contentGly[9].split(' ')
+
+        vGlyph = objGlyph(vBlib, vFunc, vLoc, vIdGlyh, vPosX, vPosY)
 
         #Creates the parameters of the Glyph
-        procCreateGlyphParameters(vGlyph, contentGly[9].split(' '), count)                    
+        procCreateGlyphParameters(vGlyph, vGlyphPar, count)                    
 
         #rule 4 - Invalid screen position or exceeds dimensions to be defined by file
         if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
             raise Error("Glyph position on screen in error,", " check the line: ",{count}) 
 
+        #Create the Glyph
         lstGlyph.append(vGlyph)
+
     except IndexError as d: #rule 2 - Variable not found
         print("Non-standard information in the Glyph declaration"," \nLine",{count}, "{d}")
     except ValueError as s: #rule 3 - Error in defined glyph coordinates (not integer or out of bounds)
@@ -273,8 +301,7 @@ def procCreateConnection(contentCon, count):
         print("Connections indices not found",{f},"on line ",{count}," of the file")
 
 # File to be read
-#vfile = 'VGLGuiData.wksp'
-vfile = 'VGLGui/data.wksp'
+vfile = 'VGLGuiData.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
@@ -302,7 +329,7 @@ def fileRead(lstGlyph):
                 count +=1   #line counter
 
                 #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
-                if ('glyph:' in line.lower()) or ('ExtPort' in line.lower()):
+                if ('glyph:' in line.lower()) or ('extport:' in line.lower()):
                     procCreateGlyph(line.split(':'), count)
 
                 #Creates the connections of the workflow file

@@ -273,7 +273,8 @@ def procCreateConnection(contentCon, count):
         print("Connections indices not found",{f},"on line ",{count}," of the file")
 
 # File to be read
-vfile = 'VGLGui/VGLGuiData.wksp'
+#vfile = 'VGLGuiData.wksp'
+vfile = 'VGLGui/data.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
@@ -301,7 +302,7 @@ def fileRead(lstGlyph):
                 count +=1   #line counter
 
                 #Extracts the contents of the workflow file line in a list separated by the information between the ":" character and create Glyph
-                if 'glyph:' in line.lower():
+                if ('glyph:' in line.lower()) or ('ExtPort' in line.lower()):
                     procCreateGlyph(line.split(':'), count)
 
                 #Creates the connections of the workflow file

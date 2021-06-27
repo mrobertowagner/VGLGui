@@ -5,7 +5,7 @@ from readWorkflow import *
 #from VisionGL.src.py import benchmark_clnd
 
 import os
-#os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
+os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 
 import pyopencl as cl
 

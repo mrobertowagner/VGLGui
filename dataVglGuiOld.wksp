@@ -1,11 +1,11 @@
-# Khoros Visual Programming Workspace
+# VisionGL Visual Programming Workspace
 #
-# cantata workspace file (/home/khoros/sveta/data.wksp) was created 
+# VisionGL workspace file (/home/dataVglGui.wksp) was created 
 # on Mon Jul  2 11:22:34 2001
-# by user khoros
+# by user VisionGL
 #
 
-WorkspaceBegin: 2.1
+WorkspaceBegin: 1.0
 
 VariablesBegin:
 
@@ -19,16 +19,16 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Inf-Reconstruction'
-Glyph:MMACH:vopenrec::localhost:1:902:142:: 
+Glyph:VGL_CL:vopenrec::localhost:1:902:142:: 
 
 #  Glyph '3x3 Str.El.'
-Glyph:MMACH:vstrflat::localhost:3:702:322:: -s00 '1' -s10 '1' -s20 '1' -s01 '1' -s11 '1' -s21 '1' -s02 '1' -s12 '1' -s22 '1' 
+Glyph:VGL_CL:vstrflat::localhost:3:702:322:: -s00 '1' -s10 '1' -s20 '1' -s01 '1' -s11 '1' -s21 '1' -s02 '1' -s12 '1' -s22 '1' 
 
 #  Glyph 'Closing of Holes'
-Glyph:MMACH:vclohole::localhost:5:642:162:: 
+Glyph:VGL_CL:vclohole::localhost:5:642:162:: 
 
 #  Glyph 'N Erosion'
-Glyph:MMACH:vnero::localhost:7:762:102:: -n '5' 
+Glyph:VGL_CL:vnero::localhost:7:762:102:: -n '5' 
 
 #  ExtPort 'External Output (1)'
 ExtPort:out:External Output (1):o1:9:1142:142: -path 'VGLGui/' -name 'lena_1024_new.tif'
@@ -78,4 +78,4 @@ NodeConnection:data:13:o1:11:i:
 AnnotationsBegin
 AnnotationsEnd
 
-WorkspaceEnd: 2.1
+WorkspaceEnd: 1.0

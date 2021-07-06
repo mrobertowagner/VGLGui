@@ -170,11 +170,15 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
         for vpar in contentGlyPar:
             if vpar != '' and vpar != '\n':
 
-                vGlyphPar = objGlyphParameters  
+                vGlyphPar = objGlyphParameters 
+                vpar = vpar.replace("\n", '') 
 
                 #Differentiates parameter name and value
                 if vpar[0] == '\'' or vpar.isdigit():
                     vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
+
+                #if vpar.replace("\n", '').isdigit():
+                #    vGlyphPar = objGlyphParameters('Value', vpar.replace("\n", ''))
 
                 if vpar[0] == "-":             
                     if vpar[1].isdigit():
@@ -246,12 +250,11 @@ def procCreateGlyph(contentGly, count):
         if len(contentGly) == 8:  #Image Input/Outpu type Glyph
             vBlib = contentGly[1]
             vFunc = contentGly[2]
-            vLoc = ''
+            vLoc = contentGly[3]
             vIdGlyh = contentGly[4]
             vPosX = contentGly[5]
             vPosY = contentGly[6]            
             vGlyphPar = contentGly[7].split(' ')
-
         elif len(contentGly) > 9: #Image type parameter
             vBlib = contentGly[1]
             vFunc = contentGly[2]
@@ -261,10 +264,10 @@ def procCreateGlyph(contentGly, count):
             vPosY = contentGly[7]
             vGlyphPar = contentGly[9].split(' ')            
 
-            if 'image' in contentGly[9]:
-                contentGly[9] = contentGly[9].replace('image', '-image')
-                contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
-                vGlyphPar = contentGly[9].split(' ')
+         #   if 'image' in contentGly[9]:
+         #       contentGly[9] = contentGly[9].replace('image', '-image')
+         #       contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
+         #       vGlyphPar = contentGly[9].split(' ')
 
         vGlyph = objGlyph(vBlib, vFunc, vLoc, vIdGlyh, vPosX, vPosY)
 
@@ -301,7 +304,7 @@ def procCreateConnection(contentCon, count):
         print("Connections indices not found",{f},"on line ",{count}," of the file")
 
 # File to be read
-vfile = 'VGLGuiData.wksp'
+vfile = 'dataVglGui.wksp'
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters

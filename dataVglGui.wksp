@@ -18,35 +18,39 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:o1:1:1142:142: -filename 'VGLGui/image/lena.png' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:o:1:302:122: -filename 'VGLGui/image/lena.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'vglBlurSq3'
-Glyph:VGL_CL:vglBlurSq3::localhost:2:902:142:: -img_input 'VGLGui/image/lena.png' -image_output 'VGLGui/image/lena_Blur.png'
+Glyph:VGL_CL:vglBlurSq3::localhost:2:382:122:: -img_input 'VGLGui/image/lena.png' -image_output 'VGLGui/image/lena_Blur.png'
 
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:3:642:162:: -img_src 'VGLGui/image/lena.png' -image_dst 'VGLGui/image/lena_Threshold.png' -thresh 0 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:3:462:122:: -img_src 'VGLGui/image/lena.png' -image_dst 'VGLGui/image/lena_Threshold.png' -thresh 0 -top 1
 
-#  Glyph 'vglClCopy'
-Glyph:VGL_CL:vglClCopy::localhost:4:702:322:: -img_src img_src -image_dst img_dst
+#  Glyph 'vglClCopy for BlurSq3'
+Glyph:VGL_CL:vglClCopy::localhost:4:562:82:: -img_src 'VGLGui/image/lena_Blur.png' -image_dst 'VGLGui/image/lena.png'
+
+#  Glyph 'vglClCopy for Threshold'
+Glyph:VGL_CL:vglClCopy::localhost:5:562:82:: -img_src 'VGLGui/image/lena_Threshold.png' 'VGLGui/image/lena.png'
 
 #  Glyph 'Image save'
-ExtPort:VGL_CL:vglSaveImage:i1:5:522:182: -filename 'VGLGui/image/lena.png' -image 'VGLGui/image/lena_new.png'
+ExtPort:VGL_CL:vglSaveImage:i1:6:882:302: -filename 'VGLGui/image/lena.png' -image 'VGLGui/image/lena_new.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:vglShowImage::o1:6:1022:222:: -winname 'Result' -image 'VGLGui/image/lena_new.png'
+ExtPort:VGL_CL:vglShowImage::o1:7:742:482:: -winname 'Result' -image 'VGLGui/image/lena_new.png'
 
 #  Connections 'Image Lena'
-NodeConnection:data:1:o:2:i:
-NodeConnection:data:1:o1:3:i:
-NodeConnection:data:1:o2:4:i:
+NodeConnection:data:1:o1:2:i:
+NodeConnection:data:1:o2:3:i:
 
 #  Connections 'Show Image Blur'
-NodeConnection:data:2:o:5:i:
+NodeConnection:data:2:o:4:i:
 NodeConnection:data:2:o1:6:i:
+NodeConnection:data:2:o2:7:i:
 
 #  Connections 'Show Image Threshold'
-NodeConnection:data:3:o1:5:i1:
-NodeConnection:data:3:o2:6:i1:
+NodeConnection:data:3:o:5:i:
+NodeConnection:data:3:o1:6:i1:
+NodeConnection:data:3:o2:7:i1:
 
 AnnotationsBegin
 AnnotationsEnd

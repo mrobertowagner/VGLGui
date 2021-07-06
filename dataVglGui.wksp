@@ -30,7 +30,7 @@ Glyph:VGL_CL:vglClThreshold::localhost:3:462:122:: -img_src 'VGLGui/image/lena.p
 Glyph:VGL_CL:vglClCopy::localhost:4:562:82:: -img_src 'VGLGui/image/lena_Blur.png' -image_dst 'VGLGui/image/lena.png'
 
 #  Glyph 'vglClCopy for Threshold'
-Glyph:VGL_CL:vglClCopy::localhost:5:562:82:: -img_src 'VGLGui/image/lena_Threshold.png' 'VGLGui/image/lena.png'
+Glyph:VGL_CL:vglClCopy::localhost:5:562:82:: -img_src 'VGLGui/image/lena_Threshold.png' -image_dst 'VGLGui/image/lena.png'
 
 #  Glyph 'Image save'
 ExtPort:VGL_CL:vglSaveImage:i1:6:882:302: -filename 'VGLGui/image/lena.png' -image 'VGLGui/image/lena_new.png'

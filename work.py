@@ -11,6 +11,7 @@ import numpy as np
 # IMPORTING METHODS
 from cl2py_shaders import * 
 
+#IMPORTING METHODS TO DISPLAY IMAGE
 from PIL import Image
 
 # IMPORTING METHODS FROM VGLGui
@@ -88,8 +89,99 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
+    if vGlyph.func == 'in':
+            print("pass")
+
+    elif vGlyph.func == 'vglBlurSq3': #Function blur
+        vglClBlurSq3(img_input, img_output)
+        media = 0.0
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p < nSteps):
+                vglClBlurSq3(img_input, img_output)
+                p = p + 1
+                fim = t.time()
+                media = media + (fim-inicio)
+        #salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
+        #vl.rgb_to_rgba(img_output)
+        #msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
+
+    elif vGlyph.func == 'vglClCopy': #Function copy
+        vglClCopy(img_input, img_output)
+        media = 0.0
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p < nSteps):
+                vglClCopy(img_input, img_output)
+                p = p + 1
+                fim = t.time()
+                media = media + (fim-inicio)
+
+        #salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
+        #vl.rgb_to_rgba(img_output)
+       #msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+
+    elif vGlyph.func == 'vglClThreshold': #Function Threshold
+        vglClThreshold(img_input, img_output, np.float32(0.5))
+        media = 0.0
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p < nSteps):
+                vglClThreshold(img_input, img_output, np.float32(0.5))
+                p = p + 1
+                fim = t.time()
+                media = media + (fim-inicio)
+                    
+        #salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
+        #vl.rgb_to_rgba(img_output)
+        #msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+        
+           
+    elif vGlyph.func == 'vglSaveImage':
+        
+        '''
+    if vGlyph.func == 'vglSaveImage':
+            salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
+            vl.rgb_to_rgba(img_output)
+            msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+    
+    if vGlyph.func == 'vglSaveImage':
+            salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
+            vl.rgb_to_rgba(img_output)
+            msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+    '''    
+
+    elif vGlyph.func == 'vglShowImage':
+        #img = Image.open('tmp/testes/img-vglClCopy.jpg')
+        #img = Image.open('tmp/testes/img-vglClCopy.jpg')
+        #img = Image.open('tmp/testes/img-vglClCopy.jpg')
+
+        #img.show()
+        '''
+    if vGlyph.func == 'vglSaveImage':
+        
+        salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
+        vl.rgb_to_rgba(img_output)
+        msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
+
+        
+        salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
+        vl.rgb_to_rgba(img_output)
+        msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+
+        
+        salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
+        vl.rgb_to_rgba(img_output)
+        msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+    '''
+
+            
 
     #Glyph execute
+    '''
     if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == True:
         #Image Input
         if vGlyph.func == 'in':
@@ -145,6 +237,12 @@ for vGlyph in lstGlyph:
             salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
             vl.rgb_to_rgba(img_output)
             msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+        
+        elif vGlyph.func == 'vglShowImage':
+            img = Image.open('images/belchior.jpg')
+            img.show()
+       '''
+
             
 
 

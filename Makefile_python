@@ -5,7 +5,7 @@ rundemopy:
 	#cd src/py/; ./teste.py ../../images/lena_std.tif 10 tmp/testes/
 	#cd src/py/; ./work.py ../../images/lena_std.tif 10 tmp/testes/
 	#cd src/py/; ./execWorkflow.py
-	cd src/py/; ./work.py images/lena_std.tif 10 /tmp/testes
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py images/lena_std.tif 10 /tmp/testes
 
 
 py:

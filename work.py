@@ -146,9 +146,6 @@ for vGlyph in lstGlyph:
             vl.rgb_to_rgba(img_output)
             msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
             
-
-
-
 # Shows the content of the Glyphs
 procShowInfo()
 print("-------------------------------------------------------------")

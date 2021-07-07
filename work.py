@@ -244,9 +244,6 @@ for vGlyph in lstGlyph:
        '''
 
             
-
-
-
 # Shows the content of the Glyphs
 procShowInfo()
 print("-------------------------------------------------------------")

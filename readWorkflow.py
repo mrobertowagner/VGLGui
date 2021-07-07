@@ -264,11 +264,6 @@ def procCreateGlyph(contentGly, count):
             vPosY = contentGly[7]
             vGlyphPar = contentGly[9].split(' ')            
 
-         #   if 'image' in contentGly[9]:
-         #       contentGly[9] = contentGly[9].replace('image', '-image')
-         #       contentGly[9] = contentGly[9] + ' \'' + contentGly[10].replace('\n','')
-         #       vGlyphPar = contentGly[9].split(' ')
-
         vGlyph = objGlyph(vBlib, vFunc, vLoc, vIdGlyh, vPosX, vPosY)
 
         #Creates the parameters of the Glyph

@@ -38,19 +38,15 @@ ExtPort:VGL_CL:vglSaveImage:i1:6:882:302: -filename 'VGLGui/image/lena.png' -ima
 #  Glyph 'Image show'
 ExtPort:VGL_CL:vglShowImage::o1:7:742:482:: -winname 'Result' -image 'VGLGui/image/lena_new.png'
 
-#  Connections 'Image Lena'
-NodeConnection:data:1:o1:2:i:
-NodeConnection:data:1:o2:3:i:
+#  Connections 'Copy save and show Image source’
+NodeConnection:data:1:filename:5:img_src:
+NodeConnection:data:5:image_dst:6:filename:
+NodeConnection:data:6:image:7:image:
 
-#  Connections 'Show Image Blur'
-NodeConnection:data:2:o:4:i:
-NodeConnection:data:2:o1:6:i:
-NodeConnection:data:2:o2:7:i:
-
-#  Connections 'Show Image Threshold'
-NodeConnection:data:3:o:5:i:
-NodeConnection:data:3:o1:6:i1:
-NodeConnection:data:3:o2:7:i1:
+#  Connections 'Applying Blur and Threshold effect on Elena image'
+NodeConnection:data:1:filename:2:img_input:
+NodeConnection:data:2:image_output:3:img_src:
+NodeConnection:data:3:image_dst:4:image:
 
 AnnotationsBegin
 AnnotationsEnd

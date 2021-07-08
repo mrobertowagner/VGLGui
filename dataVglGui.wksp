@@ -18,10 +18,10 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:o:1:302:122: -filename 'VGLGui/image/lena.png' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:o:1:302:122: -filename 'VGLGui/image/lena_1024.tif' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'vglBlurSq3'
-Glyph:VGL_CL:vglClBlurSq3::localhost:2:382:122:: -img_input 'VGLGui/image/lena.png' -image_output 'VGLGui/image/lena_Blur.png'
+Glyph:VGL_CL:vglClBlurSq3::localhost:2:382:122:: -img_input 'VGLGui/image/lena_1024.tif' -image_output 'VGLGui/tmp/lena_Blur.png'
 
 #  Glyph 'vglClThreshold'
 Glyph:VGL_CL:vglClThreshold::localhost:3:462:122:: -img_src 'VGLGui/image/lena.png' -image_dst 'VGLGui/image/lena_Threshold.png' -thresh 0 -top 1

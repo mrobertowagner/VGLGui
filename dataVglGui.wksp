@@ -18,35 +18,45 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:o:1:302:122: -filename 'VGLGui/image/lena_1024.tif' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:122: -filename 'VGLGui/image/lena_1024.tif' -iscolor 1 -has_mipmap 0
 
-#  Glyph 'vglBlurSq3'
-Glyph:VGL_CL:vglClBlurSq3::localhost:2:382:122:: -img_input 'VGLGui/image/lena_1024.tif' -image_output 'VGLGui/tmp/lena_Blur.png'
+#  Glyph 'Create Image Blur'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:82:: -img_src 'VGLGui/image/lena_1024.tif' -img_output 'VGLGui/tmp/lena_Blur.png'
+
+#  Glyph 'vglCLBlurSq3'
+Glyph:VGL_CL:vglClBlurSq3::localhost:3:382:122:: -img_input 'VGLGui/image/lena_1024.tif' -image_output 'VGLGui/tmp/lena_Blur.png'
+
+#  Glyph 'Create Image Threshold'
+Glyph:VGL_CL:vglCreateImage::localhost:4:562:82:: -img_src 'VGLGui/tmp/lena_Blur.png' -img_output 'VGLGui/tmp/lena_BlurThre.png'
 
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:3:462:122:: -img_src 'VGLGui/image/lena.png' -image_dst 'VGLGui/image/lena_Threshold.png' -thresh 0 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:5:462:122:: -src 'VGLGui/tmp/lena_Blur.png' -image_output 'VGLGui/tmp/lena_BlurThre.png' -thresh 0 -top 1
 
-#  Glyph 'vglClCopy for BlurSq3'
-Glyph:VGL_CL:vglClCopy::localhost:4:562:82:: -img_src 'VGLGui/image/lena_Blur.png' -image_dst 'VGLGui/image/lena.png'
-
-#  Glyph 'vglClCopy for Threshold'
-Glyph:VGL_CL:vglClCopy::localhost:5:562:82:: -img_src 'VGLGui/image/lena_Threshold.png' -image_dst 'VGLGui/image/lena.png'
-
-#  Glyph 'Image save'
-ExtPort:VGL_CL:vglSaveImage:i1:6:882:302: -filename 'VGLGui/image/lena.png' -image 'VGLGui/image/lena_new.png'
+#  Glyph 'Image save Blur'
+ExtPort:VGL_CL:vglSaveImage:localhost:6:882:302: -filename 'VGLGui/tmp/lena_Blur.png' -image 'VGLGui/image/lena_newBlu.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:vglShowImage::o1:7:742:482:: -winname 'Result' -image 'VGLGui/image/lena_new.png'
+ExtPort:VGL_CL:ShowImage::localhost:7:742:482:: -winname 'Blur' -image 'VGLGui/image/lena_newBlu.png'
 
-#  Connections 'Copy save and show Image source’
-NodeConnection:data:1:filename:5:img_src:
-NodeConnection:data:5:image_dst:6:filename:
-NodeConnection:data:6:image:7:image:
+#  Glyph 'Image save Blur and Thre'
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:302: -filename 'VGLGui/tmp/lena_BlurThre.png' -image 'VGLGui/image/lena_newBluThre.png'
 
-#  Connections 'Applying Blur and Threshold effect on Elena image'
-NodeConnection:data:1:filename:2:img_input:
-NodeConnection:data:2:image_output:3:img_src:
-NodeConnection:data:3:image_dst:4:image:
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:9:742:482:: -winname 'BlurThre' -image 'VGLGui/image/lena_newBluThre.png'
+
+#  Connections 'Applying Blur’
+NodeConnection:data:1:filename:2:img_src:
+NodeConnection:data:2::3:img_output:
+NodeConnection:data:3:image_output:6:image:
+NodeConnection:data:3:image_output:7:image:
+
+#  Connections 'Applying Blur and Threshold effect on image'
+NodeConnection:data:1:filename:3:img_input:
+NodeConnection:data:3:image_output:4:img_src:
+NodeConnection:data:4::5:dst:
+NodeConnection:data:3:image_output:5:src:
+NodeConnection:data:5:image_output:8:image:
+NodeConnection:data:5:image_output:9:image:
 
 AnnotationsBegin
 AnnotationsEnd

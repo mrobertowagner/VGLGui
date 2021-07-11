@@ -28,7 +28,7 @@ import time as t
     #inicio das estruturas vgl
 
 #Show info
-def procShowInfo():
+'''def procShowInfo():
     for vGlyph in lstGlyph:
         print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
             "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
@@ -45,7 +45,7 @@ def procShowInfo():
     for vConnection in lstConnection:
         print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
             "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
-
+'''
 # Program execution
 
 
@@ -133,7 +133,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
 
     elif vGlyph.func == 'vglClCopy': #Function copy
-        sys.argv[1] = '/tmp/testes/img-vglClBlurSq3.jpg'
+        sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]
@@ -161,7 +161,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
-        sys.argv[1] = 'tmp/testes/img-vglClCopy.jpg'
+        sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]

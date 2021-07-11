@@ -90,7 +90,7 @@ img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )'''
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
     if vGlyph.func == 'vglLoadImage':
-        sys.argv[1] = 'lena_1024.tif'
+        sys.argv[1] = 'images/lena_1024.tif'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]
@@ -105,7 +105,7 @@ for vGlyph in lstGlyph:
                    
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
-        sys.argv[1] = 'lena_1024.tif'
+        sys.argv[1] = 'images/lena_1024.tif'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]
@@ -189,14 +189,14 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
          
 
-    elif vGlyph.func == 'vglShowImage':
-        #img = Image.open('tmp/testes/img-vglClThreshold.jpg')
+    elif vGlyph.func == 'ShowImage':
+        img = Image.open('tmp/testes/img-vglClThreshold.jpg')
         #img1 = Image.open('tmp/testes/img-vglClCopy.jpg')
-        #img2 = Image.open('tmp/testes/img-vglClBlurSq3.jpg')
+        img2 = Image.open('tmp/testes/img-vglClBlurSq3.jpg')
 
-        #img.show()
+        img.show()
         #img1.show()
-        #img2.show()
+        img2.show()
         '''
     if vGlyph.func == 'vglSaveImage':
         

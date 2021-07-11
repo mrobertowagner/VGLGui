@@ -90,7 +90,7 @@ img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )'''
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
     if vGlyph.func == 'vglLoadImage':
-        sys.argv[1] = 'lena_1024.tif'
+        sys.argv[1] = 'images/lena_1024.tif'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]
@@ -105,7 +105,7 @@ for vGlyph in lstGlyph:
                    
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
-        sys.argv[1] = 'lena_1024.tif'
+        sys.argv[1] = 'images/lena_1024.tif'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
         img_out_path= sys.argv[3]

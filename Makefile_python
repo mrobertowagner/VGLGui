@@ -1,6 +1,6 @@
 rundemopy:
 	#cd src/py/; ./benchmark_cl.py ../../images/lena_std.tif 1 tmp/
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py images/lena_std.tif 80 tmp/testes/
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py images/lena_std.tif 80 tmp/testes/
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
 

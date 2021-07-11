@@ -28,7 +28,7 @@ import time as t
     #inicio das estruturas vgl
 
 #Show info
-def procShowInfo():
+'''def procShowInfo():
     for vGlyph in lstGlyph:
         print("Library:", vGlyph.library, "Function:", vGlyph.func, "Localhost:", vGlyph.localhost, "Glyph_Id:", vGlyph.glyph_id, 
             "Position_Line:", vGlyph.glyph_x, "Position_Column:", vGlyph.glyph_y)#, "Parameters:", vGlyph.lst_par)
@@ -45,7 +45,7 @@ def procShowInfo():
     for vConnection in lstConnection:
         print("Conexão:", vConnection.type, "Glyph_Output_Id:", vConnection.output_glyph_id, "Glyph_Output_Varname:", vConnection.output_varname,
             "Glyph_Input_Id:", vConnection.input_glyph_id, "Glyph_Input_Varname:", vConnection.input_varname)
-
+'''
 # Program execution
 
 
@@ -91,7 +91,7 @@ for vGlyph in lstGlyph:
     if vGlyph.func == 'in':
             print("pass")
 
-    elif vGlyph.func == 'vglClBlurSq3': #Function blur
+    elif vGlyph.func == 'vglCdlBlurSq3': #Function blur
         vglClBlurSq3(img_input, img_output)
         media = 0.0
         for i in range(0, 5):
@@ -106,7 +106,7 @@ for vGlyph in lstGlyph:
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
 
-    elif vGlyph.func == 'vglClCopy': #Function copy
+    elif vGlyph.func == 'vglCdlCopy': #Function copy
         vglClCopy(img_input, img_output)
         media = 0.0
         for i in range(0, 5):
@@ -122,7 +122,7 @@ for vGlyph in lstGlyph:
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
 
-    elif vGlyph.func == 'vglClThreshold': #Function Threshold
+    elif vGlyph.func == 'vglClThdreshold': #Function Threshold
         vglClThreshold(img_input, img_output, np.float32(0.5))
         media = 0.0
         for i in range(0, 5):
@@ -229,10 +229,11 @@ for vGlyph in lstGlyph:
             img = Image.open('images/belchior.jpg')
             img.show()
        '''
-
+for vGlyphPar in lstGlyphPar:
+    print(vGlyphPar.valuepar)
             
 # Shows the content of the Glyphs
-procShowInfo()
+#procShowInfo()
 print("-------------------------------------------------------------")
 print(msg)
 print("-------------------------------------------------------------")

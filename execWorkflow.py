@@ -18,6 +18,8 @@ from PIL import Image
 import sys
 import os
 
+os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
+
 sys.path.append(os.getcwd())
 
 from readWorkflow import *

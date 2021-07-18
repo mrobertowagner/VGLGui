@@ -83,6 +83,21 @@ for vGlyph in lstGlyph:
         # Read "-filename" entry from glyph vglLoadImage
         img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
+    elif vGlyph.func == 'vglCreateImage':
+
+        # Read "-filename" entry from glyph vglLoadImage
+        img_input = uploadFile (vGlyph.lst_par[0].getValue())
+
+        # Create output image
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+        
+        # Save new image
+        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Create function applied"
+    
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Read "-filename" entry from glyph vglLoadImage

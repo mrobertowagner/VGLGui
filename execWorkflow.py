@@ -79,6 +79,29 @@ def uploadFile (filename):
         vl.rgb_to_rgba(img_input)
 
     vl.vglClUpload(img_input)
+    return img_input
+
+def copyFile (filename_input, filename_output):
+
+     # Upload input image
+     img_in_path = filename_input               
+     img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+     vl.vglLoadImage(img_input)
+
+     ext = img_in_path.split(".")
+     ext.reverse()
+     if (ext.pop(0).lower() == 'jpg'):
+         if( img_input.getVglShape().getNChannels() == 4 ):
+             vl.rgba_to_rgb(img_input)
+
+     vl.vglClUpload(img_input)
+
+     # Save "-filename" output from Glyph vglSaveImage
+     img_output = vl.create_blank_image_as(img_input)
+     img_output.set_oclPtr (vl.get_similar_oclPtr_object(img_input))
+     
+     vl.vglSaveImage(filename_output, img_output)
+     vl.rgb_to_rgba(img_output)
 
 msg = ""
 
@@ -90,27 +113,25 @@ for vGlyph in lstGlyph:
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage
-        uploadFile (vGlyph.lst_par[0].getValue())
+        img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Read "-filename" entry from glyph vglLoadImage
-        uploadFile (vGlyph.lst_par[0].getValue())
+        img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
+        # Create output image
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
- 
-        media = 0.0
-        for i in range(0, 5):
-            p = 0
-            inicio = t.time()
-            while(p < nSteps):
-                vglClBlurSq3(img_input, img_output)
-                p = p + 1
-                fim = t.time()
-                media = media + (fim-inicio)
+        
+        # Apply BlurSq3 function
+        vglClBlurSq3(img_input, img_output)
 
-        msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
+        # Save new image
+        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        #vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Blur function applied"
 
     elif vGlyph.func == 'vglClCopy_TIRAR': #Function copy
         sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
@@ -176,26 +197,7 @@ for vGlyph in lstGlyph:
         
     elif vGlyph.func == 'vglSaveImage':
 
-        # Upload input image
-        img_in_path = vGlyph.lst_par[0].getValue()               
-        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-        vl.vglLoadImage(img_input)
-
-        ext = img_in_path.split(".")
-        ext.reverse()
-        if (ext.pop(0).lower() == 'jpg'):
-            if( img_input.getVglShape().getNChannels() == 4 ):
-                vl.rgba_to_rgb(img_input)
-
-        vl.vglClUpload(img_input)
-
-        # Save "-filename" output from Glyph vglSaveImage
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr (vl.get_similar_oclPtr_object(img_input))
-        img_output_path = vGlyph.lst_par[1].getValue()               
-
-        vl.vglSaveImage(img_output_path, img_output)
-        vl.rgb_to_rgba(img_output)
+        copyFile (vGlyph.lst_par[0].getValue(), vGlyph.lst_par[1].getValue())
 
     #Glyph execute
             

@@ -50,10 +50,8 @@ import time as t
 '''
 # Program execution
 
-
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
-
 
 def salvando2d(img, name):
 	# SAVING IMAGE img
@@ -68,59 +66,40 @@ def salvando2d(img, name):
 	
 	vl.vglSaveImage(name, img)
 
-#sys.argv[1] = 'lena_1024.tif'
-#img_in_path = sys.argv[1]
-#nSteps		= int(sys.argv[2])
-#img_out_path= sys.argv[3]
+def uploadFile (filename):
+    
+    # Read "-filename" entry from glyph vglLoadImage
+    img_in_path = filename               
+    nSteps		= 1
+
+    img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+
+    vl.vglLoadImage(img_input)
+    if( img_input.getVglShape().getNChannels() == 3 ):
+        vl.rgb_to_rgba(img_input)
+
+    vl.vglClUpload(img_input)
 
 msg = ""
 
 vl.vglClInit() 
 
-'''img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-vl.vglLoadImage(img_input)
-if( img_input.getVglShape().getNChannels() == 3 ):
-    vl.rgb_to_rgba(img_input)
-
-vl.vglClUpload(img_input)
-
-img_output = vl.create_blank_image_as(img_input)
-img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )'''
-
-
-
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
-    if vGlyph.func == 'vglLoadImage':
-        sys.argv[1] = 'images/lena_1024.tif'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
-        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-        vl.vglLoadImage(img_input)
-        if( img_input.getVglShape().getNChannels() == 3 ):
-            vl.rgb_to_rgba(img_input)
-        vl.vglClUpload(img_input)
 
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-                   
+    if vGlyph.func == 'vglLoadImage':
+
+        # Read "-filename" entry from glyph vglLoadImage
+        uploadFile (vGlyph.lst_par[0].getValue())
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
-        sys.argv[1] = 'images/lena_1024.tif'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
-        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-        vl.vglLoadImage(img_input)
-        if( img_input.getVglShape().getNChannels() == 3 ):
-            vl.rgb_to_rgba(img_input)
-        vl.vglClUpload(img_input)
+
+        # Read "-filename" entry from glyph vglLoadImage
+        uploadFile (vGlyph.lst_par[0].getValue())
 
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
  
-        vglClBlurSq3(img_input, img_output)
         media = 0.0
         for i in range(0, 5):
             p = 0
@@ -130,11 +109,10 @@ for vGlyph in lstGlyph:
                 p = p + 1
                 fim = t.time()
                 media = media + (fim-inicio)
-        salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
-        vl.rgb_to_rgba(img_output)
+
         msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
 
-    elif vGlyph.func == 'vglClCopy': #Function copy
+    elif vGlyph.func == 'vglClCopy_TIRAR': #Function copy
         sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
@@ -162,7 +140,7 @@ for vGlyph in lstGlyph:
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
 
-    elif vGlyph.func == 'vglClThreshold': #Function Threshold
+    elif vGlyph.func == 'vglClThreshold_TIRAR': #Function Threshold
         sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
         img_in_path = sys.argv[1]
         nSteps		= int(sys.argv[2])
@@ -189,99 +167,37 @@ for vGlyph in lstGlyph:
         salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
-         
 
     elif vGlyph.func == 'ShowImage':
-        img = Image.open('tmp/testes/img-vglClThreshold.jpg')
-        #img1 = Image.open('tmp/testes/img-vglClCopy.jpg')
-        img2 = Image.open('tmp/testes/img-vglClBlurSq3.jpg')
-
+ 
+        #Show image
+        img = Image.open(vGlyph.lst_par[0].getValue())
         img.show()
-        #img1.show()
-        img2.show()
-        '''
-    if vGlyph.func == 'vglSaveImage':
         
-        salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
-        vl.rgb_to_rgba(img_output)
-        msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
+    elif vGlyph.func == 'vglSaveImage':
 
-        
-        salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
-        vl.rgb_to_rgba(img_output)
-        msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
+        # Upload input image
+        img_in_path = vGlyph.lst_par[0].getValue()               
+        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+        vl.vglLoadImage(img_input)
 
-        
-        salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
-        vl.rgb_to_rgba(img_output)
-        msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
-    '''
+        ext = img_in_path.split(".")
+        ext.reverse()
+        if (ext.pop(0).lower() == 'jpg'):
+            if( img_input.getVglShape().getNChannels() == 4 ):
+                vl.rgba_to_rgb(img_input)
 
-            
+        vl.vglClUpload(img_input)
+
+        # Save "-filename" output from Glyph vglSaveImage
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr (vl.get_similar_oclPtr_object(img_input))
+        img_output_path = vGlyph.lst_par[1].getValue()               
+
+        vl.vglSaveImage(img_output_path, img_output)
+        vl.rgb_to_rgba(img_output)
 
     #Glyph execute
-    '''
-    if vGlyph.getGlyphReady() and vGlyph.getGlyphDone() == True:
-        #Image Input
-        if vGlyph.func == 'in':
-            print("pass")
-
-        elif vGlyph.func == 'vglBlurSq3': #Structuring element 
-            vglClBlurSq3(img_input, img_output)
-            media = 0.0
-            for i in range(0, 5):
-                p = 0
-                inicio = t.time()
-                while(p < nSteps):
-                    vglClBlurSq3(img_input, img_output)
-                    p = p + 1
-                    fim = t.time()
-                    media = media + (fim-inicio)
-            salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
-            vl.rgb_to_rgba(img_output)
-            msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
-
-        #elif vGlyph.func == 'out': #Image Output
-        #    img_output = vl.create_blank_image_as(img_input)
-        #    img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        #    vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
-
-        elif vGlyph.func == 'vglClCopy': #Function copy
-            vglClCopy(img_input, img_output)
-            media = 0.0
-            for i in range(0, 5):
-                p = 0
-                inicio = t.time()
-                while(p < nSteps):
-                    vglClCopy(img_input, img_output)
-                    p = p + 1
-                    fim = t.time()
-                    media = media + (fim-inicio)
-
-            salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
-            vl.rgb_to_rgba(img_output)
-            msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
-
-        elif vGlyph.func == 'vglClThreshold': #Function erosion
-            vglClThreshold(img_input, img_output, np.float32(0.5))
-            media = 0.0
-            for i in range(0, 5):
-                p = 0
-                inicio = t.time()
-                while(p < nSteps):
-                    vglClThreshold(img_input, img_output, np.float32(0.5))
-                    p = p + 1
-                    fim = t.time()
-                    media = media + (fim-inicio)
-            salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
-            vl.rgb_to_rgba(img_output)
-            msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
-        
-        elif vGlyph.func == 'vglShowImage':
-            img = Image.open('images/belchior.jpg')
-            img.show()
-       '''
-
             
 # Shows the content of the Glyphs
 #procShowInfo()

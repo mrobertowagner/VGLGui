@@ -3,4 +3,5 @@ rundemopy:
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
 	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py images/lena_std.tif 8 tmp/testes/
+	#cd ~/UFS/VglGui/VGLGui/; ./teste.py 
 

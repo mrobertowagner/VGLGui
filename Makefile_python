@@ -1,7 +1,7 @@
 rundemopy:
 	#cd src/py/; ./benchmark_cl.py ../../images/lena_std.tif 1 tmp/
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py images/lena_std.tif 80 tmp/testes/
-	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py images/lena_std.tif 8 tmp/testes/
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py 
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeswork.py 30 images/
+	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./teste.py 
 

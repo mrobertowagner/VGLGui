@@ -34,11 +34,24 @@ import time as t
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
 
+def salvando2d(img, name):
+	# SAVING IMAGE img
+	ext = name.split(".")
+	ext.reverse()
+
+	vl.vglClDownload(img)
+
+	if( ext.pop(0).lower() == 'jpg' ):
+		if( img.getVglShape().getNChannels() == 4 ):
+			vl.rgba_to_rgb(img)
+	
+	vl.vglSaveImage(name, img)
+
 def uploadFile (filename):
     
     # Read "-filename" entry from glyph vglLoadImage
     img_in_path = filename               
-    nSteps		= 1
+    nSteps		= 6
 
     img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
 
@@ -109,10 +122,23 @@ for vGlyph in lstGlyph:
         
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
+        nSteps = 30
+        media = 0.0
+        for i in range(0, 5):
+            nSteps = 8
+            p = 0
+            inicio = t.time()
+            while(p < nSteps):
+                vglClBlurSq3(img_output, img_output)
+                p = p + 1
+                fim = t.time()
+                media = media + (fim-inicio)
 
         # Save new image
-        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        salvando2d(img_output, vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
+        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        #vl.rgb_to_rgba(img_output)
 
         msg = msg + "Blur function applied"
 
@@ -129,8 +155,10 @@ for vGlyph in lstGlyph:
         vglClThreshold(img_input, img_output, np.float32(0.5))
                     
         # Save new image
-        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        salvando2d(img_output, vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
+        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        #vl.rgb_to_rgba(img_output)
 
         msg = msg + "Thershold function applied"
 

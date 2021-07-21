@@ -122,17 +122,7 @@ for vGlyph in lstGlyph:
         
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
-        nSteps = 30
-        media = 0.0
-        for i in range(0, 5):
-            nSteps = 8
-            p = 0
-            inicio = t.time()
-            while(p < nSteps):
-                vglClBlurSq3(img_output, img_output)
-                p = p + 1
-                fim = t.time()
-                media = media + (fim-inicio)
+
 
         # Save new image
         salvando2d(img_output, vGlyph.lst_par[1].getValue())

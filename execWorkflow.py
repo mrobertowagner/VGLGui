@@ -32,7 +32,7 @@ import time as t
 # Program execution
 
 # Reading the workflow file and loads into memory all glyphs and connections
-fileRead(lstGlyph)
+fileRead(lstGlyph, lstConnection)
 
 def uploadFile (filename):
     
@@ -75,8 +75,43 @@ msg = ""
 
 vl.vglClInit() 
 
+vGlyph_FuncExec = ''                    #Function name to execution
+vGlyph_IndexProx = 0                    #Index next glyph to run
+vGlyph_Id = 0                           #Temporary identification next program block
+vGlyph_IndexExec = 0                 #Glyph index to run
+
 #Update the status of glyph entries
-for vGlyph in lstGlyph:
+for vConnection in lstConnection:
+
+    #vConnection.output_glyph_id         #glyph identifier code output
+    #vConnection.output_varname          #variable name output
+    #vConnection.input_glyph_id          #glyph identifier code input
+    #vConnection.input_varname           #variable name input
+    #vConnection.image                   #image
+    #vConnection.ready                   #False = unread or unexecuted image; True = image read or executed 
+
+    #Identifies connection input and output glyph
+    Index = 0
+
+    for vGlyph in lstGlyph:
+
+        if vGlyph.glyph_id == vConnection.output_glyph_id:
+            vGlyph_IndexOut = Index
+        
+        if vGlyph.glyph_id == vConnection.input_glyph_id:
+            vGlyph_IndexIn = Index
+
+        Index += 1
+
+    #Execution of the first glyph of program block
+    if vGlyph_IndexExec == 0 or vGlyph_Id == 1:
+        vGlyph_IndexExec = vGlyph_IndexOut
+    else:
+        vGlyph_IndexExec = vGlyph_IndexIn
+
+    #Get information from the glyph to execute
+    vGlyph = lstGlyph[vGlyph_IndexExec]
+    vGlyph_Id = vGlyph.glyph_id                     #Temporary identification next program block
 
     if vGlyph.func == 'vglLoadImage':
 
@@ -108,7 +143,7 @@ for vGlyph in lstGlyph:
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
         # Apply BlurSq3 function
-        vglClBlurSq3(img_input, img_output)
+        #vglClBlurSq3(img_input, img_output)
 
         # Save new image
         vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
@@ -126,7 +161,7 @@ for vGlyph in lstGlyph:
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
         # Apply Threshold function
-        vglClThreshold(img_input, img_output, np.float32(0.5))
+        #vglClThreshold(img_input, img_output, np.float32(0.5))
                     
         # Save new image
         vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)

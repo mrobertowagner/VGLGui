@@ -314,7 +314,7 @@ vGlyphOut = objGlyphOutput      #Glyph output in memory
 vConnection = objConnection     #Connection in memory
 
 # Method for reading the workflow file
-def fileRead(lstGlyph):
+def fileRead(lstGlyph, lstConnection):
     try:
         if os.path.isfile(vfile):
 
@@ -338,6 +338,7 @@ def fileRead(lstGlyph):
 
             #Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
+            
     except UnboundLocalError: #rule 1
         print("Arquivo não encontrado.")
 

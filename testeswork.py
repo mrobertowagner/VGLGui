@@ -89,13 +89,12 @@ img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )'''
 
 #Update the status of glyph entries
 for vGlyph in lstGlyph:
-    print(vGlyph.vGlyphPar)
+    
     if vGlyph.func == 'vglLoadImage':
         #sys.argv[1] = 'images/lena_1024.tif'
-        sys.argv[1] = 'images/lena_1024.tif'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
+        img_in_path = vGlyph.lst_par[0].getValue()
+        nSteps		= int(sys.argv[1])
+        img_out_path= sys.argv[2]
         img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
         vl.vglLoadImage(img_input)
         if( img_input.getVglShape().getNChannels() == 3 ):
@@ -107,10 +106,9 @@ for vGlyph in lstGlyph:
                    
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
-        sys.argv[1] = 'images/lena_1024.tif'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
+        img_in_path = vGlyph.lst_par[0].getValue()
+        nSteps		= int(sys.argv[1])
+        img_out_path= sys.argv[2]
         img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
         vl.vglLoadImage(img_input)
         if( img_input.getVglShape().getNChannels() == 3 ):
@@ -130,43 +128,15 @@ for vGlyph in lstGlyph:
                 p = p + 1
                 fim = t.time()
                 media = media + (fim-inicio)
-        salvando2d(img_output, img_out_path+"img-vglClBlurSq3.jpg")
+        salvando2d(img_output, img_out_path+"img-lena_newBlur.jpg")
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClBlurSq3:\t\t" +str( round( ( media / 5 ), 9 ) ) +"s\n"
 
-    elif vGlyph.func == 'vglClCopy': #Function copy
-        sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
-        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-        vl.vglLoadImage(img_input)
-        if( img_input.getVglShape().getNChannels() == 3 ):
-            vl.rgb_to_rgba(img_input)
-        vl.vglClUpload(img_input)
-
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        vglClCopy(img_input, img_output)
-        media = 0.0
-        for i in range(0, 5):
-            p = 0
-            inicio = t.time()
-            while(p < nSteps):
-                vglClCopy(img_input, img_output)
-                p = p + 1
-                fim = t.time()
-                media = media + (fim-inicio)
-
-        salvando2d(img_output, img_out_path+"img-vglClCopy.jpg")
-        vl.rgb_to_rgba(img_output)
-        msg = msg + "Tempo de execução do método vglClCopy:\t\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
-        sys.argv[1] = 'tmp/testes/img-vglClBlurSq3.jpg'
-        img_in_path = sys.argv[1]
-        nSteps		= int(sys.argv[2])
-        img_out_path= sys.argv[3]
+        img_in_path = vGlyph.lst_par[0].getValue()
+        nSteps		= int(sys.argv[1])
+        img_out_path= sys.argv[2]
         img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
         vl.vglLoadImage(img_input)
         if( img_input.getVglShape().getNChannels() == 3 ):
@@ -186,16 +156,18 @@ for vGlyph in lstGlyph:
                 fim = t.time()
                 media = media + (fim-inicio)
                     
-        salvando2d(img_output, img_out_path+"img-vglClThreshold.jpg")
+        salvando2d(img_output, img_out_path+"lena_newBluThre.jpg")
         vl.rgb_to_rgba(img_output)
         msg = msg + "Tempo de execução do método vglClThreshold:\t\t" +str( round( (media / 5), 9 ) ) +"s\n"
          
 
-    elif vGlyph.func == 'vglShowImage':
+    elif vGlyph.func == 'ShowImage':
         #img = Image.open('tmp/testes/img-vglClThreshold.jpg')
         #img1 = Image.open('tmp/testes/img-vglClCopy.jpg')
         #img2 = Image.open('tmp/testes/img-vglClBlurSq3.jpg')
-
+        #print(vGlyph.lst_par[1].getValue())
+        img = Image.open(vGlyph.lst_par[1].getValue())
+        img.show()
         #img.show()
         #img1.show()
         #img2.show()
@@ -284,7 +256,8 @@ for vGlyph in lstGlyph:
 
             
 # Shows the content of the Glyphs
-procShowInfo()
+
+
 print("-------------------------------------------------------------")
 print(msg)
 print("-------------------------------------------------------------")

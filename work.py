@@ -22,7 +22,7 @@ os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 
 sys.path.append(os.getcwd())
 
-from readWorkflow import *
+from readTest import *
 
 
 import time as t
@@ -34,7 +34,7 @@ import time as t
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
 nSteps		= int(sys.argv[1])
-def uploadFile (filename):
+def uploadFile (filename):  
     
     # Read "-filename" entry from glyph vglLoadImage
     img_in_path = filename               
@@ -158,6 +158,19 @@ for vGlyph in lstGlyph:
         #vl.rgb_to_rgba(img_output)
 
         msg = msg + "Thershold function applied"
+    
+    elif vGlyph.func == 'vglClInvert':
+        img_input = uploadFile(vGlyph.lst_par[0].getValue())
+
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
+
+        vglClInvert(img_input,img_output)
+
+        salvando2d(img_output,vGlyph.lst_par[1].getValue())
+        vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Inveret functioun applied"
 
     elif vGlyph.func == 'ShowImage':
  

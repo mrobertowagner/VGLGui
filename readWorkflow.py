@@ -139,6 +139,10 @@ class objConnection(object):
         self.image = None                           #image
         self.ready = False                          #False = unread or unexecuted image; True = image read or executed
 
+    #Assign image to Connection
+    def setImageConnection(self, img):
+        self.image = img
+
 #Create the inputs and outputs for the glyph
 
 def procCreateGlyphInOut():

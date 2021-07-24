@@ -34,34 +34,6 @@ import time as t
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph, lstConnection)
 
-def salvando2d(img, name):
-	# SAVING IMAGE img
-	ext = name.split(".")
-	ext.reverse()
-
-	vl.vglClDownload(img)
-
-	if( ext.pop(0).lower() == 'jpg' ):
-		if( img.getVglShape().getNChannels() == 4 ):
-			vl.rgba_to_rgb(img)
-	
-	vl.vglSaveImage(name, img)
-
-def uploadFile (filename):
-    
-    # Read "-filename" entry from glyph vglLoadImage
-    img_in_path = filename               
-    nSteps		= 6
-
-    img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-
-    vl.vglLoadImage(img_input)
-    if( img_input.getVglShape().getNChannels() == 3 ):
-        vl.rgb_to_rgba(img_input)
-
-    vl.vglClUpload(img_input)
-    return img_input
-
 def copyFile (filename_input, filename_output):
 
      # Upload input image
@@ -91,7 +63,6 @@ vl.vglClInit()
 vGlyph_FuncExec = ''                    #Function name to execution
 vGlyph_IndexProx = 0                    #Index next glyph to run
 vGlyph_Id = 0                           #Temporary identification next program block
-vGlyph_IndexExec = 0                 #Glyph index to run
 
 #Update the status of glyph entries
 for vConnection in lstConnection:
@@ -104,37 +75,41 @@ for vConnection in lstConnection:
     #vConnection.ready                   #False = unread or unexecuted image; True = image read or executed 
 
     #Identifies connection input and output glyph
-    Index = 0
+    Index               = 0
+    vGlyph_Index        = 0        #Glyph index to run
+    vConnectionIndex    = lstConnection.index
 
+    # Search for the glyph for execution.
+    # If it is the first glyph, consider its output, otherwise consider its input.
     for vGlyph in lstGlyph:
 
-        if vGlyph.glyph_id == vConnection.output_glyph_id:
-            vGlyph_IndexOut = Index
+        if vConnection.output_glyph_id == vGlyph.glyph_id and vConnection.output_glyph_id == 1:
+            vGlyph_Index = Index
+        elif vConnection.input_glyph_id == vGlyph.glyph_id:
+            vGlyph_Index = Index
         
-        if vGlyph.glyph_id == vConnection.input_glyph_id:
-            vGlyph_IndexIn = Index
-
         Index += 1
-
-    #Execution of the first glyph of program block
-    if vGlyph_IndexExec == 0 or vGlyph_Id == 1:
-        vGlyph_IndexExec = vGlyph_IndexOut
-    else:
-        vGlyph_IndexExec = vGlyph_IndexIn
-
-    #Get information from the glyph to execute
-    vGlyph = lstGlyph[vGlyph_IndexExec]
-    vGlyph_Id = vGlyph.glyph_id                     #Temporary identification next program block
 
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage
-        img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        img_in_path = vGlyph.lst_par[0].getValue()               
+        nSteps		= 1
+
+        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+
+        vl.vglLoadImage(img_input)
+        if( img_input.getVglShape().getNChannels() == 3 ):
+            vl.rgb_to_rgba(img_input)
+
+        vl.vglClUpload(img_input)
+
+        lstConnection[vConnectionIndex].setImageConnection = img_input
 
     elif vGlyph.func == 'vglCreateImage':
 
         # Read "-filename" entry from glyph vglLoadImage
-        img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
         # Create output image
         img_output = vl.create_blank_image_as(img_input)
@@ -149,7 +124,7 @@ for vConnection in lstConnection:
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Read "-filename" entry from glyph vglLoadImage
-        img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
         # Create output image
         img_output = vl.create_blank_image_as(img_input)
@@ -160,8 +135,10 @@ for vConnection in lstConnection:
 
 
         # Save new image
-        salvando2d(img_output, vGlyph.lst_par[1].getValue())
+        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+        
         vl.rgb_to_rgba(img_output)
+        
         #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
         #vl.rgb_to_rgba(img_output)
 
@@ -170,18 +147,19 @@ for vConnection in lstConnection:
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
 
         # Read "-filename" entry from glyph vglLoadImage
-        img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        #img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
         # Create output image
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
         # Apply Threshold function
-        #vglClThreshold(img_input, img_output, np.float32(0.5))
+        vglClThreshold(img_input, img_output, np.float32(0.5))
                     
         # Save new image
-        salvando2d(img_output, vGlyph.lst_par[1].getValue())
-        vl.rgb_to_rgba(img_output)
+        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+        #vl.rgb_to_rgba(img_output)
+        
         #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
         #vl.rgb_to_rgba(img_output)
 
@@ -194,7 +172,21 @@ for vConnection in lstConnection:
         
     elif vGlyph.func == 'vglSaveImage':
 
-        copyFile (vGlyph.lst_par[0].getValue(), vGlyph.lst_par[1].getValue())
+        # SAVING IMAGE img
+        ext = vGlyph.lst_par[0].getValue().split(".")
+        ext.reverse()
+
+        img = vGlyph.lst_par[1].getValue()
+
+        vl.vglClDownload(vGlyph.lst_par[1].getValue())
+
+        if( ext.pop(0).lower() == 'jpg' ):
+            if( img.getVglShape().getNChannels() == 4 ):
+                vl.rgba_to_rgb(img)
+        
+        vl.vglSaveImage(ext, img)
+
+        # copyFile (vGlyph.lst_par[0].getValue(), vGlyph.lst_par[1].getValue())
          
 # Shows the content of the Glyphs
 print("-------------------------------------------------------------")

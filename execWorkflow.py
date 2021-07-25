@@ -92,6 +92,8 @@ for vConnection in lstConnection:
 
     if vGlyph.func == 'vglLoadImage':
 
+        # vglLoadImage(img, filename="")
+
         # Read "-filename" entry from glyph vglLoadImage
         img_in_path = vGlyph.lst_par[0].getValue()               
         nSteps		= 1
@@ -108,6 +110,8 @@ for vConnection in lstConnection:
 
     elif vGlyph.func == 'vglCreateImage':
 
+        # create_blank_image_as(img):
+
         # Read "-filename" entry from glyph vglLoadImage
         # img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
@@ -122,6 +126,8 @@ for vConnection in lstConnection:
         msg = msg + "Create function applied"
     
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
+
+        # vglClBlurSq3(img_input, img_output)
 
         # Read "-filename" entry from glyph vglLoadImage
         # img_input = uploadFile (vGlyph.lst_par[0].getValue())
@@ -145,6 +151,8 @@ for vConnection in lstConnection:
         msg = msg + "Blur function applied"
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
+
+        # vglClThreshold(src, dst, thresh, top = 1.0)
 
         # Read "-filename" entry from glyph vglLoadImage
         #img_input = uploadFile (vGlyph.lst_par[0].getValue())
@@ -171,6 +179,8 @@ for vConnection in lstConnection:
         img.show()
         
     elif vGlyph.func == 'vglSaveImage':
+
+        # vglSaveImage(filename, img)
 
         # SAVING IMAGE img
         ext = vGlyph.lst_par[0].getValue().split(".")

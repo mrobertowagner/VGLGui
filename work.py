@@ -34,6 +34,16 @@ import time as t
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
 nSteps		= int(sys.argv[1])
+
+convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
+                                        (2/16, 4/16, 2/16),
+                                        (1/16, 2/16, 1/16) ), np.float32)
+convolution_window_2d_5x5 = np.array((	(1/256, 4/256,  6/256,  4/256,  1/256),
+                                        (4/256, 16/256, 24/256, 16/256, 4/256),
+                                        (6/256, 24/256, 36/256, 24/256, 6/256),
+                                        (4/256, 16/256, 24/256, 16/256, 4/256),
+                                        (1/256, 4/256,  6/256,  4/256,  1/256) ), np.float32)
+
 def uploadFile (filename):  
     
     # Read "-filename" entry from glyph vglLoadImage
@@ -170,7 +180,47 @@ for vGlyph in lstGlyph:
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
 
-        msg = msg + "Inveret functioun applied"
+        msg = msg + "Invert functioun applied"
+
+    elif vGlyph.func == 'vglClConvolution':
+        img_input = uploadFile(vGlyph.lst_par[0].getValue())
+
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
+
+        vglClConvolution(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+
+        salvando2d(img_output,vGlyph.lst_par[1].getValue())
+        vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Convolution function applied"
+
+
+    elif vGlyph.func == 'vglClErode':
+        img_input = uploadFile(vGlyph.lst_par[0].getValue())
+
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
+
+        vglClErode(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+
+        salvando2d(img_output,vGlyph.lst_par[1].getValue())
+        vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Erode function applied"
+
+    elif vGlyph.func == 'vglClDilate':
+        img_input = uploadFile(vGlyph.lst_par[0].getValue())
+
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
+
+        vglClDilate(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+
+        salvando2d(img_output,vGlyph.lst_par[1].getValue())
+        vl.rgb_to_rgba(img_output)
+
+        msg = msg + "Dilate function applied"
 
     elif vGlyph.func == 'ShowImage':
  

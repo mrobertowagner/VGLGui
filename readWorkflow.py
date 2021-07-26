@@ -144,7 +144,6 @@ class objConnection(object):
         self.image = img
 
 #Create the inputs and outputs for the glyph
-
 def procCreateGlyphInOut():
     for vConnection in lstConnection:
 
@@ -157,7 +156,7 @@ def procCreateGlyphInOut():
         #If the glyph has output   
         for i, vGlyph in enumerate(lstGlyph):
             if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
-                vGlyphIn = objGlyphInput(vConnection.output_varname, False)
+                vGlyphOut = objGlyphInput(vConnection.output_varname, False)
                 lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
 #Identifies and Creates the parameters of the Glyph
@@ -289,7 +288,7 @@ def procCreateGlyph(contentGly, count):
 def procCreateConnection(contentCon, count):
     try:
         #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3], contentCon[4], contentCon[5])
+        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3].replace('\n',''), contentCon[4], contentCon[5].replace('\n',''))
         lstConnection.append(vConnection)           
 
         #rule 5 - Invalid Glyph Id
@@ -343,16 +342,5 @@ def fileRead(lstGlyph, lstConnection):
             #Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
             
-    except UnboundLocalError: #rule 1
-        print("Arquivo não encontrado.")
-
-# Program execution
-#lstGlyph = []
-#lstConnection = []
-#contentGly = []
-#contentCon = []
-#lstGlyphIn = []                 #List to store Glyphs Inputs
-#lstGlyphOut = []                #List to store Glyphs Outputs
-
-# Reading the workflow file and loads into memory all glyphs and connections
-#fileRead(lstGlyph)
+    except UnboundLocalError: #rule 1 - File not found
+        print("File not found.")

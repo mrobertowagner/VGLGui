@@ -1,0 +1,36 @@
+# Khoros Visual Programming Workspace
+#
+# cantata workspace file ([file_path.wk]) was created
+# on [DoW] [Month] [Day] [HH:MM:SS] [Year]
+# by user [username]
+#
+
+WorkspaceBegin: 2.1
+
+VariablesBegin:
+
+
+
+# No variables currently declared. #
+
+VariablesEnd:
+
+#  Glyph '[GlyphName]'
+Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+
+#  Glyph '[GlyphName]'
+Glyph:[Library]:comment::localhost:[Glyph_ID]:[Glyph_X]:[Glyph_Y]:: -[var_str] '[var_str_value]' -[var_num] [var_num_value]
+
+#  Connections '[GlyphName]'
+NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+
+#  Connections '[GlyphName]'
+NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]
+
+AnnotationsBegin
+#The glyph and the connections must be in order by glyph name. Start glyph section, end glyph section, start node conection section, end node conection section.
+AnnotationsEnd
+
+WorkspaceEnd: 2.1

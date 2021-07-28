@@ -81,123 +81,129 @@ for vConnection in lstConnection:
 
     # Search for the glyph for execution.
     # If it is the first glyph, consider its output, otherwise consider its input.
+
     for vGlyph in lstGlyph:
 
         if vConnection.output_glyph_id == vGlyph.glyph_id and vConnection.output_glyph_id == 1:
             vGlyph_Index = Index
         elif vConnection.input_glyph_id == vGlyph.glyph_id:
             vGlyph_Index = Index
+
+        Index = +1
+
+    # Only run the glyph if all its entries are
+    if vGlyph.getGlyphReady():
         
-        Index += 1
+        if vGlyph.func == 'vglLoadImage':
 
-    if vGlyph.func == 'vglLoadImage':
+            # vglLoadImage(img, filename="")
 
-        # vglLoadImage(img, filename="")
+            # Read "-filename" entry from glyph vglLoadImage
+            img_in_path = vGlyph.lst_par[0].getValue()               
+            nSteps		= 1
 
-        # Read "-filename" entry from glyph vglLoadImage
-        img_in_path = vGlyph.lst_par[0].getValue()               
-        nSteps		= 1
+            img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
 
-        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+            vl.vglLoadImage(img_input)
+            if( img_input.getVglShape().getNChannels() == 3 ):
+                vl.rgb_to_rgba(img_input)
 
-        vl.vglLoadImage(img_input)
-        if( img_input.getVglShape().getNChannels() == 3 ):
-            vl.rgb_to_rgba(img_input)
+            vl.vglClUpload(img_input)
 
-        vl.vglClUpload(img_input)
+            # Assign image to edge
+            lstConnection[vConnectionIndex].setImageConnection = img_input
 
-        lstConnection[vConnectionIndex].setImageConnection = img_input
+            # Assign done to glyph
+            lstGlyph[vGlyph_Index].setGlyphDone(True)
 
-    elif vGlyph.func == 'vglCreateImage':
+        elif vGlyph.func == 'vglCreateImage':
 
-        # create_blank_image_as(img):
+            # create_blank_image_as(img):
 
-        # Read "-filename" entry from glyph vglLoadImage
-        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
+            # Read "-filename" entry from glyph vglLoadImage
+            # img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+            # Create output image
+            img_output = vl.create_blank_image_as(img_input)
+            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+            
+            # Save new image
+            vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+            vl.rgb_to_rgba(img_output)
+
+            msg = msg + "Create function applied"
         
-        # Save new image
-        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-        vl.rgb_to_rgba(img_output)
+        elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
-        msg = msg + "Create function applied"
+            # vglClBlurSq3(img_input, img_output)
+
+            # Read "-filename" entry from glyph vglLoadImage
+            # img_input = uploadFile (vGlyph.lst_par[0].getValue())
+
+            # Create output image
+            img_output = vl.create_blank_image_as(img_input)
+            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+            
+            # Apply BlurSq3 function
+            #vglClBlurSq3(img_input, img_output)
+
+
+            # Save new image
+            #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+            
+            vl.rgb_to_rgba(img_output)
+            
+            #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+            #vl.rgb_to_rgba(img_output)
+
+            msg = msg + "Blur function applied"
+
+        elif vGlyph.func == 'vglClThreshold': #Function Threshold
+
+            # vglClThreshold(src, dst, thresh, top = 1.0)
+
+            # Read "-filename" entry from glyph vglLoadImage
+            #img_input = uploadFile (vGlyph.lst_par[0].getValue())
+
+            # Create output image
+            img_output = vl.create_blank_image_as(img_input)
+            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+            
+            # Apply Threshold function
+            vglClThreshold(img_input, img_output, np.float32(0.5))
+                        
+            # Save new image
+            #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+            #vl.rgb_to_rgba(img_output)
+            
+            #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+            #vl.rgb_to_rgba(img_output)
+
+            msg = msg + "Thershold function applied"
+
+        elif vGlyph.func == 'ShowImage':
     
-    elif vGlyph.func == 'vglClBlurSq3': #Function blur
+            img = Image.open(vGlyph.lst_par[1].getValue())
+            img.show()
+            
+        elif vGlyph.func == 'vglSaveImage':
 
-        # vglClBlurSq3(img_input, img_output)
+            # vglSaveImage(filename, img)
 
-        # Read "-filename" entry from glyph vglLoadImage
-        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
+            # SAVING IMAGE img
+            ext = vGlyph.lst_par[0].getValue().split(".")
+            ext.reverse()
 
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+            img = vGlyph.lst_par[1].getValue()
+
+            vl.vglClDownload(vGlyph.lst_par[1].getValue())
+
+            if( ext.pop(0).lower() == 'jpg' ):
+                if( img.getVglShape().getNChannels() == 4 ):
+                    vl.rgba_to_rgb(img)
+            
+            vl.vglSaveImage(ext, img)
         
-        # Apply BlurSq3 function
-        #vglClBlurSq3(img_input, img_output)
-
-
-        # Save new image
-        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
-        
-        vl.rgb_to_rgba(img_output)
-        
-        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-        #vl.rgb_to_rgba(img_output)
-
-        msg = msg + "Blur function applied"
-
-    elif vGlyph.func == 'vglClThreshold': #Function Threshold
-
-        # vglClThreshold(src, dst, thresh, top = 1.0)
-
-        # Read "-filename" entry from glyph vglLoadImage
-        #img_input = uploadFile (vGlyph.lst_par[0].getValue())
-
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        
-        # Apply Threshold function
-        vglClThreshold(img_input, img_output, np.float32(0.5))
-                    
-        # Save new image
-        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
-        #vl.rgb_to_rgba(img_output)
-        
-        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-        #vl.rgb_to_rgba(img_output)
-
-        msg = msg + "Thershold function applied"
-
-    elif vGlyph.func == 'ShowImage':
- 
-        img = Image.open(vGlyph.lst_par[1].getValue())
-        img.show()
-        
-    elif vGlyph.func == 'vglSaveImage':
-
-        # vglSaveImage(filename, img)
-
-        # SAVING IMAGE img
-        ext = vGlyph.lst_par[0].getValue().split(".")
-        ext.reverse()
-
-        img = vGlyph.lst_par[1].getValue()
-
-        vl.vglClDownload(vGlyph.lst_par[1].getValue())
-
-        if( ext.pop(0).lower() == 'jpg' ):
-            if( img.getVglShape().getNChannels() == 4 ):
-                vl.rgba_to_rgb(img)
-        
-        vl.vglSaveImage(ext, img)
-
-        # copyFile (vGlyph.lst_par[0].getValue(), vGlyph.lst_par[1].getValue())
-         
 # Shows the content of the Glyphs
 print("-------------------------------------------------------------")
 print(msg)

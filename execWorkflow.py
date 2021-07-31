@@ -32,6 +32,7 @@ import time as t
 # Program execution
 
 # Reading the workflow file and loads into memory all glyphs and connections
+# Rule7: Glyphs have READY (ready to run) and DONE (executed) status, both status start being FALSE
 fileRead(lstGlyph, lstConnection)
 
 def copyFile (filename_input, filename_output):
@@ -79,6 +80,14 @@ for vConnection in lstConnection:
     vGlyph_Index        = 0        #Glyph index to run
     vConnectionIndex    = lstConnection.index
 
+    # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
+    # If the connection image is not ready for processing, it will go to the next
+    try:
+        if not lstConnection[vConnectionIndex].getReadyConnection:
+            raise Error("Invalid connection: ",{vConnection.output_glyph_id})
+    except ValueError:
+        print("Image not ready for processing." , {vConnection.output_glyph_id})
+
     # Search for the glyph for execution.
     # If it is the first glyph, consider its output, otherwise consider its input.
 
@@ -110,11 +119,20 @@ for vConnection in lstConnection:
 
             vl.vglClUpload(img_input)
 
-            # Assign image to edge
+            # Rule2: Source glyph only has one output (image), it's a parameter
             lstConnection[vConnectionIndex].setImageConnection = img_input
 
-            # Assign done to glyph
+            # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
+            #        Assign read-ready to connection
+            lstConnection[vConnectionIndex].setReadyConnection
+                                  
+            # Rule10: Glyph becomes DONE = TRUE after its execution
+            #         Assign done to glyph
             lstGlyph[vGlyph_Index].setGlyphDone(True)
+
+            # Rule11: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
+            #         Assign done to glyph
+            lstGlyph[vGlyph_Index].setReadyGlyphOutputAll(False)
 
         elif vGlyph.func == 'vglCreateImage':
 
@@ -183,12 +201,11 @@ for vConnection in lstConnection:
 
         elif vGlyph.func == 'ShowImage':
     
+            # Rule 3: Sink glyph only has one entry (image)             
             img = Image.open(vGlyph.lst_par[1].getValue())
             img.show()
             
         elif vGlyph.func == 'vglSaveImage':
-
-            # vglSaveImage(filename, img)
 
             # SAVING IMAGE img
             ext = vGlyph.lst_par[0].getValue().split(".")
@@ -201,7 +218,8 @@ for vConnection in lstConnection:
             if( ext.pop(0).lower() == 'jpg' ):
                 if( img.getVglShape().getNChannels() == 4 ):
                     vl.rgba_to_rgb(img)
-            
+
+            # Rule 3: Sink glyph only has one entry (image)             
             vl.vglSaveImage(ext, img)
         
 # Shows the content of the Glyphs

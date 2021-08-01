@@ -251,18 +251,18 @@ for vConnection in lstConnection:
         lstGlyph[vGlyph_Index].setGlyphDoneAllOutput(False)
 
         # Rule 8: Glyph will have its READY = TRUE input when source glyph is executed
-        # Verifica a lista de conexões
+        # Check the list of connections
         for i_Con, vConnection in lstConnection:
 
-            # Verifica se o glifo executado é origem de algum glifo
+            # Checks if the executed glyph is the origin of any glyph
             if lstGlyph[vGlyph_Index].glyph_id == vConnection.output_glyph_id:
 
-                # Atribue READY = TRUE para o parâmetro de entrada do Glifo
+                # Finds the glyphs that originate from the executed glyph
                 for i_Gli, vGlyph in lstGlyph:
 
                     if vGlyph.glyph_id == vConnection.output_glyph_id:
 
-                        # Atribue READY = TRUE para o parâmetro de entrada do Glifo
+                        # Set READY = TRUE to the Glyph input parameter
                         for vGlyphIn in lstGlyph[i_Gli].lst_input:
                             lstGlyph[i_Gli].input_glyph_id.setGlyphReadyInput(True, vConnection.input_varname)
         

@@ -33,7 +33,7 @@ import time as t
 
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
-nSteps		= int(sys.argv[1])
+nSteps = 1
 
 convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
                                         (2/16, 4/16, 2/16),

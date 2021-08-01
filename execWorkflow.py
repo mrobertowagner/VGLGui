@@ -64,6 +64,7 @@ vl.vglClInit()
 vGlyph_FuncExec = ''                    #Function name to execution
 vGlyph_IndexProx = 0                    #Index next glyph to run
 vGlyph_Id = 0                           #Temporary identification next program block
+vGlyphExecuted = False                  #True = executed glyph; False = glyph not executed
 
 #Update the status of glyph entries
 for vConnection in lstConnection:
@@ -79,18 +80,17 @@ for vConnection in lstConnection:
     Index               = 0
     vGlyph_Index        = 0        #Glyph index to run
     vConnectionIndex    = lstConnection.index
+    vGlyphExecuted      = False
 
     # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
-    # If the connection image is not ready for processing, it will go to the next
     try:
         if not lstConnection[vConnectionIndex].getReadyConnection:
-            raise Error("Invalid connection: ",{vConnection.output_glyph_id})
+            raise Error("Rule6: Invalid connection: ",{vConnection.output_glyph_id})
     except ValueError:
-        print("Image not ready for processing." , {vConnection.output_glyph_id})
+        print("Rule6: Image not ready for processing." , {vConnection.output_glyph_id})
 
     # Search for the glyph for execution.
     # If it is the first glyph, consider its output, otherwise consider its input.
-
     for vGlyph in lstGlyph:
 
         if vConnection.output_glyph_id == vGlyph.glyph_id and vConnection.output_glyph_id == 1:
@@ -100,127 +100,171 @@ for vConnection in lstConnection:
 
         Index = +1
 
-    # Only run the glyph if all its entries are
-    if vGlyph.getGlyphReady():
+    # Rule10: Glyphs whose status is READY=TRUE (ready to run) are executed
+    #         Only run the glyph if all its entries are
+    try:
+        if not vGlyph.getGlyphReady():
+            raise Error("Rule10: Invalid Glyph: ",{vGlyph.glyph})
+    except ValueError:
+        print("Rule10: Glyph not ready for processing." , {vGlyph.glyph})
+
+    if vGlyph.func == 'vglLoadImage':
+
+        # vglLoadImage(img, filename="")
+
+        # Read "-filename" entry from glyph vglLoadImage
+        img_in_path = vGlyph.lst_par[0].getValue()               
+        nSteps		= 1
+
+        img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+
+        vl.vglLoadImage(img_input)
+        if( img_input.getVglShape().getNChannels() == 3 ):
+            vl.rgb_to_rgba(img_input)
+
+        vl.vglClUpload(img_input)
+
+        # Rule2: Source glyph only has one output (image), it's a parameter
+        lstConnection[vConnectionIndex].setImageConnection = img_input
+
+        # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
+        #        Assign read-ready to connection
+        lstConnection[vConnectionIndex].setReadyConnection
+
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
+                                
+    elif vGlyph.func == 'vglCreateImage':
+
+        # create_blank_image_as(img):
+
+        # Read "-filename" entry from glyph vglLoadImage
+        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
+
+        # Create output image
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
-        if vGlyph.func == 'vglLoadImage':
+        # Save new image
+        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        vl.rgb_to_rgba(img_output)
 
-            # vglLoadImage(img, filename="")
+        msg = msg + "Create function applied"
 
-            # Read "-filename" entry from glyph vglLoadImage
-            img_in_path = vGlyph.lst_par[0].getValue()               
-            nSteps		= 1
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
 
-            img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
+    elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
-            vl.vglLoadImage(img_input)
-            if( img_input.getVglShape().getNChannels() == 3 ):
-                vl.rgb_to_rgba(img_input)
+        # vglClBlurSq3(img_input, img_output)
 
-            vl.vglClUpload(img_input)
+        # Read "-filename" entry from glyph vglLoadImage
+        # img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
-            # Rule2: Source glyph only has one output (image), it's a parameter
-            lstConnection[vConnectionIndex].setImageConnection = img_input
-
-            # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
-            #        Assign read-ready to connection
-            lstConnection[vConnectionIndex].setReadyConnection
-                                  
-            # Rule10: Glyph becomes DONE = TRUE after its execution
-            #         Assign done to glyph
-            lstGlyph[vGlyph_Index].setGlyphDone(True)
-
-            # Rule11: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
-            #         Assign done to glyph
-            lstGlyph[vGlyph_Index].setReadyGlyphOutputAll(False)
-
-        elif vGlyph.func == 'vglCreateImage':
-
-            # create_blank_image_as(img):
-
-            # Read "-filename" entry from glyph vglLoadImage
-            # img_input = uploadFile (vGlyph.lst_par[0].getValue())
-
-            # Create output image
-            img_output = vl.create_blank_image_as(img_input)
-            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-            
-            # Save new image
-            vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-            vl.rgb_to_rgba(img_output)
-
-            msg = msg + "Create function applied"
+        # Create output image
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
-        elif vGlyph.func == 'vglClBlurSq3': #Function blur
+        # Apply BlurSq3 function
+        #vglClBlurSq3(img_input, img_output)
 
-            # vglClBlurSq3(img_input, img_output)
+        # Save new image
+        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+        
+        vl.rgb_to_rgba(img_output)
+        
+        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        #vl.rgb_to_rgba(img_output)
 
-            # Read "-filename" entry from glyph vglLoadImage
-            # img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        msg = msg + "Blur function applied"
 
-            # Create output image
-            img_output = vl.create_blank_image_as(img_input)
-            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-            
-            # Apply BlurSq3 function
-            #vglClBlurSq3(img_input, img_output)
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
 
+    elif vGlyph.func == 'vglClThreshold': #Function Threshold
 
-            # Save new image
-            #salvando2d(img_output, vGlyph.lst_par[1].getValue())
-            
-            vl.rgb_to_rgba(img_output)
-            
-            #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-            #vl.rgb_to_rgba(img_output)
+        # vglClThreshold(src, dst, thresh, top = 1.0)
 
-            msg = msg + "Blur function applied"
+        # Read "-filename" entry from glyph vglLoadImage
+        #img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
-        elif vGlyph.func == 'vglClThreshold': #Function Threshold
+        # Create output image
+        img_output = vl.create_blank_image_as(img_input)
+        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+        
+        # Apply Threshold function
+        vglClThreshold(img_input, img_output, np.float32(0.5))
+                    
+        # Save new image
+        #salvando2d(img_output, vGlyph.lst_par[1].getValue())
+        #vl.rgb_to_rgba(img_output)
+        
+        #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
+        #vl.rgb_to_rgba(img_output)
 
-            # vglClThreshold(src, dst, thresh, top = 1.0)
+        msg = msg + "Thershold function applied"
 
-            # Read "-filename" entry from glyph vglLoadImage
-            #img_input = uploadFile (vGlyph.lst_par[0].getValue())
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
 
-            # Create output image
-            img_output = vl.create_blank_image_as(img_input)
-            img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-            
-            # Apply Threshold function
-            vglClThreshold(img_input, img_output, np.float32(0.5))
-                        
-            # Save new image
-            #salvando2d(img_output, vGlyph.lst_par[1].getValue())
-            #vl.rgb_to_rgba(img_output)
-            
-            #vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-            #vl.rgb_to_rgba(img_output)
+    elif vGlyph.func == 'ShowImage':
 
-            msg = msg + "Thershold function applied"
+        # Rule 3: Sink glyph only has one entry (image)             
+        img = Image.open(vGlyph.lst_par[1].getValue())
+        img.show()
 
-        elif vGlyph.func == 'ShowImage':
-    
-            # Rule 3: Sink glyph only has one entry (image)             
-            img = Image.open(vGlyph.lst_par[1].getValue())
-            img.show()
-            
-        elif vGlyph.func == 'vglSaveImage':
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
 
-            # SAVING IMAGE img
-            ext = vGlyph.lst_par[0].getValue().split(".")
-            ext.reverse()
+    elif vGlyph.func == 'vglSaveImage':
 
-            img = vGlyph.lst_par[1].getValue()
+        # SAVING IMAGE img
+        ext = vGlyph.lst_par[0].getValue().split(".")
+        ext.reverse()
 
-            vl.vglClDownload(vGlyph.lst_par[1].getValue())
+        img = vGlyph.lst_par[1].getValue()
 
-            if( ext.pop(0).lower() == 'jpg' ):
-                if( img.getVglShape().getNChannels() == 4 ):
-                    vl.rgba_to_rgb(img)
+        vl.vglClDownload(vGlyph.lst_par[1].getValue())
 
-            # Rule 3: Sink glyph only has one entry (image)             
-            vl.vglSaveImage(ext, img)
+        if( ext.pop(0).lower() == 'jpg' ):
+            if( img.getVglShape().getNChannels() == 4 ):
+                vl.rgba_to_rgb(img)
+
+        # Rule 3: Sink glyph only has one entry (image)             
+        vl.vglSaveImage(ext, img)
+
+        # Identifies that the glyph was executed
+        vGlyphExecuted = True
+
+    # Actions after glyph execution
+    if vGlyphExecuted:
+
+        # Rule9: When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+        lstGlyph[vGlyph_Index].setGlyphReady(True)
+
+        # Rule11: Glyph becomes DONE = TRUE after its execution
+        #         Assign done to glyph
+        lstGlyph[vGlyph_Index].setGlyphDone(True)
+
+        # Rule12: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
+        #         Assign done to all glyph outputs
+        lstGlyph[vGlyph_Index].setGlyphDoneAllOutput(False)
+
+        # Rule 8: Glyph will have its READY = TRUE input when source glyph is executed
+        # Verifica a lista de conexões
+        for i_Con, vConnection in lstConnection:
+
+            # Verifica se o glifo executado é origem de algum glifo
+            if lstGlyph[vGlyph_Index].glyph_id == vConnection.output_glyph_id:
+
+                # Atribue READY = TRUE para o parâmetro de entrada do Glifo
+                for i_Gli, vGlyph in lstGlyph:
+
+                    if vGlyph.glyph_id == vConnection.output_glyph_id:
+
+                        # Atribue READY = TRUE para o parâmetro de entrada do Glifo
+                        for vGlyphIn in lstGlyph[i_Gli].lst_input:
+                            lstGlyph[i_Gli].input_glyph_id.setGlyphReadyInput(True, vConnection.input_varname)
         
 # Shows the content of the Glyphs
 print("-------------------------------------------------------------")

@@ -49,12 +49,12 @@ class objGlyph(object):
     def funcGlyphAddOut (self, vGlyphOut):
         self.lst_output.append(vGlyphOut)
 
-    #Function to update if the glyph is ready and return status
-    #When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+    # Return Glyph Ready status
     def getGlyphReady(self):
         return self.ready
 
-    #Assign ready to glyph
+    # Rule9: When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+    #        Function to update if the glyph is ready and return status
     def setGlyphReady(self, status):
 
         vGlyphReady = status
@@ -73,9 +73,7 @@ class objGlyph(object):
             if vGlyphReady:
                 self.ready = vGlyphReady
 
-        #self.ready = status
-
-    # Rule10: Glyph becomes DONE = TRUE after its execution
+    # Rule11: Glyph becomes DONE = TRUE after its execution
     #         Assign done to glyph
     def setGlyphDone(self, status):
         self.done = status
@@ -85,13 +83,20 @@ class objGlyph(object):
         return self.done
 
     #Assign ready to glyph inputs
-    def setReadyGlyphInputAll(self, status):
+    def setGlyphDoneAllInput(self, status):
         for i, vGlyphIn in enumerate(self.lst_input):
            self.lst_input[i].setGlyphInput(vGlyphIn, status)
 
-    # Rule11: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
+    # Rule 8: Glyph will have its READY = TRUE input when source glyph is executed
+    #         Set READ = TRUE to glyph input
+    def setGlyphReadyInput(self, status, vinput_varname):
+        for i, vGlyphIn in enumerate(self.lst_input):
+           if self.lst_input[i].varname == vinput_varname:
+               self.lst_input[i].ready = True
+
+    # Rule12: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
     #         Assign ready to glyph outputs
-    def setReadyGlyphOutputAll(self, status):
+    def setGlyphDoneAllOutput(self, status):
         for i, vGlyphOut in enumerate(self.lst_output):
            self.lst_output[i].setGlyphOutput(vGlyphOut, status)
 
@@ -113,14 +118,14 @@ class objGlyphInput(object):
 
     def __init__(self, namein, statusin):
         self.namein = namein         #glyph input name
-        self.statusin = statusin     #glyph input status
+        self.done = statusin     #glyph input status
 
     def getStatus(self):
         return self.statusin
 
     #Assign status to glyph output
     def setGlyphInput(self, status):
-        self.statusin = status
+        self.done = status
 
 
 # Structure for storing Glyphs output list in memory

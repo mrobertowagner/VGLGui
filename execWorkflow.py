@@ -82,7 +82,8 @@ for vConnection in lstConnection:
     vConnectionIndex    = lstConnection.index
     vGlyphExecuted      = False
 
-    # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
+    # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
+    #        Reading the image from another glyph does not change this status.
     try:
         if not lstConnection[vConnectionIndex].getReadyConnection:
             raise Error("Rule6: Invalid connection: ",{vConnection.output_glyph_id})
@@ -100,13 +101,13 @@ for vConnection in lstConnection:
 
         Index = +1
 
-    # Rule10: Glyphs whose status is READY=TRUE (ready to run) are executed
+    # Rule9: Glyphs whose status is READY=TRUE (ready to run) are executed
     #         Only run the glyph if all its entries are
     try:
         if not vGlyph.getGlyphReady():
-            raise Error("Rule10: Invalid Glyph: ",{vGlyph.glyph})
+            raise Error("Rule9: Invalid Glyph: ",{vGlyph.glyph})
     except ValueError:
-        print("Rule10: Glyph not ready for processing." , {vGlyph.glyph})
+        print("Rule9: Glyph not ready for processing." , {vGlyph.glyph})
 
     if vGlyph.func == 'vglLoadImage':
 
@@ -124,12 +125,8 @@ for vConnection in lstConnection:
 
         vl.vglClUpload(img_input)
 
-        # Rule2: Source glyph only has one output (image), it's a parameter
+        # Rule2: In a source glyph, images (one or more) can only be output parameters.
         lstConnection[vConnectionIndex].setImageConnection = img_input
-
-        # Rule6: Edges with images already read or generated have status READY=TRUE (image ready to be processed)
-        #        Assign read-ready to connection
-        lstConnection[vConnectionIndex].setReadyConnection
 
         # Identifies that the glyph was executed
         vGlyphExecuted = True
@@ -209,7 +206,7 @@ for vConnection in lstConnection:
 
     elif vGlyph.func == 'ShowImage':
 
-        # Rule 3: Sink glyph only has one entry (image)             
+        # Rule3: In a sink glyph, images (one or more) can only be input parameters             
         img = Image.open(vGlyph.lst_par[1].getValue())
         img.show()
 
@@ -230,7 +227,7 @@ for vConnection in lstConnection:
             if( img.getVglShape().getNChannels() == 4 ):
                 vl.rgba_to_rgb(img)
 
-        # Rule 3: Sink glyph only has one entry (image)             
+        # Rule3: In a sink glyph, images (one or more) can only be input parameters             
         vl.vglSaveImage(ext, img)
 
         # Identifies that the glyph was executed
@@ -239,23 +236,23 @@ for vConnection in lstConnection:
     # Actions after glyph execution
     if vGlyphExecuted:
 
-        # Rule9: When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
+        # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
         lstGlyph[vGlyph_Index].setGlyphReady(True)
 
-        # Rule11: Glyph becomes DONE = TRUE after its execution
+        # Rule10: Glyph becomes DONE = TRUE after its execution
         #         Assign done to glyph
         lstGlyph[vGlyph_Index].setGlyphDone(True)
 
-        # Rule12: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
-        #         Assign done to all glyph outputs
-        lstGlyph[vGlyph_Index].setGlyphDoneAllOutput(False)
-
-        # Rule 8: Glyph will have its READY = TRUE input when source glyph is executed
+        # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
+        #        Reading the image from another glyph does not change this status.
         # Check the list of connections
         for i_Con, vConnection in lstConnection:
 
             # Checks if the executed glyph is the origin of any glyph
             if lstGlyph[vGlyph_Index].glyph_id == vConnection.output_glyph_id:
+
+                # Assign read-ready to connection
+                lstConnection[vConnection].setReadyConnection
 
                 # Finds the glyphs that originate from the executed glyph
                 for i_Gli, vGlyph in lstGlyph:

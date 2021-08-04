@@ -31,9 +31,10 @@ class objGlyph(object):
 
         self.lst_par = []                       #parameter list
 
-        # Rule1: Glyphs are Vertices (represents a library function)
-        #        They have an input parameter list (it is a single input) and 
-        #        The output (there is a list of outputs for each output)
+        # Rule1: Glyphs correspond to vertices in a graph and represent a function from the VisionGL library
+        #           They have a list of input and output parameters.
+        #           Each input is linked to a single output of another glyph.
+        #           Each output can be connected to more than one input from another glyph.
         self.lst_input = []                     #glyph input list
         self.lst_output = []                    #glyph output list
 
@@ -53,8 +54,7 @@ class objGlyph(object):
     def getGlyphReady(self):
         return self.ready
 
-    # Rule9: When all glyph entries are READY=TRUE, the glyph changes status to READY=TRUE
-    #        Function to update if the glyph is ready and return status
+    # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
     def setGlyphReady(self, status):
 
         vGlyphReady = status
@@ -73,7 +73,7 @@ class objGlyph(object):
             if vGlyphReady:
                 self.ready = vGlyphReady
 
-    # Rule11: Glyph becomes DONE = TRUE after its execution
+    # Rule10: Glyph becomes DONE = TRUE after its execution
     #         Assign done to glyph
     def setGlyphDone(self, status):
         self.done = status
@@ -87,18 +87,13 @@ class objGlyph(object):
         for i, vGlyphIn in enumerate(self.lst_input):
            self.lst_input[i].setGlyphInput(vGlyphIn, status)
 
-    # Rule 8: Glyph will have its READY = TRUE input when source glyph is executed
-    #         Set READ = TRUE to glyph input
+    # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
+    #        Reading the image from another glyph does not change this status.
+    #        Set READ = TRUE to glyph input
     def setGlyphReadyInput(self, status, vinput_varname):
         for i, vGlyphIn in enumerate(self.lst_input):
            if self.lst_input[i].varname == vinput_varname:
                self.lst_input[i].ready = True
-
-    # Rule12: The outputs of a Glyph become DONE = TRUE after the execution of the Glyph
-    #         Assign ready to glyph outputs
-    def setGlyphDoneAllOutput(self, status):
-        for i, vGlyphOut in enumerate(self.lst_output):
-           self.lst_output[i].setGlyphOutput(vGlyphOut, status)
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -153,7 +148,7 @@ class objConnection(object):
         self.image = None                           #image
         self.ready = False                          #False = unread or unexecuted image; True = image read or executed
 
-    # Rule5: Edges have images stored
+    # Rule5: Each edge has an image stored
     #        Assign image to Connection
     def setImageConnection(self, img):
         self.image = img
@@ -254,9 +249,9 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
                 # -conn 1  
                 # -real '100'                  
                 #                                  
-    except IndexError as d: #rule 102 - Variable not found
+    except IndexError as d: #rule102 - Variable not found
         print("Non-standard information in the Parameter declaration"," \nLine",{count}, "{d}")
-    except ValueError as s: #rule 103 - Error in defined Parameters coordinates (not integer or out of bounds)
+    except ValueError as s: #rule103 - Error in defined Parameters coordinates (not integer or out of bounds)
         print("Non-standard information in the Parameter declaration","\nLine",{count} , "{s}")
 
 
@@ -294,16 +289,16 @@ def procCreateGlyph(contentGly, count):
         #Creates the parameters of the Glyph
         procCreateGlyphParameters(vGlyph, vGlyphPar, count)                    
 
-        #rule 104 - Invalid screen position or exceeds dimensions to be defined by file
+        #rule104 - Invalid screen position or exceeds dimensions to be defined by file
         if (int(contentGly[6]) or int(contentGly[7])) > 100000 or (int(contentGly[6]) or int(contentGly[7])) < 0:
             raise Error("Glyph position on screen in error,", " check the line: ",{count}) 
 
         #Create the Glyph
         lstGlyph.append(vGlyph)
 
-    except IndexError as d: #rule 102 - Variable not found
+    except IndexError as d: #rule102 - Variable not found
         print("Non-standard information in the Glyph declaration"," \nLine",{count}, "{d}")
-    except ValueError as s: #rule 103 - Error in defined glyph coordinates (not integer or out of bounds)
+    except ValueError as s: #rule103 - Error in defined glyph coordinates (not integer or out of bounds)
         print("Non-standard information in the Glyph declaration","\nLine",{count} , "{s}")
 
 #Creates the connections of the workflow file
@@ -313,7 +308,7 @@ def procCreateConnection(contentCon, count):
         vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3].replace('\n',''), contentCon[4], contentCon[5].replace('\n',''))
         lstConnection.append(vConnection)           
 
-        #rule 105 - Invalid Glyph Id
+        #rule105 - Invalid Glyph Id
         try:
             if int(contentCon[2])  <0 or int(contentCon[4]) < 0:
                 raise Error("Invalid glyph id on line: ",{count})
@@ -355,7 +350,7 @@ def fileRead(lstGlyph, lstConnection):
                 if ('glyph:' in line.lower()) or ('extport:' in line.lower()):
                     procCreateGlyph(line.split(':'), count)
 
-                # Rule 4: Edges are Connections between Glyphs and represent the image to be processed
+                # Rule4: Edges are Connections between Glyphs and represent the image to be processed
                 #         Creates the connections of the workflow file
                 if 'nodeconnection:' in line.lower():
                     procCreateConnection(line.split(':'), count)
@@ -365,5 +360,5 @@ def fileRead(lstGlyph, lstConnection):
             #Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
             
-    except UnboundLocalError: #rule 101 - File not found
+    except UnboundLocalError: #rule101 - File not found
         print("File not found.")

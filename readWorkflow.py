@@ -197,9 +197,6 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
                 if vpar[0] == '\'' or vpar.isdigit():
                     vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
 
-                #if vpar.replace("\n", '').isdigit():
-                #    vGlyphPar = objGlyphParameters('Value', vpar.replace("\n", ''))
-
                 if vpar[0] == "-":             
                     if vpar[1].isdigit():
                         vGlyphPar = objGlyphParameters('Value', vpar.replace("-", ''))
@@ -223,39 +220,23 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
                 vParTypeNext = lstParAux[i+1].getName()
                 vParValueNext = lstParAux[i+1].getValue()
             
-            ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
-
-            #A parameter name followed by another parameter name
-            #Write the parameter because it will have no value
-            #Example: -wh -hw -dd
+            # A parameter name followed by another parameter name. Write the parameter because it will have no value. Example: -wh -hw -dd
             if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
                 vGlyphPar = objGlyphParameters(vParValue, '')
                 vGlyph.funcGlyphAddPar(vGlyphPar)
 
-            #A parameter name followed by a value
-            #Write the parameter with its value
+            # A parameter name followed by a value. Write the parameter with its value
             if vParType == 'Name' and vParTypeNext == 'Value':
                 vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
                 vGlyph.funcGlyphAddPar(vGlyphPar)
 
-                # Examples:
-                # -wh -hw -dd 
-                # -conn 1 
-                # -wh -hw -dd
-                # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
-                # -append 1 -mapping 0 -e
-                # -real 'width_size'
-                # -backvalue 0 -masklogic 1
-                # -conn 1  
-                # -real '100'                  
-                #                                  
     except IndexError as d: #rule102 - Variable not found
         print("Non-standard information in the Parameter declaration"," \nLine",{count}, "{d}")
     except ValueError as s: #rule103 - Error in defined Parameters coordinates (not integer or out of bounds)
         print("Non-standard information in the Parameter declaration","\nLine",{count} , "{s}")
 
 
-#Create Glyph
+# Create Glyph
 def procCreateGlyph(contentGly, count):
     try:
         

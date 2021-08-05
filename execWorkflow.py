@@ -85,7 +85,7 @@ for vConnection in lstConnection:
     # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
     #        Reading the image from another glyph does not change this status.
     try:
-        if not lstConnection[vConnectionIndex].getReadyConnection:
+        if lstConnection[vConnectionIndex].getReadyConnection == False:
             raise Error("Rule6: Invalid connection: ",{vConnection.output_glyph_id})
     except ValueError:
         print("Rule6: Image not ready for processing." , {vConnection.output_glyph_id})

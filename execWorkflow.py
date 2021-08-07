@@ -38,11 +38,11 @@ def GlyphExecutedUpdate(vGlyph_Index):
             # Finds the glyphs that originate from the executed glyph
             for i_Gli, vGlyph in enumerate(lstGlyph):
 
-                if vGlyph.glyph_id == vConnection.output_glyph_id:
+                if vGlyph.glyph_id == vConnection.input_glyph_id:
 
                     # Set READY = TRUE to the Glyph input
                     for vGlyphIn in lstGlyph[i_Gli].lst_input:
-                        lstGlyph[i_Gli].input_glyph_id.setGlyphReadyInput(True, vConnection.input_varname)
+                        lstGlyph[i_Gli].setGlyphReadyInput(True, vConnection.input_varname)
 
 # Program execution
 
@@ -60,7 +60,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         if not vGlyph.getGlyphReady():
             raise Error("Rule9: Glyph not ready for processing: ",{vGlyph.glyph_id})
     except ValueError:
-        print("Rule9: Glyph not ready for processing:" , {vGlyph.glyph})
+        print("Rule9: Glyph not ready for processing:" , {vGlyph.glyph_id})
 
     if vGlyph.func == 'vglLoadImage':
 

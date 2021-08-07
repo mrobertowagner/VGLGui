@@ -95,7 +95,7 @@ class objGlyph(object):
     def setGlyphReadyInput(self, status, vinput_varname):
         for i, vGlyphIn in enumerate(self.lst_input):
            if self.lst_input[i].namein == vinput_varname:
-               self.lst_input[i].ready = True               
+               self.lst_input[i].statusin = True               
                break
 
 # Structure for storing Parameters in memory
@@ -115,16 +115,15 @@ class objGlyphParameters(object):
 class objGlyphInput(object):
 
     def __init__(self, namein, statusin):
-        self.namein = namein         #glyph input name
-        self.done = statusin     #glyph input status
+        self.namein = namein        #glyph input name
+        self.statusin = statusin        #glyph input status
 
     def getStatus(self):
-        return self.done
+        return self.statusin
 
     #Assign status to glyph output
     def setGlyphInput(self, status):
-        self.done = status
-
+        self.statusin = status
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):

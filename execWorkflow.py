@@ -33,10 +33,10 @@ def GlyphExecutedUpdate(vGlyph_Index):
         if lstGlyph[vGlyph_Index].glyph_id == vConnection.output_glyph_id:
 
             # Assign read-ready to connection
-            lstConnection[vConnection].setReadyConnection
+            lstConnection[i_Con].setReadyConnection
 
             # Finds the glyphs that originate from the executed glyph
-            for i_Gli, vGlyph in lstGlyph:
+            for i_Gli, vGlyph in enumerate(lstGlyph):
 
                 if vGlyph.glyph_id == vConnection.output_glyph_id:
 
@@ -58,9 +58,9 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     # Rule9: Glyphs whose status is READY=TRUE (ready to run) are executed. Only run the glyph if all its entries are
     try:
         if not vGlyph.getGlyphReady():
-            raise Error("Rule9: Invalid Glyph: ",{vGlyph.glyph_id})
+            raise Error("Rule9: Glyph not ready for processing: ",{vGlyph.glyph_id})
     except ValueError:
-        print("Rule9: Glyph not ready for processing." , {vGlyph.glyph})
+        print("Rule9: Glyph not ready for processing:" , {vGlyph.glyph})
 
     if vGlyph.func == 'vglLoadImage':
 

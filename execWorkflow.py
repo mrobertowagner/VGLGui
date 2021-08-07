@@ -58,9 +58,9 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     # Rule9: Glyphs whose status is READY=TRUE (ready to run) are executed. Only run the glyph if all its entries are
     try:
         if not vGlyph.getGlyphReady():
-            raise Error("Rule9: Glyph not ready for processing: ",{vGlyph.glyph_id})
+            raise Error("Rule9: Glyph not ready for processing: "})
     except ValueError:
-        print("Rule9: Glyph not ready for processing:" , {vGlyph.glyph_id})
+        print("Rule9: Glyph not ready for processing: ", {vGlyph.glyph_id})
 
     if vGlyph.func == 'vglLoadImage':
 

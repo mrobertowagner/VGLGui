@@ -72,6 +72,8 @@ class objGlyph(object):
             #If all inputs were used
             if vGlyphReady:
                 self.ready = vGlyphReady
+        else:
+            self.ready = vGlyphReady
 
     # Rule10: Glyph becomes DONE = TRUE after its execution
     #         Assign done to glyph
@@ -162,20 +164,29 @@ class objConnection(object):
 
 #Create the inputs and outputs for the glyph
 def procCreateGlyphInOut():
-    for vConnection in lstConnection:
 
-        #If the glyph has input
+    for vConnection in lstConnection:
+        
         for i, vGlyph in enumerate(lstGlyph):
+
+            # Create the input for the glyph
             if vConnection.input_varname != '\n' and vGlyph.glyph_id == vConnection.input_glyph_id:
                 vGlyphIn = objGlyphInput(vConnection.input_varname, False)
                 lstGlyph[i].funcGlyphAddIn (vGlyphIn)
 
-        #If the glyph has output   
-        for i, vGlyph in enumerate(lstGlyph):
+            # Create the output for the glyph   
             if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
                 vGlyphOut = objGlyphInput(vConnection.output_varname, False)
                 lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
+    #Rule11: Source glyph is already created with READY = TRUE. 
+    #        After creating NodeConnections, the Glyph that has no input will be considered of the SOURCE type and 
+    #        will have READY = TRUE (ready for execution)
+    for i, vGlyph in enumerate(lstGlyph):
+
+       if len(vGlyph.lst_input) == 0:
+           lstGlyph[i].setGlyphReady(True)
+           
 #Identifies and Creates the parameters of the Glyph
 def procCreateGlyphParameters(vGlyph, vParameters, count):
     try:
@@ -338,7 +349,8 @@ def fileRead(lstGlyph, lstConnection):
 
             file1.close()
 
-            #Create inputs and outputs of the Glyph
+            # Rule11: Source glyph is already created with READY = TRUE. 
+            # Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
             
     except UnboundLocalError: #rule101 - File not found

@@ -120,7 +120,7 @@ class objGlyphInput(object):
         self.done = statusin     #glyph input status
 
     def getStatus(self):
-        return self.statusin
+        return self.done
 
     #Assign status to glyph output
     def setGlyphInput(self, status):

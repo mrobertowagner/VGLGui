@@ -91,11 +91,13 @@ class objGlyph(object):
 
     # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
     #        Reading the image from another glyph does not change this status.
-    #        Set READ = TRUE to glyph input
+    #        Set READY = TRUE to glyph input and READY = TRUE to glyph 
     def setGlyphReadyInput(self, status, vinput_varname):
         for i, vGlyphIn in enumerate(self.lst_input):
            if self.lst_input[i].namein == vinput_varname:
                self.lst_input[i].ready = True
+               self.setGlyphReady()
+               break
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):

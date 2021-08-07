@@ -95,8 +95,7 @@ class objGlyph(object):
     def setGlyphReadyInput(self, status, vinput_varname):
         for i, vGlyphIn in enumerate(self.lst_input):
            if self.lst_input[i].namein == vinput_varname:
-               self.lst_input[i].ready = True
-               self.setGlyphReady(status)
+               self.lst_input[i].ready = True               
                break
 
 # Structure for storing Parameters in memory

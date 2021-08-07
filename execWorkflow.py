@@ -43,6 +43,7 @@ def GlyphExecutedUpdate(vGlyph_Index):
                     # Set READY = TRUE to the Glyph input
                     for vGlyphIn in lstGlyph[i_Gli].lst_input:
                         lstGlyph[i_Gli].setGlyphReadyInput(True, vConnection.input_varname)
+                        lstGlyph[i_Gli].setGlyphReady(True)
                     break
                 
 # Program execution

@@ -73,6 +73,8 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
             img_input = vConnection.image
 
+    img_output = img_input
+
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage

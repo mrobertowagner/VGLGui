@@ -20,13 +20,11 @@ def GlyphExecutedUpdate(vGlyph_Index):
     # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
     lstGlyph[vGlyph_Index].setGlyphReady(True)
 
-    # Rule10: Glyph becomes DONE = TRUE after its execution
-    #         Assign done to glyph
+    # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
     lstGlyph[vGlyph_Index].setGlyphDone(True)
 
     # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
-    #        Reading the image from another glyph does not change this status.
-    # Check the list of connections
+    #        Reading the image from another glyph does not change this status. Check the list of connections
     for i_Con, vConnection in enumerate(lstConnection):
 
         # Checks if the executed glyph is the origin of any glyph

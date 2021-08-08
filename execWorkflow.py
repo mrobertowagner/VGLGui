@@ -31,7 +31,7 @@ def GlyphExecutedUpdate(vGlyph_Index, image):
 
             # Rule2: In a source glyph, images (one or more) can only be output parameters.
             if image is not None:
-                lstConnection[i_Con].setImageConnection = image
+                lstConnection[i_Con].setImageConnection(image)
             
             # Assign read-ready to connection
             lstConnection[i_Con].setReadyConnection
@@ -65,6 +65,14 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     except ValueError:
         print("Rule9: Glyph not ready for processing: ", {vGlyph.glyph_id})
 
+    img_input = None
+    img_output = None
+
+    # Search the input image by connecting to the source glyph
+    for i_Con, vConnection in enumerate(lstConnection):
+        if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
+            img_input = vConnection.image
+
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage
@@ -82,22 +90,11 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
                                 
     elif vGlyph.func == 'vglCreateImage':
 
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        
-        # Save new image
-        vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
-
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, img_output)
+        GlyphExecutedUpdate(vGlyph_Index, None)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
 
@@ -105,11 +102,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         GlyphExecutedUpdate(vGlyph_Index, img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
-
-        # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
-        
+    
         # Apply Threshold function
         vglClThreshold(img_input, img_output, np.float32(0.5))
 
@@ -118,28 +111,27 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
     elif vGlyph.func == 'ShowImage':
 
-        # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-        img = Image.open(vGlyph.lst_par[1].getValue())
-        img.show()
+        if img_input is not None:
 
-        # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, None)
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters             
+            img_input.show()
+
+            # Actions after glyph execution
+            GlyphExecutedUpdate(vGlyph_Index, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
-        # SAVING IMAGE img
-        ext = vGlyph.lst_par[0].getValue().split(".")
-        ext.reverse()
+        if img_input is not None:
 
-        img = vGlyph.lst_par[1].getValue()
+            # SAVING IMAGE img
+            vpath = vGlyph.lst_par[0].getValue().split(".")
+            vpath.reverse()
 
-        vl.vglClDownload(vGlyph.lst_par[1].getValue())
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters             
+            vl.vglSaveImage(vpath, img_input)
 
-        # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-        vl.vglSaveImage(ext, None)
-
-        # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index), img
+            # Actions after glyph execution
+            GlyphExecutedUpdate(vGlyph_Index, None)
        
 img_input = None
 img_output = None

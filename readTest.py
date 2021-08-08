@@ -347,12 +347,12 @@ def fileRead(lstGlyph):
         print("Arquivo não encontrado.")
 
 # Program execution
-#lstGlyph = []
-#lstConnection = []
-#contentGly = []
-#contentCon = []
-#lstGlyphIn = []                 #List to store Glyphs Inputs
-#lstGlyphOut = []                #List to store Glyphs Outputs
+lstGlyph = []
+lstConnection = []
+contentGly = []
+contentCon = []
+lstGlyphIn = []                 #List to store Glyphs Inputs
+lstGlyphOut = []                #List to store Glyphs Outputs
 
 # Reading the workflow file and loads into memory all glyphs and connections
-#fileRead(lstGlyph)
+fileRead(lstGlyph)

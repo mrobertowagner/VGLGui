@@ -38,6 +38,11 @@ nSteps = 1
 convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
                                         (2/16, 4/16, 2/16),
                                         (1/16, 2/16, 1/16) ), np.float32)
+cv = [1, 1, 1, 1, 1, 1, 1 ,1, 1] 
+convolution_window_2d_3x3_1  = np.array(((1, 1, 1),
+                                        (1, 1, 1),
+                                        (1, 1, 1) ), np.float32)
+                                        
 convolution_window_2d_5x5 = np.array((	(1/256, 4/256,  6/256,  4/256,  1/256),
                                         (4/256, 16/256, 24/256, 16/256, 4/256),
                                         (6/256, 24/256, 36/256, 24/256, 6/256),
@@ -188,7 +193,7 @@ for vGlyph in lstGlyph:
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
 
-        vglClConvolution(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+        vglClConvolution(img_input,img_output, convolution_window_2d_3x3, np.uint32(5), np.uint32(5))
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
@@ -202,7 +207,7 @@ for vGlyph in lstGlyph:
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
 
-        vglClErode(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+        vglClErode(img_input,img_output, convolution_window_2d_3x3_1, np.uint32(5), np.uint32(5))
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
@@ -215,7 +220,7 @@ for vGlyph in lstGlyph:
         img_output = vl.create_blank_image_as(img_input)
         img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
 
-        vglClDilate(img_input,img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+        vglClDilate(img_input,img_output, cv, np.uint32(5), np.uint32(5))
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)

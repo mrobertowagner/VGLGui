@@ -4,18 +4,17 @@ import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
 import numpy as np          # TO WORK WITH MAIN
 from cl2py_shaders import * # IMPORTING METHODS
-from PIL import Image       #IMPORTING METHODS TO DISPLAY IMAGE
+from PIL import Image       # IMPORTING METHODS TO DISPLAY IMAGE
 import os
 import sys                  # IMPORTING METHODS FROM VGLGui
 from readWorkflow import *
 import time as t
 
-
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
 
 # Actions after glyph execution
-def GlyphExecutedUpdate(vGlyph_Index):
+def GlyphExecutedUpdate(vGlyph_Index, image):
 
     # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
     lstGlyph[vGlyph_Index].setGlyphReady(True)
@@ -30,6 +29,10 @@ def GlyphExecutedUpdate(vGlyph_Index):
         # Checks if the executed glyph is the origin of any glyph
         if lstGlyph[vGlyph_Index].glyph_id == vConnection.output_glyph_id:
 
+            # Rule2: In a source glyph, images (one or more) can only be output parameters.
+            if image is not None:
+                lstConnection[i_Con].setImageConnection = image
+            
             # Assign read-ready to connection
             lstConnection[i_Con].setReadyConnection
 
@@ -75,12 +78,12 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vl.vglClUpload(img_input)
 
         # Rule2: In a source glyph, images (one or more) can only be output parameters.
-        for i_Con, vConnection in enumerate(lstConnection):
-            if vConnection.output_glyph_id == vGlyph.glyph_id:
-                lstConnection[i_Con].setImageConnection = img_input
+        #for i_Con, vConnection in enumerate(lstConnection):
+        #    if vConnection.output_glyph_id == vGlyph.glyph_id:
+        #        lstConnection[i_Con].setImageConnection = img_input
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index, img_input)
                                 
     elif vGlyph.func == 'vglCreateImage':
 
@@ -92,7 +95,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vl.vglSaveImage(vGlyph.lst_par[1].getValue(), img_output)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index, img_output)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
@@ -104,7 +107,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vglClBlurSq3(img_input, img_output)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index, img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
 
@@ -116,7 +119,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vglClThreshold(img_input, img_output, np.float32(0.5))
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index, img_output)
 
     elif vGlyph.func == 'ShowImage':
 
@@ -125,7 +128,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         img.show()
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
@@ -138,10 +141,10 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vl.vglClDownload(vGlyph.lst_par[1].getValue())
 
         # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-        vl.vglSaveImage(ext, img)
+        vl.vglSaveImage(ext, None)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index)
+        GlyphExecutedUpdate(vGlyph_Index), img
        
 img_input = None
 img_output = None

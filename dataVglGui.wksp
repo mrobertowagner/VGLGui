@@ -33,13 +33,13 @@ Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0 -top 1
 
 #  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'tmp/lena_Blur.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/lena_Blur.png' 
 
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Blur'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'tmp/lena_BlurThre.png'
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'images/lena_BlurThre.png'
 
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'BlurThre'

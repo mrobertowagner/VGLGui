@@ -126,7 +126,6 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
-            vpath.reverse()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
             vl.vglSaveImage(vpath, img_input)

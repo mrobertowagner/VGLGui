@@ -77,11 +77,6 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
         vl.vglClUpload(img_input)
 
-        # Rule2: In a source glyph, images (one or more) can only be output parameters.
-        #for i_Con, vConnection in enumerate(lstConnection):
-        #    if vConnection.output_glyph_id == vGlyph.glyph_id:
-        #        lstConnection[i_Con].setImageConnection = img_input
-
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_input)
                                 

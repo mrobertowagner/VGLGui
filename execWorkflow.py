@@ -72,8 +72,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     for i_Con, vConnection in enumerate(lstConnection):
         if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
             img_input = vConnection.image
-
-    img_output = img_input
+            img_output = img_input  # Type the output image variable to be used in the Blur and Threshold functions
 
     if vGlyph.func == 'vglLoadImage':
 

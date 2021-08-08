@@ -97,7 +97,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Apply BlurSq3 function
-        #vglClBlurSq3(img_input, img_output)
+        vglClBlurSq3(img_input, img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_output)
@@ -105,7 +105,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
     
         # Apply Threshold function
-        #vglClThreshold(img_input, img_output, np.float32(0.5))
+        vglClThreshold(img_input, img_output, np.float32(0.5))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_output)
@@ -113,6 +113,8 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     elif vGlyph.func == 'ShowImage':
 
         if img_input is not None:
+
+            #img = Image.open(vGlyph.lst_par[1].getValue())
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
             img_input.show()

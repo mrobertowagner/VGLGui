@@ -1,6 +1,6 @@
 rundemopy:
 <<<<<<< HEAD
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 =======
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py

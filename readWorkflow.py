@@ -72,6 +72,8 @@ class objGlyph(object):
             #If all inputs were used
             if vGlyphReady:
                 self.ready = vGlyphReady
+        else:
+            self.ready = vGlyphReady
 
     # Rule10: Glyph becomes DONE = TRUE after its execution
     #         Assign done to glyph
@@ -89,11 +91,12 @@ class objGlyph(object):
 
     # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
     #        Reading the image from another glyph does not change this status.
-    #        Set READ = TRUE to glyph input
+    #        Set READY = TRUE to glyph input and READY = TRUE to glyph 
     def setGlyphReadyInput(self, status, vinput_varname):
         for i, vGlyphIn in enumerate(self.lst_input):
-           if self.lst_input[i].varname == vinput_varname:
-               self.lst_input[i].ready = True
+           if self.lst_input[i].namein == vinput_varname:
+               self.lst_input[i].statusin = True               
+               break
 
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
@@ -112,16 +115,15 @@ class objGlyphParameters(object):
 class objGlyphInput(object):
 
     def __init__(self, namein, statusin):
-        self.namein = namein         #glyph input name
-        self.done = statusin     #glyph input status
+        self.namein = namein        #glyph input name
+        self.statusin = statusin        #glyph input status
 
     def getStatus(self):
         return self.statusin
 
     #Assign status to glyph output
     def setGlyphInput(self, status):
-        self.done = status
-
+        self.statusin = status
 
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
@@ -162,20 +164,29 @@ class objConnection(object):
 
 #Create the inputs and outputs for the glyph
 def procCreateGlyphInOut():
-    for vConnection in lstConnection:
 
-        #If the glyph has input
+    for vConnection in lstConnection:
+        
         for i, vGlyph in enumerate(lstGlyph):
+
+            # Create the input for the glyph
             if vConnection.input_varname != '\n' and vGlyph.glyph_id == vConnection.input_glyph_id:
                 vGlyphIn = objGlyphInput(vConnection.input_varname, False)
                 lstGlyph[i].funcGlyphAddIn (vGlyphIn)
 
-        #If the glyph has output   
-        for i, vGlyph in enumerate(lstGlyph):
+            # Create the output for the glyph   
             if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
                 vGlyphOut = objGlyphInput(vConnection.output_varname, False)
                 lstGlyph[i].funcGlyphAddOut (vGlyphOut)
 
+    #Rule11: Source glyph is already created with READY = TRUE. 
+    #        After creating NodeConnections, the Glyph that has no input will be considered of the SOURCE type and 
+    #        will have READY = TRUE (ready for execution)
+    for i, vGlyph in enumerate(lstGlyph):
+
+       if len(vGlyph.lst_input) == 0:
+           lstGlyph[i].setGlyphReady(True)
+           
 #Identifies and Creates the parameters of the Glyph
 def procCreateGlyphParameters(vGlyph, vParameters, count):
     try:
@@ -196,9 +207,6 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
                 #Differentiates parameter name and value
                 if vpar[0] == '\'' or vpar.isdigit():
                     vGlyphPar = objGlyphParameters('Value', vpar.replace("'", '')) 
-
-                #if vpar.replace("\n", '').isdigit():
-                #    vGlyphPar = objGlyphParameters('Value', vpar.replace("\n", ''))
 
                 if vpar[0] == "-":             
                     if vpar[1].isdigit():
@@ -223,39 +231,23 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
                 vParTypeNext = lstParAux[i+1].getName()
                 vParValueNext = lstParAux[i+1].getValue()
             
-            ###vParAuxNext = objGlyphParameters(lstParAux[i+1].getName(), lstParAux[i+1].getValue())
-
-            #A parameter name followed by another parameter name
-            #Write the parameter because it will have no value
-            #Example: -wh -hw -dd
+            # A parameter name followed by another parameter name. Write the parameter because it will have no value. Example: -wh -hw -dd
             if vParType == 'Name' and (vParTypeNext == 'Name' or (vParTypeNext == '' and vParType != 'Value')):
                 vGlyphPar = objGlyphParameters(vParValue, '')
                 vGlyph.funcGlyphAddPar(vGlyphPar)
 
-            #A parameter name followed by a value
-            #Write the parameter with its value
+            # A parameter name followed by a value. Write the parameter with its value
             if vParType == 'Name' and vParTypeNext == 'Value':
                 vGlyphPar = objGlyphParameters(vParValue, vParValueNext)
                 vGlyph.funcGlyphAddPar(vGlyphPar)
 
-                # Examples:
-                # -wh -hw -dd 
-                # -conn 1 
-                # -wh -hw -dd
-                # -ms 0 -mc 0 -mi 0 -mr 0 -col 0 
-                # -append 1 -mapping 0 -e
-                # -real 'width_size'
-                # -backvalue 0 -masklogic 1
-                # -conn 1  
-                # -real '100'                  
-                #                                  
     except IndexError as d: #rule102 - Variable not found
         print("Non-standard information in the Parameter declaration"," \nLine",{count}, "{d}")
     except ValueError as s: #rule103 - Error in defined Parameters coordinates (not integer or out of bounds)
         print("Non-standard information in the Parameter declaration","\nLine",{count} , "{s}")
 
 
-#Create Glyph
+# Create Glyph
 def procCreateGlyph(contentGly, count):
     try:
         
@@ -357,7 +349,8 @@ def fileRead(lstGlyph, lstConnection):
 
             file1.close()
 
-            #Create inputs and outputs of the Glyph
+            # Rule11: Source glyph is already created with READY = TRUE. 
+            # Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
             
     except UnboundLocalError: #rule101 - File not found

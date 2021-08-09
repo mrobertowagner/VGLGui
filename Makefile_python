@@ -1,6 +1,11 @@
 rundemopy:
+<<<<<<< HEAD
 	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./readTest.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
+=======
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py
+	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
+>>>>>>> f809fd2e7125016c8622bda37912246b2f8ceb26
 	#cd ~/UFS/VglGui/VGLGui/; ./work.py
 

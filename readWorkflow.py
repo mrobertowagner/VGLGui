@@ -115,7 +115,7 @@ class objGlyphParameters(object):
 class objGlyphInput(object):
 
     def __init__(self, namein, statusin):
-        self.namein = namein        #glyph input name
+        self.namein = namein            #glyph input name
         self.statusin = statusin        #glyph input status
 
     def getStatus(self):

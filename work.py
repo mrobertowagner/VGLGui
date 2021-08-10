@@ -30,20 +30,29 @@ import time as t
     #inicio das estruturas vgl
 
 # Program execution
+import matplotlib.pyplot as mp
+
+def imshow(im):
+    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+    plot.set_interpolation('nearest')
+    mp.show()
 
 # Reading the workflow file and loads into memory all glyphs and connections
 fileRead(lstGlyph)
-nSteps = 1
+
 
 convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
                                         (2/16, 4/16, 2/16),
                                         (1/16, 2/16, 1/16) ), np.float32) 
 
-print(convolution_window_2d_3x3)
-cv = np.array([1,1,1,1,1,1,1,1,1], dtype=np.float32)
-#cv = [1, 1, 1, 1, 1, 1, 1 ,1, 1]
 
-cv = np.ndarray(shape=(1,1),dtype=float)                                         
+
+#cv = np.array((1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9),np.float32) # Filtro média
+#cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
+cv = np.array((	(1, 1, 1),(1, 1, 1),(1, 1, 1) ), np.float32) 
+
+
+#cv = np.ndarray(shape=(1,1),dtype=float)                                         
 print(cv)
 #cv = np.array([1, 1, 1]).astype(float)
 #print(cv)
@@ -229,11 +238,6 @@ for vGlyph in lstGlyph:
 
         msg = msg + "Dilate function applied"
 
-    elif vGlyph.func == 'ShowImage':
- 
-        img = Image.open(vGlyph.lst_par[1].getValue())
-        img.show()
-        
     elif vGlyph.func == 'vglSaveImage':
 
         copyFile (vGlyph.lst_par[0].getValue(), vGlyph.lst_par[1].getValue())

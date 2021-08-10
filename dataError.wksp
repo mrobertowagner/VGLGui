@@ -1,4 +1,4 @@
-# VisionGL Visual Programming Workspace
+ VisionGL Visual Programming Workspace
 #
 # VisionGL workspace file (/home/dataVglGui.wksp) was created 
 # on Mon Jul  2 11:22:34 2001
@@ -20,47 +20,29 @@ VariablesEnd:
 #  Glyph 'Image load'
 ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/lena_1024.tif' -iscolor 1 -has_mipmap 0
 
-#  Glyph 'Create Image Blur'
-Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
+#  Glyph 'Create Image vglClConvolution'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:122:: -img_src 'images/imagem128x128.jpeg' -img_output 'tmp/imagem128x128.png'
 
-#  Glyph 'vglCLBlurSq3'
-Glyph:VGL_CL:vglClBlurSq3::localhost:3:382:182::
 
-#  Glyph 'Create Image Threshold'
-Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
-
-#  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:-15:462:302:: -thresh 0 -top 1
-
-#  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'tmp/lena_Blur.png' 
+#  Glyph 'Image save Convolution'
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'tmp/imagem128x128.png' -image 'images/lena_Dilate.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Blur'
-
-#  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'tmp/lena_BlurThre.png'
-
-#  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'BlurThre'
+ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'imagem128x128' -image 'tmp/imagem128x128.png'
 
 #  Connections 'Applying Blur’
-NodeConnection:data:1:RETVAL:2:img
-NodeConnection:data:1:RETVAL:3:img_input
-NodeConnection:data:2:RETVAL:3:img_output
+NodeConnection:data:1:filename:2:img_src:
+NodeConnection:data:2::3:img_output:
+NodeConnection:data:3:image_output:6:image:
+NodeConnection:data:3:image_output:7:image:
 
-# Connections ‘Show in Blur’
-NodeConnection:data:3:img_output:6:image
-NodeConnection:data:3:img_output:7:image
-
-#  Connections 'Applying Threshold'
-NodeConnection:data:3:img_output:4:img
-NodeConnection:data:3:img_output:5:src
-NodeConnection:data:4:RETVAL:5:dst
-
-# Connections ‘Show in Threshold
-NodeConnection:data:5:dst:8:image
-NodeConnection:data:5:dst:9:image
+#  Connections 'Applying Blur and Threshold effect on image'
+NodeConnection:data:1:filename:3:img_input:
+NodeConnection:data:3:image_output:4:img_src:
+NodeConnection:data:4::5:dst:
+NodeConnection:data:3:image_output:5:src:
+NodeConnection:data:5:image_output:8:image:
+NodeConnection:data:5:image_output:9:image:
 
 AnnotationsBegin
 AnnotationsEnd

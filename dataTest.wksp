@@ -20,29 +20,15 @@ VariablesEnd:
 #  Glyph 'Image load'
 ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/lena_1024.tif' -iscolor 1 -has_mipmap 0
 
-#  Glyph 'Create Image Erode'
-Glyph:VGL_CL:vglCreateImage::localhost:2:562:122:: -img_src 'images/lena_1024.tif' -img_output 'tmp/lena_Erode.png'
+#  Glyph 'Create Image vglClConvolution'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:122:: -img_src 'images/imagem128x128.jpeg' -img_output 'tmp/imagem128x128.png'
 
-#  Glyph 'vglClErode'
-Glyph:VGL_CL:vglClErode::localhost:3:382:182:: -img_input 'images/lena_1024.tif' -image_output 'tmp/lena_Erode.png'
 
-#  Glyph 'Create Image Dilate'
-Glyph:VGL_CL:vglCreateImage::localhost:4:562:242:: -img_src 'tmp/lena_Erode.png' -img_output 'tmp/lena_Dilate.png'
-
-#  Glyph 'vglClDilate'
-Glyph:VGL_CL:vglClDilate::localhost:5:462:302:: -src 'tmp/lena_Dilate.png' -image_output 'tmp/lena_Dilate.png' -thresh 0 -top 1
-
-#  Glyph 'Image save Dilate'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'tmp/lena_Dilate.png' -image 'images/lena_Dilate.png'
+#  Glyph 'Image save Convolution'
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'tmp/imagem128x128.png' -image 'images/lena_Dilate.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Dilate' -image 'images/lena_Dilate.png'
-
-#  Glyph 'Image save Dilate and Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'tmp/lena_Erode.png' -image 'images/lena_Dilate.png'
-
-#  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'Dilate' -image 'tmp/lena_Erode.png'
+ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'imagem128x128' -image 'tmp/imagem128x128.png'
 
 #  Connections 'Applying Blur’
 NodeConnection:data:1:filename:2:img_src:

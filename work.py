@@ -40,6 +40,7 @@ convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
                                         (1/16, 2/16, 1/16) ), np.float32) 
 
 print(convolution_window_2d_3x3)
+cv = np.array([1,1,1,1,1,1,1,1,1], dtype=np.float32)
 #cv = [1, 1, 1, 1, 1, 1, 1 ,1, 1]
 
 cv = np.ndarray(shape=(1,1),dtype=float)                                         

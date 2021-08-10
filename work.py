@@ -37,12 +37,24 @@ nSteps = 1
 
 convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
                                         (2/16, 4/16, 2/16),
-                                        (1/16, 2/16, 1/16) ), np.float32)
-cv = [1, 1, 1, 1, 1, 1, 1 ,1, 1] 
-convolution_window_2d_3x3_1  = np.array(((1, 1, 1),
+                                        (1/16, 2/16, 1/16) ), np.float32) 
+
+print(convolution_window_2d_3x3)
+cv = np.array([1,1,1,1,1,1,1,1,1], dtype=np.float32)
+#cv = [1, 1, 1, 1, 1, 1, 1 ,1, 1]
+
+cv = np.ndarray(shape=(1,1),dtype=float)                                         
+print(cv)
+#cv = np.array([1, 1, 1]).astype(float)
+#print(cv)
+
+#newcv = cv.reshape(3,3).astype(float)
+#print(newcv)
+
+cw  = np.array(((1, 1, 1),
                                         (1, 1, 1),
                                         (1, 1, 1) ), np.float32)
-                                        
+                                
 convolution_window_2d_5x5 = np.array((	(1/256, 4/256,  6/256,  4/256,  1/256),
                                         (4/256, 16/256, 24/256, 16/256, 4/256),
                                         (6/256, 24/256, 36/256, 24/256, 6/256),
@@ -130,8 +142,7 @@ for vGlyph in lstGlyph:
         img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
         # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+
         nSteps = 30
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
@@ -160,8 +171,6 @@ for vGlyph in lstGlyph:
         img_input = uploadFile (vGlyph.lst_par[0].getValue())
 
         # Create output image
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
         
         # Apply Threshold function
         vglClThreshold(img_input, img_output, np.float32(0.5))
@@ -177,9 +186,6 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClInvert':
         img_input = uploadFile(vGlyph.lst_par[0].getValue())
 
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
-
         vglClInvert(img_input,img_output)
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
@@ -190,10 +196,8 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClConvolution':
         img_input = uploadFile(vGlyph.lst_par[0].getValue())
 
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
 
-        vglClConvolution(img_input,img_output, convolution_window_2d_3x3, np.uint32(5), np.uint32(5))
+        vglClConvolution(img_input,img_output, cw, np.uint32(5), np.uint32(5))
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
@@ -204,10 +208,9 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClErode':
         img_input = uploadFile(vGlyph.lst_par[0].getValue())
 
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
 
-        vglClErode(img_input,img_output, convolution_window_2d_3x3_1, np.uint32(5), np.uint32(5))
+
+        vglClErode(img_input,img_output, cv, np.uint32(5), np.uint32(5))
 
         salvando2d(img_output,vGlyph.lst_par[1].getValue())
         vl.rgb_to_rgba(img_output)
@@ -217,8 +220,7 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClDilate':
         img_input = uploadFile(vGlyph.lst_par[0].getValue())
 
-        img_output = vl.create_blank_image_as(img_input)
-        img_output.set_oclPtr(vl.get_similar_oclPtr_object(img_input))
+
 
         vglClDilate(img_input,img_output, cv, np.uint32(5), np.uint32(5))
 

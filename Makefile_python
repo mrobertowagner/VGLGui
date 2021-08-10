@@ -1,5 +1,8 @@
-rundemopy:
+xrundemopy:
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./work.py
-	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./readTest.py
+	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execTest.py
+	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./work.py
 

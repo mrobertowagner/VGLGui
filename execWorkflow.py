@@ -17,7 +17,7 @@ sys.path.append(os.getcwd())
 def GlyphExecutedUpdate(vGlyph_Index, image):
 
     # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
-    lstGlyph[vGlyph_Index].setGlyphReady(True)
+    #lstGlyph[vGlyph_Index].setGlyphReady(True)
 
     # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
     lstGlyph[vGlyph_Index].setGlyphDone(True)
@@ -68,12 +68,6 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     img_input = None
     img_output = None
 
-    # Search the input image by connecting to the source glyph
-    for i_Con, vConnection in enumerate(lstConnection):
-        if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
-            img_input = vConnection.image
-            img_output = img_input  # Type the output image variable to be used in the Blur and Threshold functions
-
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage
@@ -91,10 +85,25 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
                                 
     elif vGlyph.func == 'vglCreateImage':
 
+        # Search the input image by connecting to the source glyph
+        for i_Con, vConnection in enumerate(lstConnection):
+            if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
+                img = vConnection.image
+
+        RETVAL = vl.create_blank_image_as(img)
+        RETVAL.set_oclPtr( vl.get_similar_oclPtr_object(img) )
+
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, None)
+        GlyphExecutedUpdate(vGlyph_Index, RETVAL)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
+
+        # Search the input image by connecting to the source glyph
+        for i_Con, vConnection in enumerate(lstConnection):
+            if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
+                img_input = vConnection.image
+        
+        img_output = #buscar no Create
 
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
@@ -114,7 +123,13 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
         if img_input is not None:
 
-            #img = Image.open(vGlyph.lst_par[1].getValue())
+        # Criar uma função para exibir
+
+        #import matplotlib.pyplot as mp
+        #def imshow(im):
+        #    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+        #    plot.set_interpolation('nearest')
+        #    mp.show()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
             img_input.show()

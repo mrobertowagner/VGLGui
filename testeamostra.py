@@ -77,10 +77,13 @@ print(cv)
 #vl.rgb_to_rgba(img_output)
 
 
+#vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
 
-vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
+#salvando2d(img_output, img_out_path+"img-vglClErodeCross1.png")
 
-salvando2d(img_output, img_out_path+"img-vglClErodeCross1.png")
+
+vglClThreshold(img_input,img_output,np.float32(0.5))
+salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
 vl.rgb_to_rgba(img_output)
 
 

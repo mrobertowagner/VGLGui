@@ -5,5 +5,5 @@ rundemopy:
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execTest.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./work.py
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py ./images/img2.png imgtst/
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py ./images/lena_1024.tif imgtst/
 

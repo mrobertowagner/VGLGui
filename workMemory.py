@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from vgl_lib.vglClImage import create_blank_image_as
 import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
 import numpy as np          # TO WORK WITH MAIN
@@ -9,21 +10,22 @@ import os
 import sys                  # IMPORTING METHODS FROM VGLGui
 from readWorkflow import *
 import time as t
-import matplotlib.pyplot as mp
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
+import matplotlib.pyplot as mp
 
 def imshow(im):
-    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
-    plot.set_interpolation('nearest')
-    mp.show()
+            plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+            plot.set_interpolation('nearest')
+            mp.show()
+
 
 # Actions after glyph execution
 def GlyphExecutedUpdate(vGlyph_Index, image):
 
     # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
-    lstGlyph[vGlyph_Index].setGlyphReady(True)
+    #lstGlyph[vGlyph_Index].setGlyphReady(True)
 
     # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
     lstGlyph[vGlyph_Index].setGlyphDone(True)
@@ -54,7 +56,18 @@ def GlyphExecutedUpdate(vGlyph_Index, image):
                     break
                 
 # Program execution
+def salvando2d(img, name):
+	# SAVING IMAGE img
+	ext = name.split(".")
+	ext.reverse()
 
+	vl.vglClDownload(img)
+
+	if( ext.pop(0).lower() == 'jpg' ):
+		if( img.getVglShape().getNChannels() == 4 ):
+			vl.rgba_to_rgb(img)
+	
+	vl.vglSaveImage(name, img)
 # Reading the workflow file and loads into memory all glyphs and connections
 # Rule7: Glyphs have READY (ready to run) and DONE (executed) status, both status start being FALSE
 fileRead(lstGlyph, lstConnection)
@@ -71,14 +84,6 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     except ValueError:
         print("Rule9: Glyph not ready for processing: ", {vGlyph.glyph_id})
 
-    img_input = None
-    img_output = None
-
-    # Search the input image by connecting to the source glyph
-    for i_Con, vConnection in enumerate(lstConnection):
-        if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
-            img_input = vConnection.image
-            img_output = img_input  # Type the output image variable to be used in the Blur and Threshold functions
 
     if vGlyph.func == 'vglLoadImage':
 
@@ -97,37 +102,47 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
                                 
     elif vGlyph.func == 'vglCreateImage':
 
+        # Search the input image by connecting to the source glyph
+        for i_Con, vConnection in enumerate(lstConnection):
+            if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
+                img = vConnection.image
+
+        RETVAL = vl.create_blank_image_as(img)
+        #RETVAL.set_oclPtr( vl.get_similar_oclPtr_object(img) )
+
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, None)
+        GlyphExecutedUpdate(vGlyph_Index, RETVAL)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
-        # Apply BlurSq3 function
-        vglClBlurSq3(img_input, img_output)
+        # Search the input image by connecting to the source glyph
+        for i_Con, vConnection in enumerate(lstConnection):
+            if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
+                img_input = vConnection.image
+
+            img_output = RETVAL
+        
+            # Apply BlurSq3 function
+            vglClBlurSq3(img_input,img_output)
+            img_out_path = 'imgtst/'
+            salvando2d(img_output,img_out_path+"imgTst.png")
+            #imshow(img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
-    
-        # Apply Threshold function
-        vglClThreshold(img_input, img_output, np.float32(0.5))
+
+
+        img_output= vl.create_blank_image_as(img_output)
+        vglClThreshold(img_input,img_output, np.float32(0.5))
+        img_out_path = 'imgtst/'
+        #salvando2d(img_output,img_out_path+"imgTst1.png")
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_output)
 
-    elif vGlyph.func == 'ShowImage':
 
-        if img_input is not None:
-
-            #img = Image.open(vGlyph.lst_par[1].getValue())
-
-            # Rule3: In a sink glyph, images (one or more) can only be input parameters
-            RETVAL = vl.create_blank_image_as(img_input)             
-            imshow(RETVAL)
-
-            # Actions after glyph execution
-            GlyphExecutedUpdate(vGlyph_Index, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
@@ -136,8 +151,8 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
 
-            # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            vl.vglSaveImage(vpath, img_input)
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters            
+            vl.vglSaveImage(vpath, img_output)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph_Index, None)

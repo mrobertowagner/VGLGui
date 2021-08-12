@@ -9,9 +9,15 @@ import os
 import sys                  # IMPORTING METHODS FROM VGLGui
 from readWorkflow import *
 import time as t
+import matplotlib.pyplot as mp
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
+
+def imshow(im):
+    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+    plot.set_interpolation('nearest')
+    mp.show()
 
 # Actions after glyph execution
 def GlyphExecutedUpdate(vGlyph_Index, image):
@@ -116,8 +122,9 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
             #img = Image.open(vGlyph.lst_par[1].getValue())
 
-            # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            img_input.show()
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters
+            RETVAL = vl.create_blank_image_as(img_input)             
+            imshow(RETVAL)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph_Index, None)

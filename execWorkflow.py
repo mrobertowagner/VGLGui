@@ -103,7 +103,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
             if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
                 img_input = vConnection.image
         
-        img_output = #buscar no Create
+        img_output = RETVAL #buscar no Create
 
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)

@@ -7,6 +7,13 @@ import os
 import string
 from collections import defaultdict
 
+lstGlyph = []                   #List to store Glyphs
+lstGlyphPar = []                #List to store Glyphs Parameters
+lstConnection = []              #List to store Connections
+lstConnectionInput = []         #List to store Connections inputs
+lstGlyphIn = []                 #List to store Glyphs Inputs
+lstGlyphOut = []                #List to store Glyphs Outputs
+
 class Error (Exception): #classe para tratar uma execeção definida pelo usuário
     pass
     '''
@@ -136,32 +143,6 @@ class objGlyphOutput(object):
     def setGlyphOutput(self, status):
         self.statusout = status
 
-# Structure for storing Connections in memory
-# Images are stored on edges (connections between Glyphs)
-class objConnection(object):
-
-    #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-    def __init__(self, vtype, voutput_glyph_id, voutput_varname, vinput_glyph_id, vinput_varname):       
-        self.type = vtype                           #type 'data', 'controle' 
-        self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
-        self.output_varname = voutput_varname       #variable name output
-        self.input_glyph_id = vinput_glyph_id       #glyph identifier code input
-        self.input_varname = vinput_varname         #variable name input
-        self.image = None                           #image
-        self.ready = False                          #False = unread or unexecuted image; True = image read or executed
-
-    # Rule5: Each edge has an image stored
-    #        Assign image to Connection
-    def setImageConnection(self, img):
-        self.image = img
-
-    #Assign image to Connection
-    def setReadyConnection(self, img):
-        self.ready = True
-
-    def getReadyConnection(self):
-        return self.ready
-
 #Create the inputs and outputs for the glyph
 def procCreateGlyphInOut():
 
@@ -246,7 +227,6 @@ def procCreateGlyphParameters(vGlyph, vParameters, count):
     except ValueError as s: #rule103 - Error in defined Parameters coordinates (not integer or out of bounds)
         print("Non-standard information in the Parameter declaration","\nLine",{count} , "{s}")
 
-
 # Create Glyph
 def procCreateGlyph(contentGly, count):
     try:
@@ -293,37 +273,89 @@ def procCreateGlyph(contentGly, count):
     except ValueError as s: #rule103 - Error in defined glyph coordinates (not integer or out of bounds)
         print("Non-standard information in the Glyph declaration","\nLine",{count} , "{s}")
 
+  #Add glyph input function
+
+# Structure for storing Connections in memory
+# Images are stored on edges (connections between Glyphs)
+class objConnection(object):
+
+    #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
+    def __init__(self, voutput_glyph_id, voutput_varname):       
+        self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
+        self.output_varname = voutput_varname       #variable name output
+        self.lst_con_input = []                         #glyph input list
+        self.image = None                           #image
+        self.ready = False                          #False = unread or unexecuted image; True = image read or executed
+
+    # Rule5: Each edge has an image stored
+    #        Assign image to Connection
+    def setImageConnection(self, img):
+        self.image = img
+
+    #Assign image to Connection
+    def setReadyConnection(self, img):
+        self.ready = True
+
+    def getReadyConnection(self):
+        return self.ready
+
+    def addConnInput(self, vConnPar):
+        self.lst_con_input.append(vConnPar)
+
+# Structure for storing Connections input list in memory
+class objConnectionPar(object):
+
+    def __init__(self, vConnPar_id, vConnPar_Name):
+        self.Par_glyph_id = vConnPar_id         #glyph identifier code Parameter
+        self.Par_name = vConnPar_Name           #variable name Parameter
+
+    def getPar_glyph_id(self):
+        return self.Par_glyph_id
+
+    def getPar_name(self):
+        return self.Par_name
+
+# Find the connection's output glyph
+def getOutputConnectionByIdName(vGlyph_id, vNameParInput):
+
+    vConnectionOutput = None
+
+    for vConnection in lstConnection:   
+        if vConnection.input_glyph_id == vGlyph_id and vConnection.input_varname == vNameParInput:
+            vConnectionOutput = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
+            break
+
+    return vConnectionOutput
+
+# Add the connection's input glyph
+def addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname):
+
+    if vConnectionOutput is None:
+
+        for vConnIndex, vConnection in lstConnection:   
+            if vConnection.output_glyph_id == vConnectionOutput.getOutput_glyph_id and vConnection.output_varname == vConnectionOutput.getOutput_name:
+                lstConnection[vConnIndex].addConnInput = objConnectionPar(vConnection.input_glyph_id, vConnection.input_varname)
+                break
+
 #Creates the connections of the workflow file
-def procCreateConnection(contentCon, count):
-    try:
-        #NodeConnection:data:[output_Glyph_ID]:[output_varname]:[input_Glyph_ID]:[input_varname]        
-        vConnection = objConnection(contentCon[1], contentCon[2], contentCon[3].replace('\n',''), contentCon[4], contentCon[5].replace('\n',''))
-        lstConnection.append(vConnection)           
+def procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname):
+    
+    if getOutputConnectionByIdName(vinput_Glyph_ID, vinput_varname) is None:
+        vConnection = objConnection(voutput_Glyph_ID, voutput_varname)
+        lstConnection.append(vConnection)
 
-        #rule105 - Invalid Glyph Id
-        try:
-            if int(contentCon[2])  <0 or int(contentCon[4]) < 0:
-                raise Error("Invalid glyph id on line: ",{count})
-        except ValueError:
-            print("Invalid Connection Creation Values." , " check the line: ",{count})
-
-    except IndexError as f: #rule 102 - Variable not found
-        print("Connections indices not found",{f},"on line ",{count}," of the file")
+    vConnectionOutput = objConnectionPar(voutput_Glyph_ID, voutput_varname)
+    addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname)
 
 # File to be read
 vfile = 'dataVglGui.wksp'
-
-lstGlyph = []                   #List to store Glyphs
-lstGlyphPar = []                #List to store Glyphs Parameters
-lstConnection = []              #List to store Connections
-lstGlyphIn = []                 #List to store Glyphs Inputs
-lstGlyphOut = []                #List to store Glyphs Outputs
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory
 vGlyphIn = objGlyphInput        #Glyph input in memory
 vGlyphOut = objGlyphOutput      #Glyph output in memory
 vConnection = objConnection     #Connection in memory
+vConnectionOutput = objConnectionPar   #Connection input in memory
 
 # Method for reading the workflow file
 def fileRead(lstGlyph, lstConnection):
@@ -345,13 +377,30 @@ def fileRead(lstGlyph, lstConnection):
                 # Rule4: Edges are Connections between Glyphs and represent the image to be processed
                 #         Creates the connections of the workflow file
                 if 'nodeconnection:' in line.lower():
-                    procCreateConnection(line.split(':'), count)
+                    try:
 
+                        contentCon = line.split(':')
+                        voutput_Glyph_ID    = contentCon[2]
+                        voutput_varname     = contentCon[3].replace('\n','')
+                        vinput_Glyph_ID     = contentCon[4]
+                        vinput_varname      = contentCon[5].replace('\n','')
+
+                        procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname)
+
+                        #rule105 - Invalid Glyph Id
+                        try:
+                            if int(voutput_Glyph_ID)  <0 or int(vinput_Glyph_ID) < 0:
+                                raise Error("Invalid glyph id on line: ",{count})
+                        except ValueError:
+                            print("Invalid Connection Creation Values." , " check the line: ",{count})
+                    except IndexError as f: #rule 102 - Variable not found
+                        print("Connections indices not found",{f},"on line ",{count}," of the file")             
+                    
             file1.close()
 
             # Rule11: Source glyph is already created with READY = TRUE. 
             # Create inputs and outputs of the Glyph
             procCreateGlyphInOut()
-            
+
     except UnboundLocalError: #rule101 - File not found
         print("File not found.")

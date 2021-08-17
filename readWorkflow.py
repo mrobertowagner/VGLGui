@@ -153,8 +153,8 @@ def procCreateGlyphInOut():
             # Create the input for the glyph
             for vInputPar in lstConnection[indexConn].lst_con_input:
 
-                if vConnection.input_varname != '\n' and vGlyph.glyph_id == vInputPar.Par_glyph_id:
-                    vGlyphIn = objGlyphInput(vConnection.input_varname, False)
+                if vInputPar.Par_name != '\n' and vGlyph.glyph_id == vInputPar.Par_glyph_id:
+                    vGlyphIn = objGlyphInput(vInputPar.Par_name, False)
                     lstGlyph[i].funcGlyphAddIn (vGlyphIn)
 
             # Create the output for the glyph   
@@ -315,7 +315,6 @@ class objConnectionPar(object):
 def getOutputConnection(vGlyph_IdOutput):
 
     for vConnection in lstConnection:
-
         if vConnection.output_glyph_id == vGlyph_IdOutput:
             return True
             exit
@@ -326,8 +325,7 @@ def getOutputConnection(vGlyph_IdOutput):
 def getOutputConnectionByIdName(vGlyph_idInput, vNameParInput):
 
     for vConnection in lstConnection:   
-        for vInputPar in lstConnectionInput:
-            
+        for vInputPar in lstConnectionInput:          
             if vInputPar.Par_glyph_id == vGlyph_idInput and vInputPar.Par_name == vNameParInput:
                 vConnGet = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
                 return vConnGet
@@ -339,7 +337,6 @@ def addInputConnection (vConnOutput, vinput_Glyph_ID, vinput_varname):
 
     if vConnOutput is not None:
         for vConnIndex, vConnection in enumerate(lstConnection):   
-
             if vConnection.output_glyph_id == vConnOutput.Par_glyph_id and vConnection.output_varname == vConnOutput.Par_name:
                 vConnParIn = objConnectionPar(vinput_Glyph_ID, vinput_varname)
                 lstConnection[vConnIndex].addConnInput(vConnParIn)

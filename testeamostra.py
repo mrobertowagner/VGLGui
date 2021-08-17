@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
 # OPENCL LIBRARY
+from vgl_lib import vglClImage
+from PIL import Image
+from numpy.core.defchararray import asarray
 import pyopencl as cl
+
+
 
 # VGL LIBRARYS
 import vgl_lib as vl
@@ -15,6 +20,10 @@ from cl2py_shaders import *
 import time as t
 import sys
 
+from numpy import asfarray
+from matplotlib import pyplot
+
+
 """
 	THIS BENCHMARK TOOL EXPECTS 2 ARGUMENTS:
 	ARGV[1]: PRIMARY 2D-IMAGE PATH (COLORED OR GRAYSCALE)
@@ -24,7 +33,17 @@ import sys
 		TWO INPUT IMAGES TO WORK PROPERLY
 	THE RESULT IMAGES WILL BE SAVED AS IMG-[PROCESSNAME].JPG
 """
+import matplotlib.pyplot as mp
 
+from matplotlib.image import imread
+
+from matplotlib import image
+
+
+def imshow(im):
+    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+    plot.set_interpolation('nearest')
+    mp.show()
 
 def salvando2d(img, name):
 	# SAVING IMAGE img
@@ -64,6 +83,7 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
 
 
+
 #cv = np.array((1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9),np.float32) # Filtro média
 #cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
 #cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
@@ -85,11 +105,27 @@ print(cv)
 vglClThreshold(img_input,img_output,np.float32(0.5))
 salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
 vl.rgb_to_rgba(img_output)
+#imgplot = mp.imshow(img_output)
 
 
 
+#from keras.preprocessing.image import *
+print("==================================================\n")
 
+print("Imagem original")
+print(type(img_output))
 
+print("\n")
 
+#img2 = Image.fromarray(img_output)
+vl.vglCheckContext(img_output,vl.VGL_RAM_CONTEXT())
+#img = img_output.get_oclPtr() #nada
+vl.vglCheckContext(img_output,vl.IMAGE_ND_ARRAY())
+
+img= vl.VGL_ARR_SHAPE_SIZE(img_output)
+print(img)
+#print(img)
+#imshow(img)
+print("==================================================\n")
 
 

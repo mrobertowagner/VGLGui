@@ -146,14 +146,16 @@ class objGlyphOutput(object):
 #Create the inputs and outputs for the glyph
 def procCreateGlyphInOut():
 
-    for vConnection in lstConnection:
+    for indexConn, vConnection in enumerate(lstConnection):
         
         for i, vGlyph in enumerate(lstGlyph):
 
             # Create the input for the glyph
-            if vConnection.input_varname != '\n' and vGlyph.glyph_id == vConnection.input_glyph_id:
-                vGlyphIn = objGlyphInput(vConnection.input_varname, False)
-                lstGlyph[i].funcGlyphAddIn (vGlyphIn)
+            for vInputPar in lstConnection[indexConn].lst_con_input:
+
+                if vConnection.input_varname != '\n' and vGlyph.glyph_id == vInputPar.Par_glyph_id:
+                    vGlyphIn = objGlyphInput(vConnection.input_varname, False)
+                    lstGlyph[i].funcGlyphAddIn (vGlyphIn)
 
             # Create the output for the glyph   
             if vConnection.output_varname != '\n' and vGlyph.glyph_id == vConnection.output_glyph_id:
@@ -309,47 +311,52 @@ class objConnectionPar(object):
         self.Par_glyph_id = vConnPar_id         #glyph identifier code Parameter
         self.Par_name = vConnPar_Name           #variable name Parameter
 
-    def getPar_glyph_id(self):
-        return self.Par_glyph_id
+# Find the connection output 
+def getOutputConnection(vGlyph_IdOutput):
 
-    def getPar_name(self):
-        return self.Par_name
+    for vConnection in lstConnection:
 
-# Find the connection's output glyph
-def getOutputConnectionByIdName(vGlyph_id, vNameParInput):
+        if vConnection.output_glyph_id == vGlyph_IdOutput:
+            return True
+            exit
+
+    return False
+
+# Find the connection's output of input glyph
+def getOutputConnectionByIdName(vGlyph_idInput, vNameParInput):
 
     for vConnection in lstConnection:   
-
-        for vInputIndex, vInputPar in lstConnectionInput:
-
-            vConnInput = vConnection.lstConnectionInput[vInputIndex]
-
-            if vConnInput.getPar_glyph_id == vGlyph_id and vConnInput.getPar_name == vNameParInput:
+        for vInputPar in lstConnectionInput:
+            
+            if vInputPar.Par_glyph_id == vGlyph_idInput and vInputPar.Par_name == vNameParInput:
                 vConnGet = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
                 return vConnGet
 
     return None
 
 # Add the connection's input glyph
-def addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname):
+def addInputConnection (vConnOutput, vinput_Glyph_ID, vinput_varname):
 
-    if vConnectionOutput is None:
+    if vConnOutput is not None:
+        for vConnIndex, vConnection in enumerate(lstConnection):   
 
-        for vConnIndex, vConnection in lstConnection:   
-            if vConnection.output_glyph_id == vConnectionOutput.getOutput_glyph_id and vConnection.output_varname == vConnectionOutput.getOutput_name:
+            if vConnection.output_glyph_id == vConnOutput.Par_glyph_id and vConnection.output_varname == vConnOutput.Par_name:
                 vConnParIn = objConnectionPar(vinput_Glyph_ID, vinput_varname)
                 lstConnection[vConnIndex].addConnInput(vConnParIn)
                 break
 
 #Creates the connections of the workflow file
 def procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname):
-    
-    if getOutputConnectionByIdName(vinput_Glyph_ID, vinput_varname) is None:
+
+    # Create the connection    
+    if not getOutputConnection(voutput_Glyph_ID):
         vConnCre = objConnection(voutput_Glyph_ID, voutput_varname)
         lstConnection.append(vConnCre)
 
-    vConnPar = objConnectionPar(voutput_Glyph_ID, voutput_varname)
-    addInputConnection (vConnPar, vinput_Glyph_ID, vinput_varname)
+    # Create the connection input parameter
+    if getOutputConnectionByIdName(vinput_Glyph_ID, vinput_varname) is None:
+        vConnPar = objConnectionPar(voutput_Glyph_ID, voutput_varname)
+        addInputConnection (vConnPar, vinput_Glyph_ID, vinput_varname)
 
 # File to be read
 vfile = 'dataVglGui.wksp'
@@ -389,14 +396,15 @@ def fileRead(lstGlyph, lstConnection):
                         vinput_Glyph_ID     = contentCon[4]
                         vinput_varname      = contentCon[5].replace('\n','')
 
-                        procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname)
-
                         #rule105 - Invalid Glyph Id
                         try:
                             if int(voutput_Glyph_ID)  <0 or int(vinput_Glyph_ID) < 0:
                                 raise Error("Invalid glyph id on line: ",{count})
                         except ValueError:
                             print("Invalid Connection Creation Values." , " check the line: ",{count})
+
+                        procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname)
+
                     except IndexError as f: #rule 102 - Variable not found
                         print("Connections indices not found",{f},"on line ",{count}," of the file")             
                     

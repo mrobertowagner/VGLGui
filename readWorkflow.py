@@ -318,14 +318,17 @@ class objConnectionPar(object):
 # Find the connection's output glyph
 def getOutputConnectionByIdName(vGlyph_id, vNameParInput):
 
-    vConnectionOutput = None
-
     for vConnection in lstConnection:   
-        if vConnection.input_glyph_id == vGlyph_id and vConnection.input_varname == vNameParInput:
-            vConnectionOutput = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
-            break
 
-    return vConnectionOutput
+        for vInputIndex, vInputPar in lstConnectionInput:
+
+            vConnInput = vConnection.lstConnectionInput[vInputIndex]
+
+            if vConnInput.getPar_glyph_id == vGlyph_id and vConnInput.getPar_name == vNameParInput:
+                vConnGet = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
+                return vConnGet
+
+    return None
 
 # Add the connection's input glyph
 def addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname):
@@ -334,18 +337,19 @@ def addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname):
 
         for vConnIndex, vConnection in lstConnection:   
             if vConnection.output_glyph_id == vConnectionOutput.getOutput_glyph_id and vConnection.output_varname == vConnectionOutput.getOutput_name:
-                lstConnection[vConnIndex].addConnInput = objConnectionPar(vConnection.input_glyph_id, vConnection.input_varname)
+                vConnParIn = objConnectionPar(vinput_Glyph_ID, vinput_varname)
+                lstConnection[vConnIndex].addConnInput(vConnParIn)
                 break
 
 #Creates the connections of the workflow file
 def procCreateConnection(voutput_Glyph_ID, voutput_varname, vinput_Glyph_ID, vinput_varname):
     
     if getOutputConnectionByIdName(vinput_Glyph_ID, vinput_varname) is None:
-        vConnection = objConnection(voutput_Glyph_ID, voutput_varname)
-        lstConnection.append(vConnection)
+        vConnCre = objConnection(voutput_Glyph_ID, voutput_varname)
+        lstConnection.append(vConnCre)
 
-    vConnectionOutput = objConnectionPar(voutput_Glyph_ID, voutput_varname)
-    addInputConnection (vConnectionOutput, vinput_Glyph_ID, vinput_varname)
+    vConnPar = objConnectionPar(voutput_Glyph_ID, voutput_varname)
+    addInputConnection (vConnPar, vinput_Glyph_ID, vinput_varname)
 
 # File to be read
 vfile = 'dataVglGui.wksp'

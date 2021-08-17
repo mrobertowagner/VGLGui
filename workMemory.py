@@ -9,7 +9,9 @@ from PIL import Image       # IMPORTING METHODS TO DISPLAY IMAGE
 import os
 import sys                  # IMPORTING METHODS FROM VGLGui
 from readWorkflow import *
-import time as t
+
+
+from matplotlib.image import imread
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
@@ -126,6 +128,10 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
             vglClBlurSq3(img_input,img_output)
             img_out_path = 'imgtst/'
             salvando2d(img_output,img_out_path+"imgTst.png")
+
+            
+            
+
             #imshow(img_output)
 
         # Actions after glyph execution
@@ -137,7 +143,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         img_output= vl.create_blank_image_as(img_output)
         vglClThreshold(img_input,img_output, np.float32(0.5))
         img_out_path = 'imgtst/'
-        #salvando2d(img_output,img_out_path+"imgTst1.png")
+        salvando2d(img_output,img_out_path+"imgTst1.png")
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph_Index, img_output)

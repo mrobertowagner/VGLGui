@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 # OPENCL LIBRARY
+from numpy.lib.shape_base import get_array_wrap
+from vgl_lib import vglImage
+from vgl_lib.vglImage import VglImage, vglLoadImage
 from vgl_lib.struct_sizes import struct_sizes
 from vgl_lib import vglClImage
 from PIL import Image
@@ -110,30 +113,14 @@ vl.rgb_to_rgba(img_output)
 
 print("==================================================\n")
 
-print("Imagem original")
-print(type(img_output))
-
-print("\n")
-
-#img2 = Image.fromarray(img_output)
 vl.vglCheckContext(img_output,vl.VGL_RAM_CONTEXT())
-vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
-print(vl.VglImage.getVglShape(img_output))
 
+img_ndarray = VglImage.get_ipl(img_output)
 
+print(VglImage.get_ipl(img_output))
 
+imshow(img_ndarray)
 
-#print(img)
-#print(type(img))
-#imshow(img_output)
-#print(type(img))
-#print(img)
-
-#import matplotlib.pyplot as plt
-#plt.imshow(img)
-#plt.show()
-
-#imshow(imgnarr)
 print("==================================================\n")
 
 

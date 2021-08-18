@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from vgl_lib.vglImage import VglImage
 import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
 import numpy as np          # TO WORK WITH MAIN
@@ -52,6 +53,16 @@ def GlyphExecutedUpdate(GlyphExecutedUpdate_Glyph_Id, GlyphExecutedUpdate_image)
 # Reading the workflow file and loads into memory all glyphs and connections
 # Rule7: Glyphs have READY (ready to run) and DONE (executed) status, both status start being FALSE
 fileRead(lstGlyph, lstConnection)
+
+
+import matplotlib.pyplot as mp
+
+def imshow(im):
+            plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
+            plot.set_interpolation('nearest')
+            mp.show()
+
+
 
 vl.vglClInit() 
 
@@ -127,23 +138,26 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id
-        ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
+        #ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        if ShowImage_img_input is not None:
+        vl.vglCheckContext(vglClThreshold_img_output,vl.VGL_RAM_CONTEXT())
+        img_thresh = VglImage.get_ipl(vglClThreshold_img_output)
+        imshow(img_thresh)
 
-        # Criar uma função para exibir
+        vl.vglCheckContext(vglClBlurSq3_img_output,vl.VGL_RAM_CONTEXT())
+        img_blur = VglImage.get_ipl(vglClBlurSq3_img_output)
+        imshow(img_blur)
 
-        #import matplotlib.pyplot as mp
-        #def imshow(im):
-        #    plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
-        #    plot.set_interpolation('nearest')
-        #    mp.show()
+        #if ShowImage_img_input is not None:
+
+            
+
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            ShowImage_img_input.show()
+            #ShowImage_img_input.show()
 
             # Actions after glyph execution
-            GlyphExecutedUpdate(vGlyph.glyph_id, None)
+            #GlyphExecutedUpdate(vGlyph.glyph_id, None)
 
     elif vGlyph.func == 'vglSaveImage':
 

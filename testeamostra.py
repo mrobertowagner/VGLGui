@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 # OPENCL LIBRARY
+from vgl_lib.struct_sizes import struct_sizes
 from vgl_lib import vglClImage
 from PIL import Image
-from numpy.core.defchararray import asarray
+
 import pyopencl as cl
 
 
@@ -19,8 +20,6 @@ from cl2py_shaders import *
 
 import time as t
 import sys
-
-from numpy import asfarray
 from matplotlib import pyplot
 
 
@@ -105,11 +104,10 @@ print(cv)
 vglClThreshold(img_input,img_output,np.float32(0.5))
 salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
 vl.rgb_to_rgba(img_output)
-#imgplot = mp.imshow(img_output)
 
 
 
-#from keras.preprocessing.image import *
+
 print("==================================================\n")
 
 print("Imagem original")
@@ -119,13 +117,23 @@ print("\n")
 
 #img2 = Image.fromarray(img_output)
 vl.vglCheckContext(img_output,vl.VGL_RAM_CONTEXT())
-#img = img_output.get_oclPtr() #nada
-vl.vglCheckContext(img_output,vl.IMAGE_ND_ARRAY())
+vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
+print(vl.VglImage.getVglShape(img_output))
 
-img= vl.VGL_ARR_SHAPE_SIZE(img_output)
-print(img)
+
+
+
 #print(img)
-#imshow(img)
+#print(type(img))
+#imshow(img_output)
+#print(type(img))
+#print(img)
+
+#import matplotlib.pyplot as plt
+#plt.imshow(img)
+#plt.show()
+
+#imshow(imgnarr)
 print("==================================================\n")
 
 

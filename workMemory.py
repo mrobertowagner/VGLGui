@@ -149,7 +149,6 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         GlyphExecutedUpdate(vGlyph_Index, img_output)
 
 
-
     elif vGlyph.func == 'vglSaveImage':
 
         if img_input is not None:

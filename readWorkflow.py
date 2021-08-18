@@ -285,7 +285,7 @@ class objConnection(object):
     def __init__(self, voutput_glyph_id, voutput_varname):       
         self.output_glyph_id = voutput_glyph_id     #glyph identifier code output
         self.output_varname = voutput_varname       #variable name output
-        self.lst_con_input = []                         #glyph input list
+        self.lst_con_input = []                     #glyph input list
         self.image = None                           #image
         self.ready = False                          #False = unread or unexecuted image; True = image read or executed
 
@@ -294,13 +294,19 @@ class objConnection(object):
     def setImageConnection(self, img):
         self.image = img
 
+    #Get Image of Connection
+    def getImageConnection(self, img):
+        return self.image
+
     #Assign image to Connection
     def setReadyConnection(self, img):
         self.ready = True
 
+    #Return if connection is ready
     def getReadyConnection(self):
         return self.ready
 
+    #Add an entry to the input parameter list
     def addConnInput(self, vConnPar):
         self.lst_con_input.append(vConnPar)
 
@@ -329,6 +335,16 @@ def getOutputConnectionByIdName(vGlyph_idInput, vNameParInput):
             if vInputPar.Par_glyph_id == vGlyph_idInput and vInputPar.Par_name == vNameParInput:
                 vConnGet = objConnectionPar(vConnection.output_glyph_id, vConnection.output_varname)
                 return vConnGet
+
+    return None
+
+# Returns edge image based on glyph id
+def getImageById(vGlyph_idInput):
+
+    for vConnection in lstConnection:   
+        for vInputPar in lstConnectionInput:          
+            if vInputPar.Par_glyph_id == vGlyph_idInput:
+                return vConnection.getImage()
 
     return None
 

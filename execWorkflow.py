@@ -150,13 +150,13 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         # Returns edge image based on glyph id
         vglSaveImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        if img_inputSave is not None:
+        if vglSaveImage_img_input is not None:
 
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            vl.vglSaveImage(vpath, img_inputSave)
+            vl.vglSaveImage(vpath, vglSaveImage_img_input)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph.glyph_id, None)

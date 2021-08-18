@@ -14,10 +14,12 @@ os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
 
 # Actions after glyph execution
-def GlyphExecutedUpdate(vGlyph_Index, image):
+def GlyphExecutedUpdate(GlyphExecutedUpdate_Glyph_Id, GlyphExecutedUpdate_image):
 
     # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
-    lstGlyph[vGlyph_Index].setGlyphDone(True)
+    setGlyphDoneId(GlyphExecutedUpdate_Glyph_Id)
+
+
 
     # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
     #        Reading the image from another glyph does not change this status. Check the list of connections
@@ -79,7 +81,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         vl.vglClUpload(img_input)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, img_input)
+        GlyphExecutedUpdate(vGlyph.glyph_id, img_input)
                                 
     elif vGlyph.func == 'vglCreateImage':
 
@@ -92,37 +94,42 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         RETVAL.set_oclPtr( vl.get_similar_oclPtr_object(img) )
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, RETVAL)
+        GlyphExecutedUpdate(vGlyph.glyph_id, RETVAL)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Search the input image by connecting to the source glyph
-        for i_Con, vConnection in enumerate(lstConnection):
-            if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
-                img_input = vConnection.image
+        vglClBlurSq3_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
-        img_output = RETVAL #buscar no Create
+        # Search the input image by connecting to the source glyph
+        vglClBlurSq3_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply BlurSq3 function
-        vglClBlurSq3(img_input, img_output)
+        vglClBlurSq3(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
     
+        # Search the input image by connecting to the source glyph
+        vglClThreshold_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+
+        # Search the input image by connecting to the source glyph
+        vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
         # Apply Threshold function
-        vglClThreshold(img_input, img_output, np.float32(0.5))
+        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph_Index, img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
 
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id
-        img_inputShow = getImageById(vGlyph.glyph_id)
+        ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        if img_inputShow is not None:
+        if ShowImage_img_input is not None:
 
         # Criar uma função para exibir
 
@@ -133,15 +140,15 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         #    mp.show()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            img_inputShow.show()
+            ShowImage_img_input.show()
 
             # Actions after glyph execution
-            GlyphExecutedUpdate(vGlyph_Index, None)
+            GlyphExecutedUpdate(vGlyph.glyph_id, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
         # Returns edge image based on glyph id
-        img_inputSave = getImageById(vGlyph.glyph_id)
+        vglSaveImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
         if img_inputSave is not None:
 
@@ -152,7 +159,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
             vl.vglSaveImage(vpath, img_inputSave)
 
             # Actions after glyph execution
-            GlyphExecutedUpdate(vGlyph_Index, None)
+            GlyphExecutedUpdate(vGlyph.glyph_id, None)
        
 img_input = None
 img_output = None

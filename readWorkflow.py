@@ -317,6 +317,13 @@ class objConnectionPar(object):
         self.Par_glyph_id = vConnPar_id         #glyph identifier code Parameter
         self.Par_name = vConnPar_Name           #variable name Parameter
 
+# Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
+def setGlyphDoneId(vGlyphIdUpd):
+
+    for i_GliUpd, vGlyph in enumerate(lstGlyph):
+        if vGlyph.glyph_id == vGlyphIdUpd:
+            lstGlyph[i_GliUpd].setGlyphDone(True)
+
 # Find the connection output 
 def getOutputConnection(vGlyph_IdOutput):
 
@@ -339,11 +346,11 @@ def getOutputConnectionByIdName(vGlyph_idInput, vNameParInput):
     return None
 
 # Returns edge image based on glyph id
-def getImageById(vGlyph_idInput):
+def getImageInputByIdName(vGlyph_idInput, vNameParInput):
 
     for vConnection in lstConnection:   
         for vInputPar in lstConnectionInput:          
-            if vInputPar.Par_glyph_id == vGlyph_idInput:
+            if vInputPar.Par_glyph_id == vGlyph_idInput and vInputPar.Par_name == vNameParInput:
                 return vConnection.getImage()
 
     return None

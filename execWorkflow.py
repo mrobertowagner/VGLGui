@@ -16,9 +16,6 @@ sys.path.append(os.getcwd())
 # Actions after glyph execution
 def GlyphExecutedUpdate(vGlyph_Index, image):
 
-    # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
-    #lstGlyph[vGlyph_Index].setGlyphReady(True)
-
     # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
     lstGlyph[vGlyph_Index].setGlyphDone(True)
 
@@ -41,6 +38,7 @@ def GlyphExecutedUpdate(vGlyph_Index, image):
 
                 if vGlyph.glyph_id == vConnection.input_glyph_id:
 
+                    # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
                     # Set READY = TRUE to the Glyph input
                     for vGlyphIn in lstGlyph[i_Gli].lst_input:
                         lstGlyph[i_Gli].setGlyphReadyInput(True, vConnection.input_varname)
@@ -103,7 +101,7 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
             if vGlyph.glyph_id == vConnection.input_glyph_id and vConnection.image is not None:
                 img_input = vConnection.image
         
-        img_output = #buscar no Create
+        img_output = RETVAL #buscar no Create
 
         # Apply BlurSq3 function
         vglClBlurSq3(img_input, img_output)
@@ -121,7 +119,10 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
 
     elif vGlyph.func == 'ShowImage':
 
-        if img_input is not None:
+        # Returns edge image based on glyph id
+        img_inputShow = getImageById(vGlyph.glyph_id)
+
+        if img_inputShow is not None:
 
         # Criar uma função para exibir
 
@@ -132,20 +133,23 @@ for vGlyph_Index, vGlyph in enumerate(lstGlyph):
         #    mp.show()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            img_input.show()
+            img_inputShow.show()
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph_Index, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
-        if img_input is not None:
+        # Returns edge image based on glyph id
+        img_inputSave = getImageById(vGlyph.glyph_id)
+
+        if img_inputSave is not None:
 
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            vl.vglSaveImage(vpath, img_input)
+            vl.vglSaveImage(vpath, img_inputSave)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph_Index, None)

@@ -124,7 +124,9 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglSaveImage':
 
         # Returns edge image based on glyph id
-        vglSaveImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
+        #vglSaveImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
+
+        vglSaveImage_img_input = vglClThreshold_img_output
 
         if vglSaveImage_img_input is not None:
 

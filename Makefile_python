@@ -2,8 +2,8 @@ rundemopy:
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./workMemory.py
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./readTest.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py
-	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py
+	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./work.py
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py ./images/lena_1024.tif imgtst/
 

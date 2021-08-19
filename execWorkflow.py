@@ -109,23 +109,23 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id
-        #ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
+        ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        vl.vglCheckContext(vglClThreshold_img_output,vl.VGL_RAM_CONTEXT())
-        img_thresh = VglImage.get_ipl(vglClThreshold_img_output)
-        imshow(img_thresh)
+        #vl.vglCheckContext(vglClThreshold_img_output,vl.VGL_RAM_CONTEXT())
+        #img_thresh = VglImage.get_ipl(vglClThreshold_img_output)
+        #imshow(img_thresh)
 
-        vl.vglCheckContext(vglClBlurSq3_img_output,vl.VGL_RAM_CONTEXT())
-        img_blur = VglImage.get_ipl(vglClBlurSq3_img_output)
-        imshow(img_blur)
+        #vl.vglCheckContext(vglClBlurSq3_img_output,vl.VGL_RAM_CONTEXT())
+        #img_blur = VglImage.get_ipl(vglClBlurSq3_img_output)
+        #imshow(img_blur)
 
-        #if ShowImage_img_input is not None:
+        if ShowImage_img_input is not None:
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            #ShowImage_img_input.show()
+            ShowImage_img_input.show()
 
             # Actions after glyph execution
-            #GlyphExecutedUpdate(vGlyph.glyph_id, None)
+            GlyphExecutedUpdate(vGlyph.glyph_id, None)
 
     elif vGlyph.func == 'vglSaveImage':
 

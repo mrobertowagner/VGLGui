@@ -122,7 +122,9 @@ for vGlyph in lstGlyph:
         if ShowImage_img_input is not None:
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            ShowImage_img_input.show()
+            vl.vglCheckContext(ShowImage_img_input,vl.VGL_RAM_CONTEXT())
+            ShowImage_img_ndarray = VglImage.get_ipl(ShowImage_img_input)
+            imshow(ShowImage_img_ndarray)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph.glyph_id, None)

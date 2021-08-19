@@ -162,6 +162,22 @@ for vGlyph in lstGlyph:
         salvando2d(vglClThreshold_img_output,img_out_path+"Threshold.png")
         salvando2d(vglClBlurSq3_img_output,img_out_path+"Blur.png")
 
+
+def salvando2d(img, name):
+	# SAVING IMAGE img
+	ext = name.split(".")
+	ext.reverse()
+
+	vl.vglClDownload(img)
+
+	if( ext.pop(0).lower() == 'jpg' ):
+		if( img.getVglShape().getNChannels() == 4 ):
+			vl.rgba_to_rgb(img)
+	
+	vl.vglSaveImage(name, img)
+
+
+
         if vglSaveImage_img_input is not None:
 
             # SAVING IMAGE img

@@ -107,9 +107,9 @@ class objGlyphParameters(object):
 # Structure for storing Glyphs input list in memory
 class objGlyphInput(object):
 
-    def __init__(self, namein, statusin):
-        self.namein = namein            #glyph input name
-        self.statusin = statusin        #glyph input status
+    def __init__(self, vnamein, vstatusin):
+        self.namein = vnamein            #glyph input name
+        self.statusin = vstatusin        #glyph input status
 
     def getStatus(self):
         return self.statusin
@@ -117,9 +117,9 @@ class objGlyphInput(object):
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
-    def __init__(self, nameout, statusout):
-        self.nameout = nameout      #glyph output name
-        self.statusout = statusout  #glyph output status
+    def __init__(self, vnameout, vstatusout):
+        self.nameout = vnameout      #glyph output name
+        self.statusout = vstatusout  #glyph output status
 
     #Assign status to glyph output
     def setGlyphOutput(self, status):
@@ -137,11 +137,11 @@ def procCreateGlyphInOut():
 
                 if procCreateGlyphInOut_vInputPar.Par_name != '\n' and procCreateGlyphInOut_vGlyph.glyph_id == procCreateGlyphInOut_vInputPar.Par_glyph_id:
                     procCreateGlyphInOut_vGlyphIn = objGlyphInput(procCreateGlyphInOut_vInputPar.Par_name, False)
-                    lstGlyph[procCreateGlyphInOut_i].funcGlyphAddIn (vGlyphIn)
+                    lstGlyph[procCreateGlyphInOut_i].funcGlyphAddIn (procCreateGlyphInOut_vGlyphIn)
 
             # Create the output for the glyph   
             if procCreateGlyphInOut_vConnection.output_varname != '\n' and procCreateGlyphInOut_vGlyph.glyph_id == procCreateGlyphInOut_vConnection.output_glyph_id:
-                procCreateGlyphInOut_vGlyphOut = objGlyphInput(procCreateGlyphInOut_vConnection.output_varname, False)
+                procCreateGlyphInOut_vGlyphOut = objGlyphOutput(procCreateGlyphInOut_vConnection.output_varname, False)
                 lstGlyph[procCreateGlyphInOut_i].funcGlyphAddOut (procCreateGlyphInOut_vGlyphOut)
 
     #Rule11: Source glyph is already created with READY = TRUE. 
@@ -161,7 +161,7 @@ def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters
         procCreateGlyphPar_contentGlyPar = []               #clears the glyph parameter list
         procCreateGlyphPar_lstParAux = []                   #auxiliary parameter list
 
-        procCreateGlyphPar_contentGlyPar = vParameters
+        procCreateGlyphPar_contentGlyPar = procCreateGlyphPar_vParameters
 
         for procCreateGlyphPar_vpar in procCreateGlyphPar_contentGlyPar:
             if procCreateGlyphPar_vpar != '' and procCreateGlyphPar_vpar != '\n':
@@ -293,8 +293,8 @@ def setGlyphInputReady(setGlyphInputReady_vPar_glyph_id, setGlyphInputReady_vPar
 
             # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
             # Set READY = TRUE to the Glyph input
-            for setGlyphInputReady_i_GlyInput, setGlyphInputReady_vGlyphIn in enumerate(lstGlyph[setGlyphInputReady_i_Gly].lst_input):
-                
+            for setGlyphInputReady_i_GlyInput, setGlyphInputReady_vGlyphIn in enumerate(setGlyphInputReady_vGlyph.lst_input):           
+
                 if setGlyphInputReady_vGlyphIn.namein == setGlyphInputReady_vPar_name:
                     lstGlyph[setGlyphInputReady_i_Gly].lst_input[setGlyphInputReady_i_GlyInput].statusin = True
 
@@ -350,7 +350,7 @@ def getOutputConnection(getOutputConnection_vGlyph_IdOutput):
 def getOutputConnectionByIdName(getOutputConnectionByIdName_vGlyph_idInput, getOutputConnectionByIdName_vNameParInput):
 
     for getOutputConnectionByIdName_vConnection in lstConnection:   
-        for getOutputConnectionByIdName_vInputPar in getOutputConnectionByIdName_vConnection.lstConnectionInput:          
+        for getOutputConnectionByIdName_vInputPar in getOutputConnectionByIdName_vConnection.lst_con_input:          
             if getOutputConnectionByIdName_vInputPar.Par_glyph_id == getOutputConnectionByIdName_vGlyph_idInput and getOutputConnectionByIdName_vInputPar.Par_name == getOutputConnectionByIdName_vNameParInput:
                 getOutputConnectionByIdName_vConnGet = objConnectionPar(getOutputConnectionByIdName_vConnection.output_glyph_id, getOutputConnectionByIdName_vConnection.output_varname)
                 return getOutputConnectionByIdName_vConnGet

@@ -114,10 +114,6 @@ class objGlyphInput(object):
     def getStatus(self):
         return self.statusin
 
-    #Assign status to glyph output
-    def setGlyphInput(self, status):
-        self.statusin = status
-
 # Structure for storing Glyphs output list in memory
 class objGlyphOutput(object):
 
@@ -266,34 +262,44 @@ def procCreateGlyph(contentGly, count):
 # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
 #        Reading the image from another glyph does not change this status.
 #        Set READY = TRUE to glyph input and READY = TRUE to glyph 
-def setGlyphInputReadyByIdOut(setGlyphInputReadyByIdOut_vOutputGlyph_id):
+def setGlyphInputReadyByIdOut(vOutputGlyph_id):
     
-    for i_Con, setGlyphInputReadyByIdOut_vConnection in enumerate(lstConnection):
+    for i_Con, vConnection in enumerate(lstConnection):
 
         # Checks if the executed glyph is the origin of any glyph
-        if setGlyphInputReadyByIdOut_vConnection.output_glyph_id == setGlyphInputReadyByIdOut_vOutputGlyph_id:
+        if vConnection.output_glyph_id == vOutputGlyph_id:
 
             # Assign read-ready to connection
-            lstConnection[i_Con].setReadyConnection
+            lstConnection[i_Con].setReadyConnection(True)
 
-            # Finds the glyphs that originate from the executed glyph
-            for i_Gli, vGlyph in enumerate(lstGlyph):
-
-                if vGlyph.glyph_id == setGlyphInputReadyByIdOut_vConnection.input_glyph_id:
-
-                    # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
-                    # Set READY = TRUE to the Glyph input
-                    for vGlyphIn in lstGlyph[i_Gli].lst_input:
-                        lstGlyph[i_Gli].lst_input[vGlyphIn].setGlyphInput(True)
-
-                    lstGlyph[i_Gli].setGlyphReady(True)
-                    break
+            # Search all glyph entries
+            for vConnInput in vConnection.lst_con_input:
+                setGlyphInputReady(vConnInput.Par_glyph_id, vConnInput.Par_name)
 
 # Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
 def setGlyphDoneId(vGlyphIdUpd):
     for i_GliUpd, vGlyph in enumerate(lstGlyph):
         if vGlyph.glyph_id == vGlyphIdUpd:
             lstGlyph[i_GliUpd].setGlyphDone(True)
+            break
+
+#Assign status to glyph output
+def setGlyphInputReady(vPar_glyph_id, vPar_name):
+
+    # Finds the glyphs that originate from the executed glyph
+    for i_Gly, vGlyph in enumerate(lstGlyph):
+
+        if vGlyph.glyph_id == vPar_glyph_id:
+
+            # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
+            # Set READY = TRUE to the Glyph input
+            for i_GlyInput, vGlyphIn in enumerate(lstGlyph[i_Gly].lst_input):
+                
+                if vGlyphIn.namein == vPar_name:
+                    lstGlyph[i_Gly].lst_input[i_GlyInput].statusin = True
+
+            lstGlyph[i_Gly].setGlyphReady(True)
+            break
 
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
@@ -312,8 +318,8 @@ class objConnection(object):
         return self.image
 
     #Assign image to Connection
-    def setReadyConnection(self, img):
-        self.ready = True
+    def setReadyConnection(self, statusConn):
+        self.ready = statusConn
 
     #Return if connection is ready
     def getReadyConnection(self):

@@ -104,11 +104,13 @@ print(cv)
 #salvando2d(img_output, img_out_path+"img-vglClErodeCross1.png")
 
 
-vglClThreshold(img_input,img_output,np.float32(0.5))
-salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
+#vglClThreshold(img_input,img_output,np.float32(0.5))
+#salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
+
+
+vglClBlurSq3(img_input,img_output)
+salvando2d(img_output, img_out_path+"img-blur1.png")
 vl.rgb_to_rgba(img_output)
-
-
 
 
 print("==================================================\n")
@@ -119,7 +121,7 @@ img_ndarray = VglImage.get_ipl(img_output)
 
 print(VglImage.get_ipl(img_output))
 
-imshow(img_ndarray)
+#imshow(img_ndarray)
 
 print("==================================================\n")
 

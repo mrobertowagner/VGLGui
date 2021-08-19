@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from vgl_lib.vglImage import VglImage, vglLoadImage
+from vgl_lib.vglImage import VglImage
 import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
 import numpy as np          # TO WORK WITH MAIN
@@ -40,20 +40,6 @@ def imshow(im):
     plot.set_interpolation('nearest')
     mp.show()
 
-
-def salvando2d(img, name):
-	# SAVING IMAGE img
-	ext = name.split(".")
-	ext.reverse()
-
-	vl.vglClDownload(img)
-
-	if( ext.pop(0).lower() == 'jpg' ):
-		if( img.getVglShape().getNChannels() == 4 ):
-			vl.rgba_to_rgb(img)
-	
-	vl.vglSaveImage(name, img)
-
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -86,8 +72,8 @@ for vGlyph in lstGlyph:
         # Search the input image by connecting to the source glyph
         vglCreateImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img')
 
-        vglCreateImage_RETVAL = vl.create_blank_image_as(vglLoadImage_img_input)
-        #vglCreateImage_RETVAL.set_oclPtr( vl.get_similar_oclPtr_object(vglCreateImage_img_input) )
+        vglCreateImage_RETVAL = vl.create_blank_image_as(vglCreateImage_img_input)
+        vglCreateImage_RETVAL.set_oclPtr( vl.get_similar_oclPtr_object(vglCreateImage_img_input) )
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglCreateImage_RETVAL)
@@ -95,20 +81,13 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
 
         # Search the input image by connecting to the source glyph
-        #vglClBlurSq3_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClBlurSq3_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
-        #vglClBlurSq3_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        
+        vglClBlurSq3_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply BlurSq3 function
-
-        vl.vglCheckContext(vglLoadImage_img_input, vl.VGL_CL_CONTEXT())
-        vglClBlurSq3_img_output = vl.create_blank_image_as(vglLoadImage_img_input)
-        vglClBlurSq3(vglLoadImage_img_input, vglClBlurSq3_img_output)
-
-        #img_out_path = 'imgin/'
-        #salvando2d(vglClBlurSq3_img_output,img_out_path+"imgBlur.png")
+        vglClThreshold(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
@@ -116,18 +95,13 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
     
         # Search the input image by connecting to the source glyph
-        #vglClThreshold_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+        vglClThreshold_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
 
         # Search the output image by connecting to the source glyph
-        #vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+        vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
         # Apply Threshold function
-        #vl.vglCheckContext(vglLoadImage_img_input, vl.VGL_CL_CONTEXT())
-        vglClThreshold_img_output = vl.create_blank_image_as(vglLoadImage_img_input)
-        vglClThreshold(vglLoadImage_img_input, vglClThreshold_img_output, np.float32(0.5))
-
-        #img_out_path = 'imgin/'
-        #salvando2d(vglClThreshold_img_output,img_out_path+"imgThresh.png")
+        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
@@ -135,58 +109,31 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id
-        #ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
+        ShowImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        vl.vglCheckContext(vglClThreshold_img_output,vl.VGL_RAM_CONTEXT())
-        img_thresh = VglImage.get_ipl(vglClThreshold_img_output)
-        imshow(img_thresh)
-
-        vl.vglCheckContext(vglClBlurSq3_img_output,vl.VGL_RAM_CONTEXT())
-        img_blur = VglImage.get_ipl(vglClBlurSq3_img_output)
-        imshow(img_blur)
-
-        #if ShowImage_img_input is not None:
+        if ShowImage_img_input is not None:
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters             
-            #ShowImage_img_input.show()
+            vl.vglCheckContext(ShowImage_img_input,vl.VGL_RAM_CONTEXT())
+            ShowImage_img_ndarray = VglImage.get_ipl(ShowImage_img_input)
+            imshow(ShowImage_img_ndarray)
 
             # Actions after glyph execution
-            #GlyphExecutedUpdate(vGlyph.glyph_id, None)
+            GlyphExecutedUpdate(vGlyph.glyph_id, None)
 
     elif vGlyph.func == 'vglSaveImage':
 
         # Returns edge image based on glyph id
         vglSaveImage_img_input = getImageInputByIdName(vGlyph.glyph_id, 'image')
 
-        img_out_path = 'imgin/'
-        salvando2d(vglClThreshold_img_output,img_out_path+"Threshold.png")
-        salvando2d(vglClBlurSq3_img_output,img_out_path+"Blur.png")
-
-
-def salvando2d(img, name):
-	# SAVING IMAGE img
-	ext = name.split(".")
-	ext.reverse()
-
-	vl.vglClDownload(img)
-
-	if( ext.pop(0).lower() == 'jpg' ):
-		if( img.getVglShape().getNChannels() == 4 ):
-			vl.rgba_to_rgb(img)
-	
-	vl.vglSaveImage(name, img)
-
-
-
         if vglSaveImage_img_input is not None:
 
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
-            # Rule3: In a sink glyph, images (one or more) can only be input parameters 
-            vl.vglClDownload(vglClBlurSq3_img_output) 
-            vl.vglSaveImage(vpath, vglClBlurSq3_img_output) 
-            vl.vglClDownload(vglClThreshold_img_output)          
-            vl.vglSaveImage(vpath, vglClThreshold_img_output)
+
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters
+            vl.vglClDownload(vglSaveImage_img_input)             
+            vl.vglSaveImage(vpath, vglSaveImage_img_input)
 
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph.glyph_id, None)

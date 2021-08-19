@@ -91,20 +91,6 @@ class objGlyph(object):
     def getGlyphDone(self):
         return self.done
 
-    #Assign ready to glyph inputs
-    def setGlyphDoneAllInput(self, status):
-        for i, vGlyphIn in enumerate(self.lst_input):
-           self.lst_input[i].setGlyphInput(vGlyphIn, status)
-
-    # Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
-    #        Reading the image from another glyph does not change this status.
-    #        Set READY = TRUE to glyph input and READY = TRUE to glyph 
-    def setGlyphReadyInput(self, status, vinput_varname):
-        for i, vGlyphIn in enumerate(self.lst_input):
-           if self.lst_input[i].namein == vinput_varname:
-               self.lst_input[i].statusin = True               
-               break
-
 # Structure for storing Parameters in memory
 class objGlyphParameters(object):
 
@@ -277,6 +263,38 @@ def procCreateGlyph(contentGly, count):
 
   #Add glyph input function
 
+# Rule6: Edges whose source glyph has already been executed, and which therefore already had their image generated, have READY=TRUE (image ready to be processed).
+#        Reading the image from another glyph does not change this status.
+#        Set READY = TRUE to glyph input and READY = TRUE to glyph 
+def setGlyphInputReadyByIdOut(setGlyphInputReadyByIdOut_vOutputGlyph_id):
+    
+    for i_Con, setGlyphInputReadyByIdOut_vConnection in enumerate(lstConnection):
+
+        # Checks if the executed glyph is the origin of any glyph
+        if setGlyphInputReadyByIdOut_vConnection.output_glyph_id == setGlyphInputReadyByIdOut_vOutputGlyph_id:
+
+            # Assign read-ready to connection
+            lstConnection[i_Con].setReadyConnection
+
+            # Finds the glyphs that originate from the executed glyph
+            for i_Gli, vGlyph in enumerate(lstGlyph):
+
+                if vGlyph.glyph_id == setGlyphInputReadyByIdOut_vConnection.input_glyph_id:
+
+                    # Rule8: Glyphs have a list of entries. When all entries are READY=TRUE, the glyph changes status to READY=TRUE (function ready to run)
+                    # Set READY = TRUE to the Glyph input
+                    for vGlyphIn in lstGlyph[i_Gli].lst_input:
+                        lstGlyph[i_Gli].lst_input[vGlyphIn].setGlyphInput(True)
+
+                    lstGlyph[i_Gli].setGlyphReady(True)
+                    break
+
+# Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
+def setGlyphDoneId(vGlyphIdUpd):
+    for i_GliUpd, vGlyph in enumerate(lstGlyph):
+        if vGlyph.glyph_id == vGlyphIdUpd:
+            lstGlyph[i_GliUpd].setGlyphDone(True)
+
 # Structure for storing Connections in memory
 # Images are stored on edges (connections between Glyphs)
 class objConnection(object):
@@ -288,11 +306,6 @@ class objConnection(object):
         self.lst_con_input = []                     #glyph input list
         self.image = None                           #image
         self.ready = False                          #False = unread or unexecuted image; True = image read or executed
-
-    # Rule5: Each edge has an image stored
-    #        Assign image to Connection
-    def setImageConnection(self, img):
-        self.image = img
 
     #Get Image of Connection
     def getImageConnection(self, img):
@@ -317,13 +330,6 @@ class objConnectionPar(object):
         self.Par_glyph_id = vConnPar_id         #glyph identifier code Parameter
         self.Par_name = vConnPar_Name           #variable name Parameter
 
-# Rule10: Glyph becomes DONE = TRUE after its execution. Assign done to glyph
-def setGlyphDoneId(vGlyphIdUpd):
-
-    for i_GliUpd, vGlyph in enumerate(lstGlyph):
-        if vGlyph.glyph_id == vGlyphIdUpd:
-            lstGlyph[i_GliUpd].setGlyphDone(True)
-
 # Find the connection output 
 def getOutputConnection(vGlyph_IdOutput):
 
@@ -344,6 +350,14 @@ def getOutputConnectionByIdName(vGlyph_idInput, vNameParInput):
                 return vConnGet
 
     return None
+
+# Rule5: Each edge has an image stored
+#        Assign image to Connection
+def setImageConnectionByOutputId(vGlyph_OutputId, img):
+
+    for indexConn, vConnection in enumerate(lstConnection):   
+        if vConnection.output_glyph_id == vGlyph_OutputId:
+            lstConnection[indexConn].image = img
 
 # Returns edge image based on glyph id
 def getImageInputByIdName(vGlyph_idInput, vNameParInput):

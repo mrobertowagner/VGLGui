@@ -182,8 +182,11 @@ def salvando2d(img, name):
 
             # SAVING IMAGE img
             vpath = vGlyph.lst_par[0].getValue()
-            # Rule3: In a sink glyph, images (one or more) can only be input parameters             
+            # Rule3: In a sink glyph, images (one or more) can only be input parameters 
+            vl.vglClDownload(vglClBlurSq3_img_output) 
+            vl.vglSaveImage(vpath, vglClBlurSq3_img_output) 
+            vl.vglClDownload(vglClThreshold_img_output)          
             vl.vglSaveImage(vpath, vglClThreshold_img_output)
-            vl.vglSaveImage(vpath, vglClBlurSq3_img_output)
+
             # Actions after glyph execution
             GlyphExecutedUpdate(vGlyph.glyph_id, None)

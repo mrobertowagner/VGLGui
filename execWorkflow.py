@@ -87,7 +87,7 @@ for vGlyph in lstGlyph:
         vglClBlurSq3_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply BlurSq3 function
-        vglClBlurSq3(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
+        #vglClBlurSq3(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
@@ -101,7 +101,7 @@ for vGlyph in lstGlyph:
         vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
         # Apply Threshold function
-        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
+        #vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)

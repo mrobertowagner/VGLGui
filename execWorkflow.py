@@ -132,7 +132,7 @@ for vGlyph in lstGlyph:
             vpath = vGlyph.lst_par[0].getValue()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters
-            vl.vglClDownload(vglSaveImage_img_input)             
+            vl.vglCheckContext(vglSaveImage_img_input,vl.VGL_RAM_CONTEXT())             
             vl.vglSaveImage(vpath, vglSaveImage_img_input)
 
             # Actions after glyph execution

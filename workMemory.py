@@ -87,10 +87,60 @@ for vGlyph in lstGlyph:
         vglClBlurSq3_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply BlurSq3 function
-        vglClThreshold(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
+        vglClBlurSq3(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
+
+
+    elif vGlyph.func == 'vglClErode': #Function Erode
+
+        # Search the input image by connecting to the source glyph
+        vglClErode_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClErode_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
+        # Apply BlurSq3 function
+        vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
+        window_x = vGlyph.lst_par[0].getValue()
+        print(window_x)
+        window_y = vGlyph.lst_par[1].getValue()
+        print(window_y)
+        vglClErode(vglClErode_img_input, vglClErode_img_output, cv, np.uint32(window_x), np.uint32(window_y))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
+
+    elif vGlyph.func == 'vglClConvolution': #Function Convolution
+
+        # Search the input image by connecting to the source glyph
+        vglClConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+        
+        # Search the output image by connecting to the source glyph
+        vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
+        # Apply BlurSq3 function
+        vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
+        vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output, cv, np.uint32(3), np.uint32(3))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
+
+
+    elif vGlyph.func == 'vglClDilate': #Function Dilate
+    
+        # Search the input image by connecting to the source glyph
+        vglClDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+
+        # Search the output image by connecting to the source glyph
+        vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
+        # Apply Dilate function
+        vglClDilate(vglClDilate_img_input, vglClDilate_img_output, cv, np.uint32(3), np.uint32(3))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
     
@@ -101,7 +151,7 @@ for vGlyph in lstGlyph:
         vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
         # Apply Threshold function
-        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
+        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
@@ -132,7 +182,7 @@ for vGlyph in lstGlyph:
             vpath = vGlyph.lst_par[0].getValue()
 
             # Rule3: In a sink glyph, images (one or more) can only be input parameters
-            vl.vglClDownload(vglSaveImage_img_input)             
+            vl.vglCheckContext(vglSaveImage_img_input,vl.VGL_RAM_CONTEXT())             
             vl.vglSaveImage(vpath, vglSaveImage_img_input)
 
             # Actions after glyph execution

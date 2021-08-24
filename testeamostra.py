@@ -90,9 +90,13 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 #cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
 #cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
 cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
-
-print(cv)
-
+lista = '[0, 1, 0, 1, 1, 1, 0, 1, 0]'
+conv = []
+for num in lista:
+	conv.append(int(num))
+cov = np.array(conv,np.float32)
+print(type(cov))
+print(cov)
 #vglClConvolution(img_input, img_output, cv, np.uint32(3), np.uint32(3))
 
 #salvando2d(img_output, img_out_path+"img-vglClConvolution.jpg")
@@ -108,8 +112,8 @@ print(cv)
 #salvando2d(img_output, img_out_path+"img-vglClTreshold.png")
 
 
-vglClBlurSq3(img_input,img_output)
-salvando2d(img_output, img_out_path+"img-blur1.png")
+vglClConvolution(img_input,img_output, cov, np.uint32(3),np.uint32(3))
+salvando2d(img_output, img_out_path+"img-final.png")
 vl.rgb_to_rgba(img_output)
 
 
@@ -119,9 +123,9 @@ vl.vglCheckContext(img_output,vl.VGL_RAM_CONTEXT())
 
 img_ndarray = VglImage.get_ipl(img_output)
 
-print(VglImage.get_ipl(img_output))
+#print(VglImage.get_ipl(img_output))
 
-#imshow(img_ndarray)
+imshow(img_ndarray)
 
 print("==================================================\n")
 

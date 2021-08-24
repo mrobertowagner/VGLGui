@@ -1,6 +1,6 @@
 rundemopy:
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./workMemory.py
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./redtst.py
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./workMemory.py
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./w.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py

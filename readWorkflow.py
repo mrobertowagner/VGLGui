@@ -6,6 +6,7 @@ import re
 import os
 import string
 from collections import defaultdict
+import numpy as np
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
@@ -97,12 +98,13 @@ class objGlyphParameters(object):
     def __init__(self, namepar, valuepar):
         self.name = namepar      #variable name
         self.value = valuepar    #variable value
-
+        
     def getName(self):
         return self.name
 
     def getValue(self):
         return self.value
+
 
 # Structure for storing Glyphs input list in memory
 class objGlyphInput(object):
@@ -151,7 +153,15 @@ def procCreateGlyphInOut():
 
        if len(procCreateGlyphInOut_vGlyph.lst_input) == 0:
            lstGlyph[procCreateGlyphInOut_i].setGlyphReady(True)
-           
+
+form = ']'
+def form(a):
+    for letra in a:
+        if form in a:
+            a = a.replace(letra,'')
+
+
+dados = []
 #Identifies and Creates the parameters of the Glyph
 def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters, procCreateGlyphPar_count):
     try:
@@ -171,31 +181,39 @@ def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters
 
                 #Differentiates parameter name and value
                 if procCreateGlyphPar_vpar[0] == '\'' or procCreateGlyphPar_vpar.isdigit():
-                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("'", '')) 
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("'", ''))
+                    
 
+                if procCreateGlyphPar_vpar.isdigit() or procCreateGlyphPar_vpar[0] =='[':
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar)
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace(",", ''))
+                    
                 if procCreateGlyphPar_vpar[0] == "-":             
                     if procCreateGlyphPar_vpar[1].isdigit():
                         procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("-", ''))
                     else:
                         procCreateGlyphPar_vGlyphPar = objGlyphParameters('Name', procCreateGlyphPar_vpar.replace('-', ''))
-
+                
                 #Temporary list to differentiate parameters and their values
                 procCreateGlyphPar_lstParAux.append(procCreateGlyphPar_vGlyphPar)
-
+        
         #Creates the parameters of the Glyph
         for procCreateGlyphPar_i, procCreateGlyphPar_vParAux in enumerate(procCreateGlyphPar_lstParAux):
             
             procCreateGlyphPar_vParType = procCreateGlyphPar_vParAux.getName()
             procCreateGlyphPar_vParValue = procCreateGlyphPar_vParAux.getValue()
-            
+
+
             procCreateGlyphPar_vParTypeNext = ''
             procCreateGlyphPar_vParValueNext = ''
+
 
             #If you don't have the next parameter to include
             if procCreateGlyphPar_i < (len(procCreateGlyphPar_lstParAux)-1):
                 procCreateGlyphPar_vParTypeNext = procCreateGlyphPar_lstParAux[procCreateGlyphPar_i+1].getName()
                 procCreateGlyphPar_vParValueNext = procCreateGlyphPar_lstParAux[procCreateGlyphPar_i+1].getValue()
             
+                
             # A parameter name followed by another parameter name. Write the parameter because it will have no value. Example: -wh -hw -dd
             if procCreateGlyphPar_vParType == 'Name' and (procCreateGlyphPar_vParTypeNext == 'Name' or (procCreateGlyphPar_vParTypeNext == '' and procCreateGlyphPar_vParType != 'Value')):
                 procCreateGlyphPar_vGlyphPar = objGlyphParameters(procCreateGlyphPar_vParValue, '')
@@ -400,7 +418,7 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
         addInputConnection (procCreateConnection_vConnPar, procCreateConnection_vinput_Glyph_ID, procCreateConnection_vinput_varname)
 
 # File to be read
-vfile = 'dataVglGui.wksp'
+vfile = 'dataVglGui2.wksp'
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory
@@ -457,3 +475,4 @@ def fileRead(lstGlyph, lstConnection):
 
     except UnboundLocalError: #rule101 - File not found
         print("File not found.")
+

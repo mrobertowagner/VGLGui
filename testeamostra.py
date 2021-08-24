@@ -90,13 +90,33 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 #cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
 #cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
 cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
-lista = '[0, 1, 0, 1, 1, 1, 0, 1, 0]'
+lista = '0, 1, 0, 1, 1, 1, 0, 1, 0]'
+
 conv = []
-for num in lista:
-	conv.append(int(num))
-cov = np.array(conv,np.float32)
+lst = [0, 1, 0, 1, 1, 1, 0, 1, 0]
+print(type(lst))
+cov = np.array(lst,np.float32)
 print(type(cov))
 print(cov)
+
+'''fileRead(lstGlyph,lstConnection)
+for vGlyph in lstGlyph:
+    if vGlyph.func == "vglClErode":
+        print(vGlyph.lst_par[0].getValue())
+        txt = vGlyph.lst_par[0].getValue()
+        liststr = txt[1:-1]
+        print(liststr)
+        dados = []
+        for linha in liststr:
+            dados.append(int(linha))
+        print(dados)
+        print(type(dados))
+        w = np.array(dados,np.float32)
+        print(w)
+        print(type(w))
+print(w)
+'''
+
 #vglClConvolution(img_input, img_output, cv, np.uint32(3), np.uint32(3))
 
 #salvando2d(img_output, img_out_path+"img-vglClConvolution.jpg")

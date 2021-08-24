@@ -100,14 +100,21 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClErode_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
-        # Apply BlurSq3 function
+
+
+        #Implementar no ReadWorkflow
+        txt = vGlyph.lst_par[0].getValue()
+        liststr = txt[1:-1]
+        dados = []
+        for linha in liststr:
+            dados.append(int(linha))
+        w = np.array(dados,np.float32)
+        window_x = vGlyph.lst_par[1].getValue()
+        window_y = vGlyph.lst_par[2].getValue()
+
+        # Apply Erode function
         vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
-        window_x = vGlyph.lst_par[0].getValue()
-        print(window_x)
-        window_y = vGlyph.lst_par[1].getValue()
-        print(window_y)
-        vglClErode(vglClErode_img_input, vglClErode_img_output, cv, np.uint32(window_x), np.uint32(window_y))
+        vglClErode(vglClErode_img_input, vglClErode_img_output, w, np.uint32(window_x), np.uint32(window_y))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
@@ -120,9 +127,18 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
-        # Apply BlurSq3 function
+        #Implementar no ReadWorkflow
+        liststr = txt[1:-1]
+        dados = []
+        for linha in liststr:
+            dados.append(int(linha))
+        w = np.array(dados,np.float32)
+        window_x = vGlyph.lst_par[1].getValue()
+        window_y = vGlyph.lst_par[2].getValue()
+
+        # Apply Convolution function
         vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
-        vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output, cv, np.uint32(3), np.uint32(3))
+        vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output, w, np.uint32(window_x), np.uint32(window_y))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
@@ -135,9 +151,20 @@ for vGlyph in lstGlyph:
 
         # Search the output image by connecting to the source glyph
         vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+        txt = vGlyph.lst_par[0].getValue()
+
+        #Implementar no ReadWorkflow
+        liststr = txt[1:-1]
+        dados = []
+        for linha in liststr:
+            dados.append(int(linha))
+        w = np.array(dados,np.float32)
+        window_x = vGlyph.lst_par[1].getValue()
+        window_y = vGlyph.lst_par[2].getValue()
 
         # Apply Dilate function
-        vglClDilate(vglClDilate_img_input, vglClDilate_img_output, cv, np.uint32(3), np.uint32(3))
+        vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
+        vglClDilate(vglClDilate_img_input, vglClDilate_img_output, w, np.uint32(window_x), np.uint32(window_y))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)

@@ -182,12 +182,13 @@ def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters
                 #Differentiates parameter name and value
                 if procCreateGlyphPar_vpar[0] == '\'' or procCreateGlyphPar_vpar.isdigit():
                     procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("'", ''))
-                    
+                elif procCreateGlyphPar_vpar[0].isdigit() and procCreateGlyphPar_vpar[1] == '.':
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar)
 
                 if procCreateGlyphPar_vpar.isdigit() or procCreateGlyphPar_vpar[0] =='[':
                     procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar)
                     procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace(",", ''))
-                    
+                
                 if procCreateGlyphPar_vpar[0] == "-":             
                     if procCreateGlyphPar_vpar[1].isdigit():
                         procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("-", ''))
@@ -476,3 +477,10 @@ def fileRead(lstGlyph, lstConnection):
     except UnboundLocalError: #rule101 - File not found
         print("File not found.")
 
+fileRead(lstGlyph,lstConnection)
+for vGlyph in lstGlyph:
+    if vGlyph.func == "vglClThreshold":
+        print(vGlyph.lst_par[0].getValue())
+        print(vGlyph.lst_par[1].getValue())
+
+''''''

@@ -86,12 +86,12 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
 
 
-#cv = np.array((1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9),np.float32) # Filtro média
+cv = np.array((1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9),np.float32) # Filtro média
 #cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
 #cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
-cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
+#cv = np.array(	(0, 1, 0, 1, 1, 1, 0, 1, 0 ), np.float32)
 lista = '0, 1, 0, 1, 1, 1, 0, 1, 0]'
-
+print(cv)
 conv = []
 lst = [0, 1, 0, 1, 1, 1, 0, 1, 0]
 print(type(lst))
@@ -99,7 +99,37 @@ cov = np.array(lst,np.float32)
 print(type(cov))
 print(cov)
 
-'''fileRead(lstGlyph,lstConnection)
+'''
+
+
+fileRead(lstGlyph,lstConnection)
+for vGlyph in lstGlyph:
+    if vGlyph.func == "vglClErode":
+        print(vGlyph.lst_par[0].getValue())
+        #print(type(tratnum(vGlyph.lst_par[0].getValue())))
+        #print(tratnum(vGlyph.lst_par[0].getValue()))
+        #print(vGlyph.lst_par[1].getName())
+        #print(type(vGlyph.lst_par[1].getValue()))
+
+
+
+
+#f = '11111'
+#g = tratnum(f)
+#print(g)
+
+#process(liststr)
+#r = re.compile(r'[^\d ]')
+#f = '-1,1,1,1@@,1,1!#!#!@!,1,1,1#!#!@!'
+
+#s = re.findall('-?\d+\.?\d*',f)
+#print(tratnum(s))
+#numeros  =  "".join(re.findall("\d+",f))
+#a = (r.sub('',f))
+#print(s)
+#print(numeros)
+
+fileRead(lstGlyph,lstConnection)
 for vGlyph in lstGlyph:
     if vGlyph.func == "vglClErode":
         print(vGlyph.lst_par[0].getValue())

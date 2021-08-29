@@ -154,14 +154,6 @@ def procCreateGlyphInOut():
        if len(procCreateGlyphInOut_vGlyph.lst_input) == 0:
            lstGlyph[procCreateGlyphInOut_i].setGlyphReady(True)
 
-form = ']'
-def form(a):
-    for letra in a:
-        if form in a:
-            a = a.replace(letra,'')
-
-
-dados = []
 #Identifies and Creates the parameters of the Glyph
 def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters, procCreateGlyphPar_count):
     try:
@@ -180,15 +172,26 @@ def procCreateGlyphPar(procCreateGlyphPar_vGlyph, procCreateGlyphPar_vParameters
                 procCreateGlyphPar_vpar = procCreateGlyphPar_vpar.replace("\n", '') 
 
                 #Differentiates parameter name and value
+
+                #regex codes 
+                #r = re.compile(r'[^\d ]')
+                #r = re.compile(r'-?\d+\.?\d*')
+                #\[[\s\d\.,-]*\]
                 if procCreateGlyphPar_vpar[0] == '\'' or procCreateGlyphPar_vpar.isdigit():
                     procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("'", ''))
-                elif procCreateGlyphPar_vpar[0].isdigit() and procCreateGlyphPar_vpar[1] == '.':
-                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar)
 
-                if procCreateGlyphPar_vpar.isdigit() or procCreateGlyphPar_vpar[0] =='[':
-                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar)
-                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace(",", ''))
-                
+                elif procCreateGlyphPar_vpar[0].isdigit() and procCreateGlyphPar_vpar[1] == '.': #decimal number
+                    procCreateGlyphPar_vpar = re.findall('-?\d+\.?\d*',procCreateGlyphPar_vpar)
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar )
+
+                elif procCreateGlyphPar_vpar.isdigit() or procCreateGlyphPar_vpar[0] =='[': #array
+                    procCreateGlyphPar_vpar = re.findall('-?\d+\.?\d*',procCreateGlyphPar_vpar)
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar )
+
+                elif procCreateGlyphPar_vpar[0] == '-' and procCreateGlyphPar_vpar[1].isdigit(): #negative number
+                    procCreateGlyphPar_vpar = re.findall('-?\d+\.?\d*',procCreateGlyphPar_vpar)
+                    procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar )
+
                 if procCreateGlyphPar_vpar[0] == "-":             
                     if procCreateGlyphPar_vpar[1].isdigit():
                         procCreateGlyphPar_vGlyphPar = objGlyphParameters('Value', procCreateGlyphPar_vpar.replace("-", ''))
@@ -476,11 +479,3 @@ def fileRead(lstGlyph, lstConnection):
 
     except UnboundLocalError: #rule101 - File not found
         print("File not found.")
-
-fileRead(lstGlyph,lstConnection)
-for vGlyph in lstGlyph:
-    if vGlyph.func == "vglClThreshold":
-        print(vGlyph.lst_par[0].getValue())
-        print(vGlyph.lst_par[1].getValue())
-
-''''''

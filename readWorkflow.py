@@ -4,9 +4,8 @@
 #
 import re
 import os
-import string
 from collections import defaultdict
-import numpy as np
+
 
 lstGlyph = []                   #List to store Glyphs
 lstGlyphPar = []                #List to store Glyphs Parameters
@@ -424,7 +423,7 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
         addInputConnection (procCreateConnection_vConnPar, procCreateConnection_vinput_Glyph_ID, procCreateConnection_vinput_varname)
 
 # File to be read
-vfile = 'dataVglGui2.wksp'
+vfile = 'dataVglGui.wksp'
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory

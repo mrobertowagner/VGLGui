@@ -24,13 +24,13 @@ ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -isc
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
 
 #  Glyph 'vglClErode'
-Glyph:VGL_CL:vglClErode::localhost:3:382:182:: -convolution_window [0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11] -window_size_x 3 -window_size_y 3
+Glyph:VGL_CL:vglClErode::localhost:3:382:182:: -convolution_window [0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Create Image Convolution'
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 
 #  Glyph 'vglClDilate'
-Glyph:VGL_CL:vglClDilate::localhost:5:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1] -window_size_x 3 -window_size_y 3
+Glyph:VGL_CL:vglClDilate::localhost:5:462:302:: -convolution_window [0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Erode'
 ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Dilate.png' 

@@ -15,11 +15,9 @@ lstConnectionInput = []         #List to store Connections inputs
 lstGlyphIn = []                 #List to store Glyphs Inputs
 lstGlyphOut = []                #List to store Glyphs Outputs
 
-class Error (Exception): #classe para tratar uma execeção definida pelo usuário
+class Error (Exception): #Class for treat a exception defined for user
     pass
-    '''
-        FALTA OS AJUSTES PARA SAÍDA DA CLASSE, POREM SÓ COM A FUNÇÃO 'raise' JÁ FUNCIONA
-    '''
+
 # Structure for storing Glyphs in memory
 # Glyph represents a function
 class objGlyph(object):
@@ -244,15 +242,18 @@ def procCreateGlyph(procCreateGlyph_contentGly, procCreateGlyph_count):
         procCreateGlyph_vPosX = ''
         procCreateGlyph_vPosY = ''            
         procCreateGlyph_vGlyphPar = ''
-
+        
+        
         if len(procCreateGlyph_contentGly) == 8:  #Image Input/Outpu type Glyph
             procCreateGlyph_vBlib = procCreateGlyph_contentGly[1]
             procCreateGlyph_vFunc = procCreateGlyph_contentGly[2]
             procCreateGlyph_vLoc = procCreateGlyph_contentGly[3]
             procCreateGlyph_vIdGlyh = procCreateGlyph_contentGly[4]
             procCreateGlyph_vPosX = procCreateGlyph_contentGly[5]
-            procCreateGlyph_vPosY = procCreateGlyph_contentGly[6]            
-            procCreateGlyph_vGlyphPar = procCreateGlyph_contentGly[7].split(' ')
+            procCreateGlyph_vPosY = procCreateGlyph_contentGly[6]
+            procCreateGlyph_vGlyphPar = procCreateGlyph_contentGly[7].replace(", ",',')  
+            procCreateGlyph_vGlyphPar = procCreateGlyph_vGlyphPar.split(' ')  
+            
         elif len(procCreateGlyph_contentGly) > 9: #Image type parameter
             procCreateGlyph_vBlib = procCreateGlyph_contentGly[1]
             procCreateGlyph_vFunc = procCreateGlyph_contentGly[2]
@@ -260,7 +261,8 @@ def procCreateGlyph(procCreateGlyph_contentGly, procCreateGlyph_count):
             procCreateGlyph_vIdGlyh = procCreateGlyph_contentGly[5]
             procCreateGlyph_vPosX = procCreateGlyph_contentGly[6]
             procCreateGlyph_vPosY = procCreateGlyph_contentGly[7]
-            procCreateGlyph_vGlyphPar = procCreateGlyph_contentGly[9].split(' ')            
+            procCreateGlyph_vGlyphPar = procCreateGlyph_contentGly[9].replace(", ",',') 
+            procCreateGlyph_vGlyphPar = procCreateGlyph_vGlyphPar.split(' ')           
 
         procCreateGlyph_vGlyph = objGlyph(procCreateGlyph_vBlib, procCreateGlyph_vFunc, procCreateGlyph_vLoc, procCreateGlyph_vIdGlyh, procCreateGlyph_vPosX, procCreateGlyph_vPosY)
 
@@ -479,3 +481,4 @@ def fileRead(lstGlyph, lstConnection):
 
     except UnboundLocalError: #rule101 - File not found
         print("File not found.")
+

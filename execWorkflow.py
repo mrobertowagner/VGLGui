@@ -40,6 +40,13 @@ def imshow(im):
     plot.set_interpolation('nearest')
     mp.show()
 
+def tratnum (num):
+    listnum = []
+    for line in num:
+        listnum.append(float(line))
+        listnumpy = np.array(listnum,np.float32)
+    return listnumpy
+
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -92,6 +99,53 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
 
+
+    elif vGlyph.func == 'vglClErode': #Function Erode
+
+        # Search the input image by connecting to the source glyph
+        vglClErode_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClErode_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+       
+        # Apply Erode function
+        vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
+        vglClErode(vglClErode_img_input, vglClErode_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
+
+    elif vGlyph.func == 'vglClConvolution': #Function Convolution
+
+        # Search the input image by connecting to the source glyph
+        vglClConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+        
+        # Search the output image by connecting to the source glyph
+        vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
+        # Apply Convolution function
+        vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
+        vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
+
+
+    elif vGlyph.func == 'vglClDilate': #Function Dilate
+    
+        # Search the input image by connecting to the source glyph
+        vglClDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+
+        # Search the output image by connecting to the source glyph
+        vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
+        # Apply Dilate function
+        vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
+        vglClDilate(vglClDilate_img_input, vglClDilate_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
+
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
     
         # Search the input image by connecting to the source glyph
@@ -101,7 +155,7 @@ for vGlyph in lstGlyph:
         vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
         # Apply Threshold function
-        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(0.5))
+        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)

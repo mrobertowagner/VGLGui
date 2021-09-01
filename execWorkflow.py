@@ -5,7 +5,6 @@ import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
 import numpy as np          # TO WORK WITH MAIN
 from cl2py_shaders import * # IMPORTING METHODS
-from PIL import Image       # IMPORTING METHODS TO DISPLAY IMAGE
 import os
 import sys                  # IMPORTING METHODS FROM VGLGui
 from readWorkflow import *
@@ -118,10 +117,10 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClConvolution': #Function Convolution
 
         # Search the input image by connecting to the source glyph
-        vglClConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+        vglClConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
-        vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+        vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply Convolution function
         vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
@@ -134,10 +133,10 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClDilate': #Function Dilate
     
         # Search the input image by connecting to the source glyph
-        vglClDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+        vglClDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
 
         # Search the output image by connecting to the source glyph
-        vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+        vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply Dilate function
         vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())

@@ -424,7 +424,7 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
         addInputConnection (procCreateConnection_vConnPar, procCreateConnection_vinput_Glyph_ID, procCreateConnection_vinput_varname)
 
 # File to be read
-vfile = 'dataVglGui2.wksp'
+vfile = 'dataVglGui3.wksp'
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory

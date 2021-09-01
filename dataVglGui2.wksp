@@ -33,10 +33,10 @@ Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 Glyph:VGL_CL:vglClDilate::localhost:5:462:302:: -convolution_window [0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Dilate.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Erode.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Dilate'
+ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Erode'
 
 #  Glyph 'Image save Erode and Dilate'
 ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'images/img2_ErodeDilate.png'
@@ -53,12 +53,12 @@ NodeConnection:data:2:RETVAL:3:img_output
 NodeConnection:data:3:img_output:6:image
 NodeConnection:data:3:img_output:7:image
 
-#  Connections 'Applying Convolution'
+#  Connections 'Applying Dilate'
 NodeConnection:data:3:img_output:4:img
 NodeConnection:data:3:img_output:5:src
 NodeConnection:data:4:RETVAL:5:dst
 
-# Connections ‘Show in Convolution'
+# Connections ‘Show in Dilate'
 NodeConnection:data:5:dst:8:image
 NodeConnection:data:5:dst:9:image
 

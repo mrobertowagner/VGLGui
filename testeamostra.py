@@ -86,10 +86,12 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
 
 
-cv = np.array((0,1,0,1,1,1,0,1,0),np.float32) # Filtro média
-#cv = np.array((1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3),np.float32)  # Filtro média
-#cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
+#cv = np.array((0,1,0,1,1,1,0,1,0),np.float32) # Filtro média
 
+#cv = np.array((1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9, 1/9),np.float32)  # Filtro média
+#cv = np.array(	(1, 1, 1, 1, 1, 1, 1, 1, 1 ), np.float32)
+cv = np.array((0.00390625, 0.03125   , 0.109375  , 0.21875   , 0.2734375 ,
+       0.21875   , 0.109375  , 0.03125   , 0.00390625),np.float32)  # Filtro média
 
 '''
 
@@ -145,13 +147,13 @@ print(w)
 #vl.rgb_to_rgba(img_output)
 
 
-vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
-salvando2d(img_output, img_out_path+"img-vglClErode.png")
+#vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
+#salvando2d(img_output, img_out_path+"img-vglClErode.png")
 
-vglClConvolution(img_input,img_output, cv, np.uint32(3), np.uint32(3))
-salvando2d(img_output, img_out_path+"img-vglClConvolution.png")
+vglClConvolution(img_input,img_output, cv, np.uint32(1), np.uint32(9))
+salvando2d(img_output, img_out_path+"ClConvolution.png")
 
-vglClDilate(img_input,img_output, cv, np.uint32(3), np.uint32(3))
-salvando2d(img_output, img_out_path+"img-vglClDilate.png")
+#vglClDilate(img_input,img_output, cv, np.uint32(3), np.uint32(3))
+#salvando2d(img_output, img_out_path+"img-vglClDilate.png")
 #vglClThreshold(img_input,img_output,np.float32(0.5))
 #salvando2d(img_output, img_out_path+"img-vglClTreshold.png")

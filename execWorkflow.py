@@ -139,7 +139,7 @@ for vGlyph in lstGlyph:
         vglClDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply Dilate function
-        vl.vglCheckContext(vglClErode_img_output,vl.VGL_CL_CONTEXT())
+        vl.vglCheckContext(vglClDilate_img_output,vl.VGL_CL_CONTEXT())
         vglClDilate(vglClDilate_img_input, vglClDilate_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
         # Actions after glyph execution

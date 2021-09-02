@@ -1,10 +1,11 @@
 # VisionGL Visual Programming Workspace
 #
-# VisionGL workspace file (/home/dataVglGui3.wksp) was created 
+# VisionGL workspace file (/home/dataVglGui4.wksp) was created 
 # on Mon Jul  2 11:22:34 2001
 # by user VisionGL
 
-#Convolution -> ConvolutionDilate -> ConvolutionDilateErode
+
+#Convolution -> Dilate -> Erode
 
 WorkspaceBegin: 1.0
 
@@ -34,7 +35,7 @@ Glyph:VGL_CL:vglCreateImage::localhost:4:562:122::
 #  Glyph 'vglClDilate'
 Glyph:VGL_CL:vglClDilate::localhost:5:382:182:: -convolution_window [0,1,0,1,1,1,0,1,0] -window_size_x 3 -window_size_y 3
 
-#  Glyph 'Create Image Erode'
+#  Glyph 'Create Image Dilate'
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 
 #  Glyph 'vglClErode'
@@ -46,43 +47,43 @@ ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/img2_Convulti
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'Convolution'
 
-#  Glyph 'Image save Dilate'
-ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/img2_ConvolutionDilate.png' 
+#  Glyph 'Image save Convolution_Dilate'
+ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/img2_Convolution_Dilate.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'ConvolutionDilate'
+ExtPort:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'Convolution_Dilate'
 
-#  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/img2_ConvolutionDilateErode.png'
+#  Glyph 'Image save Rode'
+ExtPort:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/img2_Convolution_Dilate_Erode.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'img2_ConvolutionDilateErode'
+ExtPort:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'img2_Convolution_Dilate_Erode'
 
 
-#  Connections 'Applying Convolution’
+#  Connections 'Applying Erode’
 NodeConnection:data:1:RETVAL:2:img
 NodeConnection:data:1:RETVAL:3:img_input
 NodeConnection:data:2:RETVAL:3:img_output
 
-#Connections 'Show Convolution'
+#Connections 'Show Erode'
 NodeConnection:data:3:img_output:8:image
 NodeConnection:data:3:img_output:9:image
 
-#  Connections 'Applying Dilate'
-NodeConnection:data:3:img_output:4:img
-NodeConnection:data:3:img_output:5:img_input
+#  Connections 'Applying Convolution'
+NodeConnection:data:1:RETVAL:4:img
+NodeConnection:data:1:RETVAL:5:img_input
 NodeConnection:data:4:RETVAL:5:img_output
 
-#Connections 'Show Dilate'
+#Connections 'Show Convolution'
 NodeConnection:data:5:img_output:10:image
 NodeConnection:data:5:img_output:11:image
 
-#Connections 'Applying Erode'
-NodeConnection:data:5:img_output:6:img
-NodeConnection:data:5:img_output:7:img_input
+#Connections 'Applying Dilate'
+NodeConnection:data:1:RETVAL:6:img
+NodeConnection:data:1:RETVAL:7:img_input
 NodeConnection:data:6:RETVAL:7:img_output
 
-#Connections 'Show Erode'
+#Connections 'Show Dilate'
 NodeConnection:data:7:img_output:12:image
 NodeConnection:data:7:img_output:13:image
 

@@ -1,8 +1,10 @@
 # VisionGL Visual Programming Workspace
 #
-# VisionGL workspace file (/home/dataVglGui.wksp) was created 
+# VisionGL workspace file (/home/dataVglGui2.wksp) was created 
 # on Mon Jul  2 11:22:34 2001
 # by user VisionGL
+
+#Erode -> Dilate
 
 WorkspaceBegin: 1.0
 

@@ -150,8 +150,13 @@ print(w)
 #vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
 #salvando2d(img_output, img_out_path+"img-vglClErode.png")
 
-vglClConvolution(img_input,img_output, cv, np.uint32(1), np.uint32(9))
-salvando2d(img_output, img_out_path+"ClConvolution.png")
+vglClSwapRgb(img_input,img_output)
+salvando2d(img_output, img_out_path+"ClSwap.png")
+#vglClConvolution(img_input,img_output, cv, np.uint32(1), np.uint32(9))
+#salvando2d(img_output, img_out_path+"ClConvolution.png")
+
+vglClMax(img_input,img_input,img_output)
+salvando2d(img_output, img_out_path+"ClSum.png")
 
 #vglClDilate(img_input,img_output, cv, np.uint32(3), np.uint32(3))
 #salvando2d(img_output, img_out_path+"img-vglClDilate.png")

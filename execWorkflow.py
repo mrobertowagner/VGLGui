@@ -121,7 +121,7 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-
+        print(tratnum(vGlyph.lst_par[0].getValue()))
         # Apply Convolution function
         vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
         vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
@@ -158,6 +158,35 @@ for vGlyph in lstGlyph:
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
+    
+    elif vGlyph.func == 'vglClSwapRgb': #Function SwapRGB
+    
+        # Search the input image by connecting to the source glyph
+        vglClSwapRgb_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
+
+        # Search the output image by connecting to the source glyph
+        vglClSwapRgb_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
+
+        # Apply Threshold function
+        vglClSwapRgb(vglClSwapRgb_img_input,vglClSwapRgb_img_output)
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
+
+    elif vGlyph.func == 'vglClMax': #Function blur
+
+        # Search the input image by connecting to the source glyph
+        vglClMax_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClMax_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+
+        # Apply BlurSq3 function
+        vglClMax(vglClMax_img_input,vglCreateImage_RETVAL, vglClMax_img_output)
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMax_img_output)
 
     elif vGlyph.func == 'ShowImage':
 

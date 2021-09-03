@@ -18,19 +18,19 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Convolution 1x9'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
 
 #  Glyph 'vglClConvolution'
-Glyph:VGL_CL:vglClConvolution::localhost:3:382:182:: -convolution_window [0.0625, 0.25, 0.375, 0.25, 0.0625] -window_size_x 1 -window_size_y 3 
+Glyph:VGL_CL:vglClConvolution::localhost:3:382:182:: -convolution_window [0.00024414, 0.00292969, 0.01611328, 0.05371094, 0.12084961, 0.19335938, 0.22558594, 0.19335938, 0.12084961, 0.05371094,0.01611328, 0.00292969, 0.00024414] -window_size_x 13 -window_size_y 13 
 
 #  Glyph 'Create Image Convolution 9x1'
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:122::
 
 #  Glyph 'vglClConvolution'
-Glyph:VGL_CL:vglClConvolution::localhost:5:382:182:: -convolution_window [0.0625, 0.25, 0.375, 0.25, 0.0625] -window_size_x 3 -window_size_y 1
+Glyph:VGL_CL:vglClConvolution::localhost:5:382:182:: -convolution_window [0.0625, 0.25, 0.375, 0.25, 0.0625] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Dilate'
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:122::
@@ -39,10 +39,10 @@ Glyph:VGL_CL:vglCreateImage::localhost:6:562:122::
 Glyph:VGL_CL:vglClDilate::localhost:7:382:182:: -convolution_window [0,1,0,1,1,1,0,1,0] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/img2_Convultion1x3.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lenacolor512_Convolution13x13.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'img2_Convultion1x3'
+ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion13x3'
 
 #  Glyph 'Image save Convolution'
 ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/img2_Convolution3x1.png' 

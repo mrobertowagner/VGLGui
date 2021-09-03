@@ -1,0 +1,73 @@
+# VisionGL Visual Programming Workspace
+#
+# VisionGL workspace file (/home/dataVglGui.wksp) was created 
+# on Mon Jul  2 11:22:34 2001
+# by user VisionGL
+
+WorkspaceBegin: 1.0
+
+VariablesBegin:
+
+#
+# list of currently declared variables
+#
+
+width_size = 2342
+height_size = 1144
+
+VariablesEnd:
+
+#  Glyph 'Image load'
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
+
+#  Glyph 'Create Image Convolution 13x13'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
+
+#  Glyph 'vglClConvolution'
+Glyph:VGL_CL:vglClConvolution::localhost:3:382:182:: -convolution_window [0.00024414, 0.00292969, 0.01611328, 0.05371094, 0.12084961, 0.19335938, 0.22558594, 0.19335938, 0.12084961, 0.05371094,0.01611328, 0.00292969, 0.00024414] -window_size_x 13 -window_size_y 13 
+
+#  Glyph 'Create Image Dilate'
+Glyph:VGL_CL:vglCreateImage::localhost:4:562:122::
+
+#  Glyph 'vglClDilate'
+Glyph:VGL_CL:vglClDilate::localhost:5:382:182:: -convolution_window [0,1,0,1,1,1,0,1,0] -window_size_x 3 -window_size_y 3
+
+#  Glyph 'Image save Convolution'
+ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/conv512x512/lenacolor512_Convolution13x13.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'lenacolor512_Convultion13x3'
+
+#  Glyph 'Image save DilateConvolution'
+ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lenacolor512_DilateConvolution.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_ConvolutionDilate'
+
+
+
+#  Connections 'Applying Convolution’
+NodeConnection:data:1:RETVAL:2:img
+NodeConnection:data:1:RETVAL:3:img_input
+NodeConnection:data:2:RETVAL:3:img_output
+
+# Connections ‘Show in Convolution’
+NodeConnection:data:3:img_output:6:image
+NodeConnection:data:3:img_output:7:image
+
+#  Connections 'Applying Dilate'
+NodeConnection:data:3:img_output:4:img
+NodeConnection:data:3:img_output:5:img_input
+NodeConnection:data:4:RETVAL:5:img_output
+
+# Connections ‘Show in ConvolutionDilate'
+NodeConnection:data:5:img_output:8:image
+NodeConnection:data:5:img_output:9:image
+
+
+
+
+AnnotationsBegin
+AnnotationsEnd
+
+WorkspaceEnd: 1.0

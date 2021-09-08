@@ -9,6 +9,6 @@ __kernel void vglClInvert(__read_only  image2d_t img_input,__write_only  image2d
                               CLK_ADDRESS_CLAMP |           //Clamp to zeros
                               CLK_FILTER_NEAREST;           //Don't interpolate
 	float4 p = read_imagef(img_input, smp, coords);
-	p.xyz = 1.0 - p.xyz;
+	p.xyz = ((float) 1.0) - p.xyz;
 	write_imagef(img_output,coords,p);
 }

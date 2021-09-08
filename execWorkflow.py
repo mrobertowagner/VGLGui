@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from vgl_lib import vglClImage
 from vgl_lib.vglImage import VglImage
 import pyopencl as cl       # OPENCL LIBRARY
 import vgl_lib as vl        # VGL LIBRARYS
@@ -121,7 +122,7 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        print(tratnum(vGlyph.lst_par[0].getValue()))
+
         # Apply Convolution function
         vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
         vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
@@ -167,26 +168,40 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         vglClSwapRgb_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
-        # Apply Threshold function
+        # Apply SwapRgb function
         vglClSwapRgb(vglClSwapRgb_img_input,vglClSwapRgb_img_output)
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
-
-    elif vGlyph.func == 'vglClMax': #Function blur
+    
+    elif vGlyph.func == 'vglClInvert': #Function Max
 
         # Search the input image by connecting to the source glyph
-        vglClMax_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClInvert_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
-        vglClMax_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        vglClInvert_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-
-        # Apply BlurSq3 function
-        vglClMax(vglClMax_img_input,vglCreateImage_RETVAL, vglClMax_img_output)
+        # Apply Invert function
+        vglClInvert(vglClInvert_img_input, vglClInvert_img_output)
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMax_img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
+
+    elif vGlyph.func == 'vglClMin': #Function Min
+
+        # Search the input image by connecting to the source glyph
+        vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        vglClMin_img_input1 = vglCreateImage_RETVAL
+        # Apply Min function
+        vglClMax(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
     elif vGlyph.func == 'ShowImage':
 

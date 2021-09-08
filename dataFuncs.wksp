@@ -30,31 +30,55 @@ Glyph:VGL_CL:vglClBlurSq3::localhost:3:382:182::
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0.5 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0.8 -top 1
 
-#  Glyph 'Create Image Max'
+#  Glyph 'Create Image Invert '
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 
-#  Glyph 'vglClSwapRgb'
-Glyph:VGL_CL:vglClSwapRgb::localhost:7:462:302::
+#  Glyph 'vglClInvert'
+Glyph:VGL_CL:vglClInvert::localhost:7:462:302::
+
+#  Glyph 'Create Image ClSwapRgb'
+Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
+
+#  Glyph 'vglClSwap'
+Glyph:VGL_CL:vglClSwapRgb::localhost:9:462:302::
+
+#  Glyph 'Create Image ClMin'
+Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
+
+#  Glyph 'vglClMin'
+Glyph:VGL_CL:vglClMin::localhost:11:462:302::
 
 #  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/img2_Blur.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/datafuncs/img2_Blur.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'Blur'
+ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:10:882:482: -filename 'images/img2_BlurThre.png'
+ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/datafuncs/img2_BlurThre.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:11:742:542:: -winname 'BlurThre'
+ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
 
 #  Glyph 'Image save BlurThreMax'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/img2_BlurThreMax.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/datafuncs/img2_BlurThreInvert.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'BlurThreMax'
+ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'BlurThreInvert'
+
+#  Glyph 'Image save BlurThreMaxSwap'
+ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/datafuncs/img2_BlurThreInvertSwap.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
+
+#  Glyph 'Image save BlurThreMaxSwapInvert'
+ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'
 
 #  Connections 'Applying Blur’
 NodeConnection:data:1:RETVAL:2:img
@@ -62,24 +86,44 @@ NodeConnection:data:1:RETVAL:3:img_input
 NodeConnection:data:2:RETVAL:3:img_output
 
 # Connections ‘Show in Blur’
-NodeConnection:data:3:img_output:8:image
-NodeConnection:data:3:img_output:9:image
+NodeConnection:data:3:img_output:12:image
+NodeConnection:data:3:img_output:13:image
 
 #  Connections 'Applying Threshold'
 NodeConnection:data:3:img_output:4:img
 NodeConnection:data:3:img_output:5:src
 NodeConnection:data:4:RETVAL:5:dst
 
-# Connections ‘Show in Threshold
-NodeConnection:data:5:dst:10:image
-NodeConnection:data:5:dst:11:image
+# Connections ‘Show in Thre'
+NodeConnection:data:5:dst:14:image
+NodeConnection:data:5:dst:15:image
 
+# Connections ‘Applying Max'
 NodeConnection:data:5:dst:6:img
-NodeConnection:data:5:dst:7:src
-NodeConnection:data:6:RETVAL:7:dst
+NodeConnection:data:5:dst:7:img_input
+NodeConnection:data:6:RETVAL:7:img_output
 
-NodeConnection:data:7:dst:12:image
-NodeConnection:data:7:dst:13:image
+# Connections ‘Show in BlurThreMax'
+NodeConnection:data:7:img_output:16:image
+NodeConnection:data:7:img_output:17:image
+
+#Connections 'Applying SwapRgb'
+NodeConnection:data:7:img_output:8:img
+NodeConnection:data:7:img_output:9:src
+NodeConnection:data:8:RETVAL:9:dst
+
+#Connections 'Show in BlurThreMaxRgb'
+NodeConnection:data:9:dst:18:image
+NodeConnection:data:9:dst:19:image
+
+#Connections 'Applying Invert'
+NodeConnection:data:9:dst:10:img
+NodeConnection:data:9:dst:11:img_input
+NodeConnection:data:10:RETVAL:11:img_output
+
+#Connections 'Show in BlurThreMaxRgbInvert'
+NodeConnection:data:11:img_output:20:image
+NodeConnection:data:11:img_output:21:image
 
 
 AnnotationsBegin

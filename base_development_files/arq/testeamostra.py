@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 # OPENCL LIBRARY
+from vgl_lib.vglConst import VGL_CL_CONTEXT
 from numpy.lib.shape_base import get_array_wrap
-from vgl_lib import vglImage
-from vgl_lib.vglImage import VglImage, vglLoadImage
+from vgl_lib import vglImage, vglShape
+from vgl_lib.vglImage import VglImage, create_vglShape, vglLoadImage
 from vgl_lib.struct_sizes import struct_sizes
 from vgl_lib import vglClImage
 from PIL import Image
@@ -90,8 +91,45 @@ img_output2.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
 img_output3 = vl.create_blank_image_as(img_input)
 img_output3.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
 
-#vglClThreshold(img_input,img_output,np.float32(0.8))
-#salvando2d(img_output, img_out_path+"img-vglClThresh.png")
+def rgb2gray(im):
+    result = np.dot(im[...,:3], [0.299, 0.587, 0.114])
+    result[result > 255] = 255
+    np.round(result)
+    return np.uint8(result)
+
+def rgb_to_gray(img):
+        grayImage = np.zeros(img.shape)
+        R = np.array(img[:, :, 0])
+        G = np.array(img[:, :, 1])
+        B = np.array(img[:, :, 2])
+
+        R = (R *.299)
+        G = (G *.587)
+        B = (B *.114)
+
+        Avg = (R+G+B)
+        grayImage = img.copy()
+
+        for i in range(3):
+           grayImage[:,:,i] = Avg
+           
+        return grayImage       
+
+imggray = rgb_to_gray(VglImage.get_ipl(img_input))
+
+#imshow(imggray)
+
+#salvando2d(gray, img_out_path+"img-vglClTrs.tif")
+from skimage import io
+#vl.vglCheckContext(f,vl.VGL_RAM_CONTEXT()) 
+#vglLoadImage(imggray)
+#print(imggray)
+#vl.vglCheckContext(imggray, vl.VGL_CL_CONTEXT())
+#f = VglImage.get_ipl(imggray)
+imggray1 = io.imread(imggray)
+#vl.vglAddContext(fa, vl.VGL_RAM_CONTEXT())	
+#vglClThreshold(imggray, img_output,np.float32(0.5))
+#salvando2d(imggray,img_out_path+"img-vglClTrs.tif")
 
 #vglClInvert(img_input,img_output1)
 #salvando2d(img_output1, img_out_path+"img-vglClInvert.png")
@@ -101,3 +139,5 @@ img_output3.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
 
 #vglClSum(img_output,img_output1,img_output2)
 #salvando2d(img_output3, img_out_path+"img-vglClS.png")
+
+

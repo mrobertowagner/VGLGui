@@ -44,11 +44,11 @@ Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
 #  Glyph 'vglClSwap'
 Glyph:VGL_CL:vglClSwapRgb::localhost:9:462:302::
 
-#  Glyph 'Create Image ClMin'
+#  Glyph 'Create Image ClMax'
 Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
 
-#  Glyph 'vglClMin'
-Glyph:VGL_CL:vglClMin::localhost:11:462:302::
+#  Glyph 'vglClMax'
+Glyph:VGL_CL:vglClMax::localhost:11:462:302::
 
 #  Glyph 'Image save Blur'
 ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/datafuncs/img2_Blur.png' 

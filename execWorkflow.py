@@ -47,6 +47,13 @@ def tratnum (num):
         listnumpy = np.array(listnum,np.float32)
     return listnumpy
 
+def rgb2gray(im):
+    result = np.dot(im[...,:3], [0.299, 0.587, 0.114])
+    result[result > 255] = 255
+    np.round(result)
+    return np.uint8(result)
+
+
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -188,7 +195,7 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
 
-    elif vGlyph.func == 'vglClMin': #Function Min
+    elif vGlyph.func == 'vglClMax': #Function Min
 
         # Search the input image by connecting to the source glyph
         vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -203,6 +210,15 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
+
+    elif vGlyph.func == 'RgbToGray': #Function Min
+
+        funRgbToGray_input = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        funRgbToGray_ndarray  = VglImage.get_ipl(funRgbToGray_input)
+        
+        funRgbToGray_output = rgb2gray(funRgbToGray_ndarray)
+        
+        GlyphExecutedUpdate(vGlyph.glyph_id, funRgbToGray_output )
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id

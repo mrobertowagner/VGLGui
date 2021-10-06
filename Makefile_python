@@ -1,4 +1,5 @@
 rundemopy:
-	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py images/img2.png testeamostra/
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py
+	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./bench.py standard_test_images/lena_gray_512.tif 10 testeamostra/ 

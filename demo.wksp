@@ -1,0 +1,132 @@
+# VisionGL Visual Programming Workspace
+#
+# VisionGL workspace file (/home/dataVglGui.wksp) was created 
+# on Mon Jul  2 11:22:34 2001
+# by user VisionGL
+
+WorkspaceBegin: 1.0
+
+VariablesBegin:
+
+#
+# list of currently declared variables
+#
+
+width_size = 2342
+height_size = 1144
+
+VariablesEnd:
+
+#  Glyph 'Image load'
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png ' -iscolor 1 -has_mipmap 0
+
+#  Glyph 'Create Image SwapRgb'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
+
+#  Glyph 'vglClSwapRgb'
+Glyph:VGL_CL:vglClSwapRgb::localhost:3:382:182::
+
+#  Glyph 'Create Image Blur'
+Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
+
+#  Glyph 'vglClBlurSq3'
+Glyph:VGL_CL:vglClBlurSq3::localhost:5:462:302::
+
+#  Glyph 'Create Image Threshold '
+Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
+
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:7:462:302:: -thresh 0.1 -top 1
+
+#  Glyph 'Create Image Sum'
+Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
+
+#  Glyph 'vglClSum'
+Glyph:VGL_CL:vglClSum::localhost:9:462:302:: 
+
+#  Glyph 'Create Image Dilate'
+Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
+
+#  Glyph 'vglClDilate'
+Glyph:VGL_CL:vglClBlurSq3::localhost:11:462:302::
+
+#  Glyph 'Image save Blur'
+ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Blur.png'
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
+
+#  Glyph 'Image save Blur and Thre'
+ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_BlurThre.png'
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
+
+#  Glyph 'Image save BlurThreMax'
+ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/demo/img2_BlurThreInvert.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'BlurThreInvert'
+
+#  Glyph 'Image save BlurThreMaxSwap'
+ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/demo/img2_BlurThreInvertSwap.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
+
+#  Glyph 'Image save BlurThreMaxSwapInvert'
+ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/demo/img2_BlurThreMaxSwapMin.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'
+
+#  Connections 'Applying SwapRgb’
+NodeConnection:data:1:RETVAL:2:img
+NodeConnection:data:1:RETVAL:3:src
+NodeConnection:data:2:RETVAL:3:dst
+
+# Connections ‘Show in Swap’
+NodeConnection:data:3:dst:12:image
+NodeConnection:data:3:dst:13:image
+
+#  Connections 'Applying Blur'
+NodeConnection:data:3:dst:4:img
+NodeConnection:data:3:dst:5:img_input
+NodeConnection:data:4:RETVAL:5:img_output
+
+# Connections ‘Show in Blur'
+NodeConnection:data:5:img_output:14:image
+NodeConnection:data:5:img_output:15:image
+
+# Connections ‘Applying Threshold'
+NodeConnection:data:5:img_output:6:img
+NodeConnection:data:5:img_output:7:src
+NodeConnection:data:6:RETVAL:7:dst
+
+# Connections ‘Show in BlurThreMax'
+NodeConnection:data:7:dst:16:image
+NodeConnection:data:7:dst:17:image
+
+#Connections 'Applying Sum'
+NodeConnection:data:7:dst:8:img
+NodeConnection:data:7:dst:9:img_input
+NodeConnection:data:8:RETVAL:9:img_output
+
+#Connections 'Show in Sum'
+NodeConnection:data:9:img_output:18:image
+NodeConnection:data:9:img_output:19:image
+
+#Connections 'Applying Invert'
+NodeConnection:data:9:img_output:10:img
+NodeConnection:data:9:img_output:11:img_input
+NodeConnection:data:10:RETVAL:11:img_output
+
+#Connections 'Show in BlurThreMaxRgbInvert'
+NodeConnection:data:11:img_output:20:image
+NodeConnection:data:11:img_output:21:image
+
+
+AnnotationsBegin
+AnnotationsEnd
+
+WorkspaceEnd: 1.0

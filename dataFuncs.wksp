@@ -19,7 +19,11 @@ VariablesEnd:
 
 #  Glyph 'Image load'
 <<<<<<< HEAD
+<<<<<<< HEAD
 ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+=======
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+>>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 =======
 Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
 >>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
@@ -80,7 +84,11 @@ Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
 
 #  Glyph 'Image save BlurThreMaxSwapInvert'
 <<<<<<< HEAD
+<<<<<<< HEAD
 ExtPort:VGL_CL:vglSaveImage::localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
+=======
+Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png'
+>>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 =======
 Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png'
 >>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835

@@ -425,7 +425,11 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
 
 # File to be read
 <<<<<<< HEAD
+<<<<<<< HEAD
 vfile = 'dataGui.wksp'
+=======
+vfile = 'dataFuncs.wksp'
+>>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 =======
 vfile = 'dataFuncs.wksp'
 >>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835

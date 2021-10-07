@@ -83,15 +83,7 @@ Glyph:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/datafuncs/img2
 Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
 
 #  Glyph 'Image save BlurThreMaxSwapInvert'
-<<<<<<< HEAD
-<<<<<<< HEAD
 ExtPort:VGL_CL:vglSaveImage::localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
-=======
-Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png'
->>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
-=======
-Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png'
->>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'

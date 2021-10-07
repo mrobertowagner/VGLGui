@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/15_test.jpg' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Blur'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::

@@ -424,15 +424,8 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
         addInputConnection (procCreateConnection_vConnPar, procCreateConnection_vinput_Glyph_ID, procCreateConnection_vinput_varname)
 
 # File to be read
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 vfile = 'dataGui.wksp'
-=======
-vfile = 'dataFuncs.wksp'
->>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
-=======
-vfile = 'dataFuncs.wksp'
->>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory

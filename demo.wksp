@@ -26,38 +26,38 @@ Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
 #  Glyph 'vglClSwapRgb'
 Glyph:VGL_CL:vglClSwapRgb::localhost:3:382:182::
 
-#  Glyph 'Create Image Blur'
+#  Glyph 'Create Image Threshold'
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 
-#  Glyph 'vglClBlurSq3'
-Glyph:VGL_CL:vglClBlurSq3::localhost:5:462:302::
-
-#  Glyph 'Create Image Threshold '
-Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
-
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:7:462:302:: -thresh 0.1 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0.1 -top 1
 
 #  Glyph 'Create Image Sum'
+Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
+
+#  Glyph 'vglClSum'
+Glyph:VGL_CL:vglClSum::localhost:7:462:302::
+
+#  Glyph 'Create Image Blur'
 Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
 
 #  Glyph 'vglClSum'
-Glyph:VGL_CL:vglClSum::localhost:9:462:302:: 
+Glyph:VGL_CL:vglClBlurSq3::localhost:9:462:302:: 
 
-#  Glyph 'Create Image Dilate'
+#  Glyph 'Create Image Close'
 Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
 
-#  Glyph 'vglClDilate'
-Glyph:VGL_CL:vglClBlurSq3::localhost:11:462:302::
+#  Glyph 'vglClClose'
+Glyph:VGL_CL:vglClClose::localhost:11:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Blur.png'
+ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Swap.png'
 
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_BlurThre.png'
+ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_SwapBlur.png'
 
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
@@ -89,39 +89,39 @@ NodeConnection:data:2:RETVAL:3:dst
 NodeConnection:data:3:dst:12:image
 NodeConnection:data:3:dst:13:image
 
-#  Connections 'Applying Blur'
+#  Connections 'Applying Threshold'
 NodeConnection:data:3:dst:4:img
-NodeConnection:data:3:dst:5:img_input
-NodeConnection:data:4:RETVAL:5:img_output
+NodeConnection:data:3:dst:5:src
+NodeConnection:data:4:RETVAL:5:dst
 
-# Connections ‘Show in Blur'
-NodeConnection:data:5:img_output:14:image
-NodeConnection:data:5:img_output:15:image
+# Connections ‘Show in Threshold'
+NodeConnection:data:5:dst:14:image
+NodeConnection:data:5:dst:15:image
 
-# Connections ‘Applying Threshold'
-NodeConnection:data:5:img_output:6:img
-NodeConnection:data:5:img_output:7:src
-NodeConnection:data:6:RETVAL:7:dst
+# Connections ‘Applying Sum'
+NodeConnection:data:5:dst:6:img
+NodeConnection:data:5:dst:7:img_input
+NodeConnection:data:6:RETVAL:7:img_output
 
-# Connections ‘Show in BlurThreMax'
-NodeConnection:data:7:dst:16:image
-NodeConnection:data:7:dst:17:image
+# Connections ‘Show in Sum'
+NodeConnection:data:7:img_output:16:image
+NodeConnection:data:7:img_output:17:image
 
-#Connections 'Applying Sum'
-NodeConnection:data:7:dst:8:img
-NodeConnection:data:7:dst:9:img_input
+#Connections 'Applying Blur'
+NodeConnection:data:7:img_output:8:img
+NodeConnection:data:7:img_output:9:img_input
 NodeConnection:data:8:RETVAL:9:img_output
 
-#Connections 'Show in Sum'
+#Connections 'Show in Blur'
 NodeConnection:data:9:img_output:18:image
 NodeConnection:data:9:img_output:19:image
 
-#Connections 'Applying Invert'
+#Connections 'Applying BlackHat'
 NodeConnection:data:9:img_output:10:img
 NodeConnection:data:9:img_output:11:img_input
 NodeConnection:data:10:RETVAL:11:img_output
 
-#Connections 'Show in BlurThreMaxRgbInvert'
+#Connections 'Show in BlackHat'
 NodeConnection:data:11:img_output:20:image
 NodeConnection:data:11:img_output:21:image
 

@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/15_test.jpg ' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Blur'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -75,7 +75,7 @@ ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/datafuncs/im
 ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
 
 #  Glyph 'Image save BlurThreMaxSwapInvert'
-ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
+ExtPort:VGL_CL:vglSaveImage::localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
 
 #  Glyph 'Image show'
 ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'

@@ -55,9 +55,7 @@ def rgb2gray(im):
 
 msg = ""
 media = 0.0
-count = 0
-
-
+nsteps = 1000
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -111,12 +109,11 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClBlurSq3(vglClBlurSq3_img_input, vglClBlurSq3_img_output)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-            mediablur = (media/5)
         msg = msg + "Tempo de execução da Blur \t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
@@ -138,12 +135,11 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClErode(vglClErode_img_input, vglClErode_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-            mediaerode = (media/5)
         msg = msg + "Tempo de execução da Erosão \t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
@@ -165,12 +161,11 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-            mediaconv = (media/5)
         msg = msg + "Tempo de execução da Convolução\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
@@ -193,12 +188,11 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClDilate(vglClDilate_img_input, vglClDilate_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))  
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-            mediadilate = (media/5)
         msg = msg + "Tempo de execução da Dilatação\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
@@ -219,12 +213,11 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))  
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-            mediath = (media/5)
         msg = msg + "Tempo de execução da Threshold\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
@@ -245,7 +238,7 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<1000):
+            while(p<nsteps):
                 vglClSwapRgb(vglClSwapRgb_img_input,vglClSwapRgb_img_output)
                 p = p + 1
             fim = t.time()
@@ -266,10 +259,20 @@ for vGlyph in lstGlyph:
         # Apply Invert function
         vglClInvert(vglClInvert_img_input, vglClInvert_img_output)
 
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                vglClInvert(vglClInvert_img_input, vglClInvert_img_output)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Tempo de execução da Invert\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
 
-    elif vGlyph.func == 'blackHat': #Function Max
+    elif vGlyph.func == 'vglClMax': #Function Max
 
         # Search the input image by connecting to the source glyph
         vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -280,10 +283,18 @@ for vGlyph in lstGlyph:
         vglClMin_img_input1 = vglCreateImage_RETVAL
 
         
-        # Apply Maxunction
+        # Apply Max function
         vglClMax(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
 
-        
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                vglClMax(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Tempo de execução da Max\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
@@ -302,6 +313,22 @@ for vGlyph in lstGlyph:
         
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
+
+    elif vGlyph.func == 'vglClClose': #Function Sum
+        ##FALTA IMPLEMENTAÇÃO
+        # Search the input image by connecting to the source glyph
+        vglClClose_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+
+        # Search the output image by connecting to the source glyph
+        vglClClose_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        
+        vglClDilate(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        
+        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        vglClSub(vglClClose_img_output, vglClClose_img_input,vglClClose_img_output)
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_img_output)
 
 
     elif vGlyph.func == 'ShowImage':
@@ -339,5 +366,5 @@ for vGlyph in lstGlyph:
 
 print("-------------------------------------------------------------")            
 print(msg)
-print("O tempo de execução em segundos é :",mediablur+mediath)
+#print("O tempo de execução em segundos é :",mediablur+mediath)
 print("-------------------------------------------------------------")

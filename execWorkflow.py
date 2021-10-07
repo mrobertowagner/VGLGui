@@ -55,7 +55,7 @@ def rgb2gray(im):
 
 msg = ""
 media = 0.0
-nsteps = 1
+nsteps = 1000
 vl.vglClInit() 
 
 # Update the status of glyph entries

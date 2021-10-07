@@ -1,6 +1,6 @@
 # VisionGL Visual Programming Workspace
 #
-# VisionGL workspace file (/home/dataVglGui.wksp) was created 
+# VisionGL workspace file (/home/dataVglGui.wksp) was created
 # on Mon Jul  2 11:22:34 2001
 # by user VisionGL
 
@@ -18,7 +18,11 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
+<<<<<<< HEAD
 ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+=======
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+>>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 
 #  Glyph 'Create Image Blur'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -51,34 +55,38 @@ Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
 Glyph:VGL_CL:vglClMax::localhost:11:462:302::
 
 #  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/datafuncs/img2_Blur.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/datafuncs/img2_Blur.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
+Glyph:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/datafuncs/img2_BlurThre.png'
+Glyph:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/datafuncs/img2_BlurThre.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
+Glyph:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
 
 #  Glyph 'Image save BlurThreMax'
-ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/datafuncs/img2_BlurThreInvert.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/datafuncs/img2_BlurThreInvert.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'BlurThreInvert'
+Glyph:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'BlurThreInvert'
 
 #  Glyph 'Image save BlurThreMaxSwap'
-ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/datafuncs/img2_BlurThreInvertSwap.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/datafuncs/img2_BlurThreInvertSwap.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
+Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
 
 #  Glyph 'Image save BlurThreMaxSwapInvert'
+<<<<<<< HEAD
 ExtPort:VGL_CL:vglSaveImage::localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png' 
+=======
+Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/datafuncs/img2_BlurThreMaxSwapMin.png'
+>>>>>>> 96f3ad7b6ebafb359d3b67e7b21cc10cc1cf3835
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'
+Glyph:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'
 
 #  Connections 'Applying Blur’
 NodeConnection:data:1:RETVAL:2:img

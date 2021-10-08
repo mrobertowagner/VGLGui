@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Convolution'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -39,22 +39,22 @@ Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 Glyph:VGL_CL:vglClErode::localhost:7:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 11 -window_size_y 11 
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lena_Convolution1.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lena_Convolution1.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion'
+Glyph:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion'
 
 #  Glyph 'Image save DilateConvolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/lena_ConvolutionDilate.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/lena_ConvolutionDilate.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'lenacolor512_ConvolutionDilate'
+Glyph:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'lenacolor512_ConvolutionDilate'
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/conv512x512/lena_ConvolutionDilateErode.png'
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/conv512x512/lena_ConvolutionDilateErode.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'img2_ConvolutionDilateErode'
+Glyph:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'img2_ConvolutionDilateErode'
 
 #  Connections 'Applying Convolution’
 NodeConnection:data:1:RETVAL:2:img

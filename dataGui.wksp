@@ -39,19 +39,19 @@ Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 Glyph:VGL_CL:vglClErode::localhost:7:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 11 -window_size_y 11 
 
 #  Glyph 'Image save Convolution'
-Glyph:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lena_Convolution1.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/Convolution.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion'
+Glyph:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'color512_Convolution'
 
 #  Glyph 'Image save DilateConvolution'
-Glyph:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/lena_ConvolutionDilate.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/ConvolutionDilate.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'lenacolor512_ConvolutionDilate'
+Glyph:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'color512_ConvolutionDilate'
 
 #  Glyph 'Image save Erode'
-Glyph:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/conv512x512/lena_ConvolutionDilateErode.png'
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/conv512x512/ConvolutionDilateErode.png'
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'img2_ConvolutionDilateErode'

@@ -55,7 +55,7 @@ def rgb2gray(im):
 
 msg = ""
 media = 0.0
-nsteps = 1000
+nsteps = 1
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -272,7 +272,7 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
 
-    elif vGlyph.func == 'vglClMax': #Function Max
+    elif vGlyph.func == 'vglClSub': #Function Sub
 
         # Search the input image by connecting to the source glyph
         vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -284,17 +284,18 @@ for vGlyph in lstGlyph:
 
         
         # Apply Max function
-        vglClMax(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+        vglClSub(vglClMin_img_output,vglClMin_img_input1, vglClMin_img_output)
 
         for i in range(0, 5):
             p = 0
             inicio = t.time()
             while(p<nsteps):
-                vglClMax(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+                vglClSub(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Max\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
@@ -308,7 +309,7 @@ for vGlyph in lstGlyph:
         vglClSum_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         # Apply SwapRgb function
-        vglClSum_img_input = vglClSwapRgb_img_output
+        vglClSum_img_input = vglClConvolution_img_output
         vglClSum(vglClSum_img_input,vglClSum_img_output,vglClSum_img_output)      
         
         # Actions after glyph execution
@@ -321,12 +322,19 @@ for vGlyph in lstGlyph:
 
         # Search the output image by connecting to the source glyph
         vglClClose_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        
         vglClDilate(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
-        
-        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClSub(vglClClose_img_output, vglClClose_img_input,vglClClose_img_output)
+        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))    
+
+        vglClDilate(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))    
+              
+        vglClSum_img_input = vglClThreshold_img_output
+        vglClMin(vglClClose_img_output,vglClSum_img_input,vglClClose_img_output) 
+      
+        #vglClClose_img_input1 = vglClSwapRgb_img_input
+        #vglClSub( vglClClose_img_output, vglClClose_img_input1   ,vglClClose_img_output)
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_img_output)
 

@@ -116,6 +116,8 @@ imshow
 
 
 
+
+
 filename = 'images/demo/'
   
 image_path = 'images/demo'
@@ -127,7 +129,7 @@ kernel = cv2.getStructuringElement(cv2.MORPH_RECT,
                                    filterSize)
   
 # Reading the image named 'input.jpg'
-input_image = cv2.imread("images/demo/imgtst.png")
+input_image = cv2.imread("images/demo/img2.png")
 input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2GRAY)
   
 # Applying the Top-Hat operation
@@ -137,10 +139,10 @@ tophat_img = cv2.morphologyEx(input_image,
     
 cv2.imshow("original", input_image)
 cv2.imshow("tophat", tophat_img)
-status = cv2.imwrite('/home/Documentos/teste1.png',tophat_img)
-print(status)
+status = cv2.imwrite('/home/Documentos/teste11.png',tophat_img)
+#print(status)
 cv2.waitKey(5000)
-
+'''
 input_image = cv2.imread("images/demo/teste.png")
 ret, thresh1 = cv2.threshold(input_image, 3, 255, cv2.THRESH_BINARY) 
 
@@ -160,3 +162,4 @@ cv2.imshow('Erosion', img_erosion)
 cv2.waitKey(5000)
 cv2.imshow('Dilation', img_dilation) 
 cv2.waitKey(5000)
+'''

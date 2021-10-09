@@ -114,7 +114,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Blur \t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Blur runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
@@ -140,7 +140,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Erosão \t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Erode runtime \t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
@@ -166,7 +166,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Convolução\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
@@ -193,7 +193,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Dilatação\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
@@ -218,7 +218,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Threshold\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Threshold runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
@@ -243,7 +243,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da SwapRgb\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "SwapRgb runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
@@ -267,7 +267,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Invert\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Invert runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
@@ -295,7 +295,7 @@ for vGlyph in lstGlyph:
             fim = t.time()
             media = media + (fim - inicio)
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
-
+        msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 

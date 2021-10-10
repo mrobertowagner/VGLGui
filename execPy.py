@@ -89,9 +89,11 @@ msg = ""
 
 
 
-'''
+
 vl.vglClInit()
 
+
+'''
 img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
 vl.vglLoadImage(img_input)
 if( img_input.getVglShape().getNChannels() == 3 ):
@@ -108,11 +110,9 @@ vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
 vglClThreshold(img_input,img_output,np.float32(0.5))
 salvando2d(img_output, img_out_path+"img-Threshold.png")
-imshow
 
-'''
 #salvando2d(img_output3, img_out_path+"img-vglClS.png")
-
+'''
 
 
 
@@ -122,14 +122,15 @@ filename = 'images/demo/'
   
 image_path = 'images/demo'
 
-
+'''
 # Getting the kernel to be used in Top-Hat
 filterSize =(3, 3)
 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, 
                                    filterSize)
   
+print(kernel)
 # Reading the image named 'input.jpg'
-input_image = cv2.imread("images/demo/img2.png")
+input_image = cv2.imread("images/img21.png")
 input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2GRAY)
   
 # Applying the Top-Hat operation
@@ -143,7 +144,9 @@ status = cv2.imwrite('/home/Documentos/teste11.png',tophat_img)
 #print(status)
 cv2.waitKey(5000)
 '''
-input_image = cv2.imread("images/demo/teste.png")
+
+
+input_image = cv2.imread("images/demo/imgf.png")
 ret, thresh1 = cv2.threshold(input_image, 3, 255, cv2.THRESH_BINARY) 
 
 cv2.imshow('Binary Threshold', thresh1)
@@ -151,7 +154,7 @@ cv2.waitKey(5000)
 
 
 
-
+'''
 kernel = np.ones((3,3), np.uint8) 
   
 img_erosion = cv2.erode(thresh1, kernel, iterations=1) 
@@ -163,3 +166,5 @@ cv2.waitKey(5000)
 cv2.imshow('Dilation', img_dilation) 
 cv2.waitKey(5000)
 '''
+
+

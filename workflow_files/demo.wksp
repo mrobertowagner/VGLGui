@@ -42,43 +42,43 @@ Glyph:VGL_CL:vglClConvolution::localhost:7:462:302:: -convolution_window ['0.000
 Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
 
 #  Glyph 'vglClSum'
-Glyph:VGL_CL:vglClClose::localhost:9:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1] -window_size_x 3 -window_size_y 3
+Glyph:VGL_CL:blackhat::localhost:9:462:302:: -convolution_window [0, 1, 0, 1, 1, 1, 0, 1, 0] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Create Image Close'
 Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
 
-#  Glyph 'vglClClose'
-Glyph:VGL_CL:vglClSub::localhost:11:462:302::
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:11:462:302:: -thresh 1 -top 1
 
 #  Glyph 'Image save Blur'
 ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Swap.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Blur'
+ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Swap'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_SwapBlur.png'
+ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_Thre.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'BlurThre'
+ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'Thre'
 
 #  Glyph 'Image save BlurThreMax'
-ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/demo/img2_BlurThreInvert.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/demo/img2_SwapConvolution.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'BlurThreInvert'
+ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'SwapConvolution'
 
 #  Glyph 'Image save BlurThreMaxSwap'
-ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/demo/img2_BlurThreInvertSwap.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/demo/img2_SwapConvolutionClosing.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'BlurThreInvertSwap'
+ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'SwapConvolutionClosing'
 
 #  Glyph 'Image save BlurThreMaxSwapInvert'
-ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/demo/img2_BlurThreMaxSwapMin.png' 
+ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/demo/img2_SwapConvolutionClosingMask.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'BlurThreInvertSwapMin'
+ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'SwapConvolutionClosingMask'
 
 #  Connections 'Applying SwapRgb’
 NodeConnection:data:1:RETVAL:2:img
@@ -118,12 +118,12 @@ NodeConnection:data:9:img_output:19:image
 
 #Connections 'Applying BlackHat'
 NodeConnection:data:9:img_output:10:img
-NodeConnection:data:9:img_output:11:img_input
-NodeConnection:data:10:RETVAL:11:img_output
+NodeConnection:data:9:img_output:11:src
+NodeConnection:data:10:RETVAL:11:dst
 
 #Connections 'Show in BlackHat'
-NodeConnection:data:11:img_output:20:image
-NodeConnection:data:11:img_output:21:image
+NodeConnection:data:11:dst:20:image
+NodeConnection:data:11:dst:21:image
 
 
 AnnotationsBegin

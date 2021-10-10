@@ -18,13 +18,13 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png ' -iscolor 1 -has_mipmap 0
 
-#  Glyph 'Create Image Blur'
+#  Glyph 'Create Image SwapRgb'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
 
-#  Glyph 'vglCLBlurSq3'
-Glyph:VGL_CL:vglClBlurSq3::localhost:3:382:182::
+#  Glyph 'vglClSwapRgb'
+Glyph:VGL_CL:vglClSwapRgb::localhost:3:382:182::
 
 #  Glyph 'Create Image Threshold'
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
@@ -32,35 +32,99 @@ Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 #  Glyph 'vglClThreshold'
 Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0.1 -top 1
 
+#  Glyph 'Create Image Convolution'
+Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
+
+#  Glyph 'vglClConvolution'
+Glyph:VGL_CL:vglClConvolution::localhost:7:462:302:: -convolution_window ['0.0003', '0.0004', '0.0007', '0.0010', '0.0013', '0.0016', '0.0018', '0.0019', '0.0018', '0.0016', '0.0013', '0.0010', '0.0007', '0.0004', '0.0003','0.0004', '0.0007', '0.0011', '0.0017', '0.0022', '0.0027', '0.0031', '0.0032', '0.0031', '0.0027', '0.0022', '0.0017', '0.0011', '0.0007', '0.0004','0.0007', '0.0011', '0.0018', '0.0026', '0.0035', '0.0042', '0.0048', '0.0050', '0.0048', '0.0042', '0.0035', '0.0026', '0.0018', '0.0011', '0.0007','0.0010', '0.0017', '0.0026', '0.0038', '0.0050', '0.0061', '0.0069', '0.0072', '0.0069', '0.0061', '0.0050', '0.0038', '0.0026', '0.0017', '0.0010','0.0013', '0.0022', '0.0035', '0.0050', '0.0066', '0.0081', '0.0092', '0.0096', '0.0092', '0.0081', '0.0066', '0.0050', '0.0035', '0.0022', '0.0013','0.0016', '0.0027', '0.0042', '0.0061', '0.0081', '0.0100', '0.0113', '0.0118', '0.0113', '0.0100', '0.0081', '0.0061', '0.0042', '0.0027', '0.0016','0.0018', '0.0031', '0.0048', '0.0069', '0.0092', '0.0113', '0.0128', '0.0133', '0.0128', '0.0113', '0.0092', '0.0069', '0.0048', '0.0031', '0.0018','0.0019', '0.0032', '0.0050', '0.0072', '0.0096', '0.0118', '0.0133', '0.0139', '0.0133', '0.0118', '0.0096', '0.0072', '0.0050', '0.0032', '0.0019','0.0018', '0.0031', '0.0048', '0.0069', '0.0092', '0.0113', '0.0128', '0.0133', '0.0128', '0.0113', '0.0092', '0.0069', '0.0048', '0.0031', '0.0018','0.0016', '0.0027', '0.0042', '0.0061', '0.0081', '0.0100', '0.0113', '0.0118', '0.0113', '0.0100', '0.0081', '0.0061', '0.0042', '0.0027', '0.0016','0.0013', '0.0022', '0.0035', '0.0050', '0.0066', '0.0081', '0.0092', '0.0096', '0.0092', '0.0081', '0.0066', '0.0050', '0.0035', '0.0022', '0.0013','0.0010', '0.0017', '0.0026', '0.0038', '0.0050', '0.0061', '0.0069', '0.0072', '0.0069', '0.0061', '0.0050', '0.0038', '0.0026', '0.0017', '0.0010','0.0007', '0.0011', '0.0018', '0.0026', '0.0035', '0.0042', '0.0048', '0.0050', '0.0048', '0.0042', '0.0035', '0.0026', '0.0018', '0.0011', '0.0007','0.0004', '0.0007', '0.0011', '0.0017', '0.0022', '0.0027', '0.0031', '0.0032', '0.0031', '0.0027', '0.0022', '0.0017', '0.0011', '0.0007', '0.0004','0.0003', '0.0004', '0.0007', '0.0010', '0.0013', '0.0016', '0.0018', '0.0019', '0.0018', '0.0016', '0.0013', '0.0010', '0.0007', '0.0004', '0.0003'] -window_size_x 15 -window_size_y 15
+
+#  Glyph 'Create Image Sum'
+Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
+
+#  Glyph 'vglClSum'
+Glyph:VGL_CL:blackhat::localhost:9:462:302:: -convolution_window [0, 1, 0, 1, 1, 1, 0, 1, 0] -window_size_x 3 -window_size_y 3
+
+#  Glyph 'Create Image Close'
+Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
+
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:11:462:302:: -thresh 1 -top 1
+
 #  Glyph 'Image save Blur'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Blur.png' 
+ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Swap.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Blur'
+ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Swap'
 
 #  Glyph 'Image save Blur and Thre'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'images/img2_BlurThre.png'
+ExtPort:VGL_CL:vglSaveImage:localhost:14:882:482: -filename 'images/demo/img2_Thre.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'BlurThre'
+ExtPort:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'Thre'
 
-#  Connections 'Applying Blur’
+#  Glyph 'Image save BlurThreMax'
+ExtPort:VGL_CL:vglSaveImage:localhost:16:882:362: -filename 'images/demo/img2_SwapConvolution.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'SwapConvolution'
+
+#  Glyph 'Image save BlurThreMaxSwap'
+ExtPort:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/demo/img2_SwapConvolutionClosing.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'SwapConvolutionClosing'
+
+#  Glyph 'Image save BlurThreMaxSwapInvert'
+ExtPort:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/demo/img2_SwapConvolutionClosingMask.png' 
+
+#  Glyph 'Image show'
+ExtPort:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'SwapConvolutionClosingMask'
+
+#  Connections 'Applying SwapRgb’
 NodeConnection:data:1:RETVAL:2:img
-NodeConnection:data:1:RETVAL:3:img_input
-NodeConnection:data:2:RETVAL:3:img_output
+NodeConnection:data:1:RETVAL:3:src
+NodeConnection:data:2:RETVAL:3:dst
 
-# Connections ‘Show in Blur’
-NodeConnection:data:3:img_output:6:image
-NodeConnection:data:3:img_output:7:image
+# Connections ‘Show in Swap’
+NodeConnection:data:3:dst:12:image
+NodeConnection:data:3:dst:13:image
 
 #  Connections 'Applying Threshold'
-NodeConnection:data:3:img_output:4:img
-NodeConnection:data:3:img_output:5:src
+NodeConnection:data:3:dst:4:img
+NodeConnection:data:3:dst:5:src
 NodeConnection:data:4:RETVAL:5:dst
 
-# Connections ‘Show in Threshold
-NodeConnection:data:5:dst:8:image
-NodeConnection:data:5:dst:9:image
+# Connections ‘Show in Threshold'
+NodeConnection:data:5:dst:14:image
+NodeConnection:data:5:dst:15:image
+
+# Connections ‘Applying Sum'
+NodeConnection:data:3:dst:6:img
+NodeConnection:data:3:dst:7:img_input
+NodeConnection:data:6:RETVAL:7:img_output
+
+# Connections ‘Show in Sum'
+NodeConnection:data:7:img_output:16:image
+NodeConnection:data:7:img_output:17:image
+
+#Connections 'Applying Blur'
+NodeConnection:data:7:img_output:8:img
+NodeConnection:data:7:img_output:9:img_input
+NodeConnection:data:8:RETVAL:9:img_output
+
+#Connections 'Show in Blur'
+NodeConnection:data:9:img_output:18:image
+NodeConnection:data:9:img_output:19:image
+
+#Connections 'Applying BlackHat'
+NodeConnection:data:9:img_output:10:img
+NodeConnection:data:9:img_output:11:src
+NodeConnection:data:10:RETVAL:11:dst
+
+#Connections 'Show in BlackHat'
+NodeConnection:data:11:dst:20:image
+NodeConnection:data:11:dst:21:image
+
 
 AnnotationsBegin
 AnnotationsEnd

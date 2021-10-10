@@ -279,12 +279,10 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-
-        vglClMin_img_input1 = vglCreateImage_RETVAL
-
+        vglClMin_img_buffer = vglCreateImage_img_input
         
         # Apply Max function
-        vglClSub(vglClMin_img_output,vglClMin_img_input1, vglClMin_img_output)
+        vglClSub(vglClMin_img_input,vglClDilate_img_input,vglClMin_img_output  )
 
         for i in range(0, 5):
             p = 0
@@ -297,7 +295,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output )
 
 
     elif vGlyph.func == 'vglClSum': #Function Sum
@@ -315,28 +313,36 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
-    elif vGlyph.func == 'vglClClose': #Function Sum
+    elif vGlyph.func == 'blackhat': #Function Sum
         ##FALTA IMPLEMENTAÇÃO
+
+        '''
+
+        black-hat é o fecamento de f menos f
+        fechamento é a dilatação seguida de erosão com o msmo elemento estruturante
+        
+        '''
         # Search the input image by connecting to the source glyph
-        vglClClose_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClClose_src = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
 
         # Search the output image by connecting to the source glyph
-        vglClClose_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClDilate(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClClose_dst = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))    
+        vglClClose_buf2 =  vglLoadImage_img_input
 
-        vglClDilate(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClErode(vglClClose_img_input, vglClClose_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))    
-              
-        vglClSum_img_input = vglClThreshold_img_output
-        vglClMin(vglClClose_img_output,vglClSum_img_input,vglClClose_img_output) 
-      
-        #vglClClose_img_input1 = vglClSwapRgb_img_input
-        #vglClSub( vglClClose_img_output, vglClClose_img_input1   ,vglClClose_img_output)
+        vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        vglClSub(vglClClose_src,vglClClose_buf2,vglClClose_dst)
+
+
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_dst)
 
 
     elif vGlyph.func == 'ShowImage':
@@ -374,5 +380,4 @@ for vGlyph in lstGlyph:
 
 print("-------------------------------------------------------------")            
 print(msg)
-#print("O tempo de execução em segundos é :",mediablur+mediath)
 print("-------------------------------------------------------------")

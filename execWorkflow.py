@@ -279,7 +279,7 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClSub_img_buffer = vglClThreshold_img_input
+        vglClSub_img_buffer = vglClSwapRgb_img_input
         
         # Apply Max function
         vglClSub(vglClSub_img_input, vglClSub_img_buffer,vglClSub_img_output  )

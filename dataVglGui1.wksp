@@ -54,19 +54,19 @@ Glyph:VGL_CL:vglClErode::localhost:11:462:302:: -convolution_window [0,0,0.125,0
 Glyph:VGL_CL:vglCreateImage::localhost:12:562:242::
 
 #  Glyph 'vglClDilate'
-Glyph:VGL_CL:vglClErode::localhost:13:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+Glyph:VGL_CL:vglClDilate::localhost:13:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Dilate'
 Glyph:VGL_CL:vglCreateImage::localhost:14:562:242::
 
 #  Glyph 'vglClDilate'
-Glyph:VGL_CL:vglClDilate::localhost:15:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+Glyph:VGL_CL:vglClErode::localhost:15:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Sub'
 Glyph:VGL_CL:vglCreateImage::localhost:16:562:242::
 
 #  Glyph 'vglClSub'
-Glyph:VGL_CL:vglClDilate::localhost:17:462:302::
+Glyph:VGL_CL:vglClDilate::localhost:17:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Min'
 Glyph:VGL_CL:vglCreateImage::localhost:18:562:242::
@@ -74,14 +74,14 @@ Glyph:VGL_CL:vglCreateImage::localhost:18:562:242::
 #  Glyph 'vglClMin'
 Glyph:VGL_CL:vglClMin::localhost:19:462:302::
 
-#  Glyph 'Create Image Threshold'
+#  Glyph 'Create Threshold'
 Glyph:VGL_CL:vglCreateImage::localhost:20:562:242::
 
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:21:462:302:: -thresh 0.019 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:21:462:302:: -thresh 0.0000000001 -top 1
 
 #  Glyph 'Image save SwapRgb'
-Glyph:VGL_CL:vglSaveImage::localhost:22:882:362: -filename 'images/demo/img2_Swap.png'
+Glyph:VGL_CL:vglSaveImage:localhost:22:882:362: -filename 'images/demo/img2_Swap.png'
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:23:742:422:: -winname 'Swap'
@@ -105,10 +105,10 @@ Glyph:VGL_CL:vglSaveImage:localhost:28:882:362: -filename 'images/demo/img2_Swap
 Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlcakHatMin'
 
 #  Glyph 'Image save SwapConvolutionDilateErode2SubMinThresh'
-Glyph:VGL_CL:vglSaveImage:localhost:28:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMinThresh.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:30:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMinThresh.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlcakHatMinThresh'
+Glyph:VGL_CL:ShowImage::localhost:31:742:422:: -winname 'SwapConvolutionBlcakHatMinThresh'
 
 #  Connections 'Applying SwapRgb’
 NodeConnection:data:1:RETVAL:2:img

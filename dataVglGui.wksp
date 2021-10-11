@@ -50,7 +50,7 @@ Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
 #  Glyph 'vglClThreshold'
 Glyph:VGL_CL:vglClThreshold::localhost:11:462:302:: -thresh 1 -top 1
 
-#  Glyph 'Image save Blur'
+#  Glyph 'Image save SwapRgb'
 ExtPort:VGL_CL:vglSaveImage::localhost:12:882:362: -filename 'images/demo/img2_Swap.png'
 
 #  Glyph 'Image show'

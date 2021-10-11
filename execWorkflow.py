@@ -275,20 +275,46 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClSub': #Function Sub
 
         # Search the input image by connecting to the source glyph
-        vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClSub_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
-        vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClMin_img_buffer = vglCreateImage_img_input
+        vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        vglClSub_img_buffer = vglClSwapRgb_img_input
         
         # Apply Max function
-        vglClSub(vglClMin_img_input,vglClDilate_img_input,vglClMin_img_output  )
+        #vglClSub(vglClSub_img_input, vglClSub_img_buffer,vglClSub_img_output  )
 
         for i in range(0, 5):
             p = 0
             inicio = t.time()
             while(p<nsteps):
-                vglClSub(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+                #vglClSub(vglClSub_img_input,vglClSub_img_output, vglClSub_img_output)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output )
+
+
+    elif vGlyph.func == 'vglClMin': #Function Min
+
+        # Search the input image by connecting to the source glyph
+        vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        vglClMin_img_buffer = vglClThreshold_img_output
+        
+        # Apply Max function
+        #vglClMin(vglClMin_img_input, vglClMin_img_buffer,vglClMin_img_output  )
+
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                #vglClMin(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
@@ -296,7 +322,6 @@ for vGlyph in lstGlyph:
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output )
-
 
     elif vGlyph.func == 'vglClSum': #Function Sum
     
@@ -318,27 +343,27 @@ for vGlyph in lstGlyph:
 
         '''
 
-        black-hat é o fecamento de f menos f
+        black-hat é o fechamento de f menos f
         fechamento é a dilatação seguida de erosão com o msmo elemento estruturante
         
         '''
         # Search the input image by connecting to the source glyph
-        vglClClose_src = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        #vglClClose_src = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
 
         # Search the output image by connecting to the source glyph
-        vglClClose_dst = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        #vglClClose_dst = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        vglClClose_buf2 =  vglLoadImage_img_input
+        #vglClClose_buf2 =  vglLoadImage_img_input
 
-        vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        #vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        #vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        #vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        #vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        vglClSub(vglClClose_src,vglClClose_buf2,vglClClose_dst)
+        #vglClSub(vglClClose_src,vglClClose_buf2,vglClClose_dst)
 
 
         # Actions after glyph execution

@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/test.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image SwapRgb'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -78,7 +78,7 @@ Glyph:VGL_CL:vglClMin::localhost:19:462:302::
 Glyph:VGL_CL:vglCreateImage::localhost:20:562:242::
 
 #  Glyph 'vglClThreshold'
-Glyph:VGL_CL:vglClThreshold::localhost:21:462:302:: -thresh 0.0000000001 -top 1
+Glyph:VGL_CL:vglClThreshold::localhost:21:462:302:: -thresh 0.4 -top 1
 
 #  Glyph 'Image save SwapRgb'
 Glyph:VGL_CL:vglSaveImage:localhost:22:882:362: -filename 'images/demo/img2_Swap.png'
@@ -102,13 +102,13 @@ Glyph:VGL_CL:ShowImage::localhost:27:742:422:: -winname 'SwapConvolution'
 Glyph:VGL_CL:vglSaveImage:localhost:28:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMin.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlcakHatMin'
+Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlackHatMin'
 
 #  Glyph 'Image save SwapConvolutionDilateErode2SubMinThresh'
 Glyph:VGL_CL:vglSaveImage:localhost:30:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMinThresh.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:31:742:422:: -winname 'SwapConvolutionBlcakHatMinThresh'
+Glyph:VGL_CL:ShowImage::localhost:31:742:422:: -winname 'SwapConvolutionBlackHatMinThresh'
 
 #  Connections 'Applying SwapRgb’
 NodeConnection:data:1:RETVAL:2:img

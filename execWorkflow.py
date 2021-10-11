@@ -279,10 +279,10 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClSub_img_buffer = vglClSwapRgb_img_input
+        vglClSub_img_buffer = vglClThreshold_img_input
         
         # Apply Max function
-        #vglClSub(vglClSub_img_input, vglClSub_img_buffer,vglClSub_img_output  )
+        vglClSub(vglClSub_img_input, vglClSub_img_buffer,vglClSub_img_output  )
 
         for i in range(0, 5):
             p = 0
@@ -295,7 +295,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output )
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
 
 
     elif vGlyph.func == 'vglClMin': #Function Min
@@ -307,8 +307,8 @@ for vGlyph in lstGlyph:
         vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
         vglClMin_img_buffer = vglClThreshold_img_output
         
-        # Apply Max function
-        #vglClMin(vglClMin_img_input, vglClMin_img_buffer,vglClMin_img_output  )
+        # Apply Min function
+        vglClMin(vglClMin_img_input, vglClMin_img_buffer,vglClMin_img_output  )
 
         for i in range(0, 5):
             p = 0
@@ -321,7 +321,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output )
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
     elif vGlyph.func == 'vglClSum': #Function Sum
     
@@ -338,7 +338,7 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
-    elif vGlyph.func == 'blackhat': #Function Sum
+    elif vGlyph.func == 'blackhat': #Function black-hat
         ##FALTA IMPLEMENTAÇÃO
 
         '''
@@ -367,7 +367,7 @@ for vGlyph in lstGlyph:
 
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_dst)
+        #GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_dst)
 
 
     elif vGlyph.func == 'ShowImage':

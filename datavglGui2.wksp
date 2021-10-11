@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/eye.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image SwapRgb'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -36,7 +36,7 @@ Glyph:VGL_CL:vglClConvolution::localhost:5:462:302:: -convolution_window [0.0030
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 
 #  Glyph 'BlackHat'
-Glyph:VGL_CL:BlackHat::localhost:7:382:182:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+Glyph:VGL_CL:BlackHat::localhost:7:382:182:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Sub'
 Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
@@ -54,34 +54,34 @@ Glyph:VGL_CL:vglClThreshold::localhost:11:462:302:: -thresh 0.1 -top 1
 Glyph:VGL_CL:vglCreateImage::localhost:12:562:242::
 
 #  Glyph 'Reconstruct'
-Glyph:VGL_CL:Reconstruct::localhost:13:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+Glyph:VGL_CL:Reconstruct::localhost:13:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Image save Convolution'
-Glyph:VGL_CL:vglSaveImage::localhost:14:882:362: -filename 'images/demo/img2_Convolution.png'
+Glyph:VGL_CL:vglSaveImage::localhost:14:882:362:: -filename 'images/demo1/img2_1.png'
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:15:742:422:: -winname 'Convolution'
+Glyph:VGL_CL:ShowImage::localhost:15:742:422:: -winname 'SwapConvolution'
 
 #  Glyph 'Image save ConvBlackHat'
-Glyph:VGL_CL:vglSaveImage:localhost:16:882:482: -filename 'images/demo/img2_ConvolutionBlackHat.png'
+Glyph:VGL_CL:vglSaveImage::localhost:16:882:482:: -filename 'images/demo1/img2_2.png'
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:17:742:542:: -winname 'ConvolutionBlackHat'
 
 #  Glyph 'Image save ConvBlackHatSub'
-Glyph:VGL_CL:vglSaveImage:localhost:18:882:362: -filename 'images/demo/img2_ConvolutionBlackHatSub.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:18:882:362:: -filename 'images/demo1/img2_3.png' 
 
 #  Glyph 'Image show'
-Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'ConvolutionBlackHatSub'
+Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'SwapConvolutionBlackHatSub'
 
 #  Glyph 'Image save ConvolutionBlackHatSubThresh'
-Glyph:VGL_CL:vglSaveImage:localhost:20:882:362: -filename 'images/demo/img2_ConvolutionBlackHatSubThresh.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:20:882:362:: -filename 'images/demo1/img2_4.png' 
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'ConvolutionBlackHatSubThresh'
 
 #  Glyph 'Image save ConvolutionBlackHatSubThreshRecons'
-Glyph:VGL_CL:vglSaveImage:localhost:22:882:362: -filename 'images/demo/img2_ConvolutionBlackHatSubThreshRecons.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'images/demo1/img2_5.png' 
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:23:742:422:: -winname 'ConvolutionBlackHatSubThreshRecons'
@@ -101,8 +101,8 @@ NodeConnection:data:5:img_output:14:image
 NodeConnection:data:5:img_output:15:image
 
 # Connections ‘Applying Black-Hat'
-NodeConnection:data:3:img_output:6:img
-NodeConnection:data:3:img_output:7:img_input
+NodeConnection:data:5:img_output:6:img
+NodeConnection:data:5:img_output:7:img_input
 NodeConnection:data:6:RETVAL:7:img_output
 
 # Connections ‘Show in Convolution'

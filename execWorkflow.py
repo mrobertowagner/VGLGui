@@ -275,14 +275,14 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClSub': #Function Sub
 
         # Search the input image by connecting to the source glyph
-        vglClSub_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClSub_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
         vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClSub_img_buffer = vglClSwapRgb_img_input
-        
+
+        vglClSub_img_input1 = vglLoadImage_img_input
         # Apply Max function
-        vglClSub(vglClSub_img_input, vglClSub_img_buffer,vglClSub_img_output  )
+        vglClSub(vglClSwapRgb_img_input,vglClSub_img_input1,vglClSub_img_output  )
 
         for i in range(0, 5):
             p = 0
@@ -338,7 +338,7 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
-    elif vGlyph.func == 'blackhat': #Function black-hat
+    elif vGlyph.func == 'BlackHat': #Function black-hat
         ##FALTA IMPLEMENTAÇÃO
 
         '''
@@ -348,27 +348,44 @@ for vGlyph in lstGlyph:
         
         '''
         # Search the input image by connecting to the source glyph
-        #vglClClose_src = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClBlackHat_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
 
         # Search the output image by connecting to the source glyph
-        #vglClClose_dst = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        vglClBlackHat_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        #vglClClose_buf2 =  vglLoadImage_img_input
+        
 
-        #vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClBlackHat_img_input, vglClBlackHat_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        #vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClErode(vglClBlackHat_img_input, vglClBlackHat_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        #vglClDilate(vglClClose_dst, vglClClose_buf2, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClBlackHat_img_input, vglClBlackHat_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
-        #vglClErode(vglClClose_src, vglClClose_dst , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClErode(vglClBlackHat_img_input, vglClBlackHat_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
         #vglClSub(vglClClose_src,vglClClose_buf2,vglClClose_dst)
 
 
         # Actions after glyph execution
-        #GlyphExecutedUpdate(vGlyph.glyph_id, vglClClose_dst)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlackHat_img_output)
 
+
+    elif vGlyph.func == 'Reconstruct': #Rec
+    
+        # Search the input image by connecting to the source glyph
+        vglClRec_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+
+        # Search the output image by connecting to the source glyph
+        vglClRec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        vglClDilate(vglClRec_img_input, vglClRec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClRec_img_input, vglClRec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClRec_img_input, vglClRec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClRec_img_input, vglClRec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+        vglClDilate(vglClRec_img_input, vglClRec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClRec_img_output)
 
     elif vGlyph.func == 'ShowImage':
 

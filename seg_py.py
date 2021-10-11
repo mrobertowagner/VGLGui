@@ -55,14 +55,25 @@ if __name__ == "__main__":
     my.imshow(my.histeq(imgray))
 
   if (TEST3):
-    kernel = np.ones((5, 5), np.uint8)
+    #1 extração do canal verde
+    imgreen = img[:,:,1]
 
-    imsmooth = smooth(imgray, 5)    
-    imbh = blackhat(imsmooth, kernel, iterations=2)
-    result = imbh - imsmooth
-  
+    #2 suavização
+    imsmooth = smooth(imgreen, 5)
     my.imshow(imsmooth)
+
+    #3 black hat
+    kernel = np.ones((5, 5), np.uint8)
+    imbh = blackhat(imsmooth, kernel, iterations=2)
+
+    #4 black hat menos imagem de entrada
+    result = imbh - imsmooth  
     my.imshow(my.histeq(result))
+
+    #5 threshold    
     imthresh = my.thresh(result, 3)
     my.imshow(imthresh)
-    my.imshow(reconstruct(imthresh))
+
+    #6 opening by reconstruction: erosão seguida da dilatação condicional até estabilização
+    imopenrec = reconstruct(imthresh)
+    my.imshow(imopenrec)

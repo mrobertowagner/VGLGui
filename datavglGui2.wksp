@@ -35,7 +35,7 @@ Glyph:VGL_CL:vglClConvolution::localhost:5:462:302:: -convolution_window [0.0030
 #  Glyph 'Create Image Black-Hat'
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 
-#  Glyph 'vglClConvolution'
+#  Glyph 'BlackHat'
 Glyph:VGL_CL:BlackHat::localhost:7:382:182:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Create Image Sub'

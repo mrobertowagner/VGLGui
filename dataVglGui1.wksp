@@ -1,0 +1,186 @@
+# VisionGL Visual Programming Workspace
+#
+# VisionGL workspace file (/home/dataVglGui1.wksp) was created 
+# on Sun Oct 2 10:07:34 2021
+# by user VisionGL
+
+WorkspaceBegin: 1.0
+
+VariablesBegin:
+
+#
+# list of currently declared variables
+#
+
+width_size = 2342
+height_size = 1144
+
+VariablesEnd:
+
+#  Glyph 'Image load'
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+
+#  Glyph 'Create Image SwapRgb'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
+
+#  Glyph 'vglClSwapRgb'
+Glyph:VGL_CL:vglClSwapRgb::localhost:3:382:182::
+
+#  Glyph 'Create Image Threshold'
+Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
+
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:5:462:302:: -thresh 0.1 -top 1
+
+#  Glyph 'Create Image Convolution'
+Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
+
+#  Glyph 'vglClConvolution'
+Glyph:VGL_CL:vglClConvolution::localhost:7:462:302:: -convolution_window ['0.0003', '0.0004', '0.0007', '0.0010', '0.0013', '0.0016', '0.0018', '0.0019', '0.0018', '0.0016', '0.0013', '0.0010', '0.0007', '0.0004', '0.0003','0.0004', '0.0007', '0.0011', '0.0017', '0.0022', '0.0027', '0.0031', '0.0032', '0.0031', '0.0027', '0.0022', '0.0017', '0.0011', '0.0007', '0.0004','0.0007', '0.0011', '0.0018', '0.0026', '0.0035', '0.0042', '0.0048', '0.0050', '0.0048', '0.0042', '0.0035', '0.0026', '0.0018', '0.0011', '0.0007','0.0010', '0.0017', '0.0026', '0.0038', '0.0050', '0.0061', '0.0069', '0.0072', '0.0069', '0.0061', '0.0050', '0.0038', '0.0026', '0.0017', '0.0010','0.0013', '0.0022', '0.0035', '0.0050', '0.0066', '0.0081', '0.0092', '0.0096', '0.0092', '0.0081', '0.0066', '0.0050', '0.0035', '0.0022', '0.0013','0.0016', '0.0027', '0.0042', '0.0061', '0.0081', '0.0100', '0.0113', '0.0118', '0.0113', '0.0100', '0.0081', '0.0061', '0.0042', '0.0027', '0.0016','0.0018', '0.0031', '0.0048', '0.0069', '0.0092', '0.0113', '0.0128', '0.0133', '0.0128', '0.0113', '0.0092', '0.0069', '0.0048', '0.0031', '0.0018','0.0019', '0.0032', '0.0050', '0.0072', '0.0096', '0.0118', '0.0133', '0.0139', '0.0133', '0.0118', '0.0096', '0.0072', '0.0050', '0.0032', '0.0019','0.0018', '0.0031', '0.0048', '0.0069', '0.0092', '0.0113', '0.0128', '0.0133', '0.0128', '0.0113', '0.0092', '0.0069', '0.0048', '0.0031', '0.0018','0.0016', '0.0027', '0.0042', '0.0061', '0.0081', '0.0100', '0.0113', '0.0118', '0.0113', '0.0100', '0.0081', '0.0061', '0.0042', '0.0027', '0.0016','0.0013', '0.0022', '0.0035', '0.0050', '0.0066', '0.0081', '0.0092', '0.0096', '0.0092', '0.0081', '0.0066', '0.0050', '0.0035', '0.0022', '0.0013','0.0010', '0.0017', '0.0026', '0.0038', '0.0050', '0.0061', '0.0069', '0.0072', '0.0069', '0.0061', '0.0050', '0.0038', '0.0026', '0.0017', '0.0010','0.0007', '0.0011', '0.0018', '0.0026', '0.0035', '0.0042', '0.0048', '0.0050', '0.0048', '0.0042', '0.0035', '0.0026', '0.0018', '0.0011', '0.0007','0.0004', '0.0007', '0.0011', '0.0017', '0.0022', '0.0027', '0.0031', '0.0032', '0.0031', '0.0027', '0.0022', '0.0017', '0.0011', '0.0007', '0.0004','0.0003', '0.0004', '0.0007', '0.0010', '0.0013', '0.0016', '0.0018', '0.0019', '0.0018', '0.0016', '0.0013', '0.0010', '0.0007', '0.0004', '0.0003'] -window_size_x 15 -window_size_y 15
+
+#  Glyph 'Create Image Dilate'
+Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
+
+#  Glyph 'vglCDilate'
+Glyph:VGL_CL:vglClDilate::localhost:9:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Erode'
+Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
+
+#  Glyph 'vglClErode'
+Glyph:VGL_CL:vglClErode::localhost:11:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Dilate'
+Glyph:VGL_CL:vglCreateImage::localhost:12:562:242::
+
+#  Glyph 'vglClDilate'
+Glyph:VGL_CL:vglClErode::localhost:13:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Dilate'
+Glyph:VGL_CL:vglCreateImage::localhost:14:562:242::
+
+#  Glyph 'vglClDilate'
+Glyph:VGL_CL:vglClDilate::localhost:15:462:302:: -convolution_window [0,0,0.125,0,0, 0, 0,0.5,0,0,0.125,0.5,1,0.5,0.125,0,0,0.5,0,0, 0, 0, 0.125,0,0] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Sub'
+Glyph:VGL_CL:vglCreateImage::localhost:16:562:242::
+
+#  Glyph 'vglClSub'
+Glyph:VGL_CL:vglClDilate::localhost:17:462:302::
+
+#  Glyph 'Create Image Min'
+Glyph:VGL_CL:vglCreateImage::localhost:18:562:242::
+
+#  Glyph 'vglClMin'
+Glyph:VGL_CL:vglClMin::localhost:19:462:302::
+
+#  Glyph 'Create Image Threshold'
+Glyph:VGL_CL:vglCreateImage::localhost:20:562:242::
+
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:21:462:302:: -thresh 0.019 -top 1
+
+#  Glyph 'Image save SwapRgb'
+Glyph:VGL_CL:vglSaveImage::localhost:22:882:362: -filename 'images/demo/img2_Swap.png'
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:23:742:422:: -winname 'Swap'
+
+#  Glyph 'Image save Threshold'
+Glyph:VGL_CL:vglSaveImage:localhost:24:882:482: -filename 'images/demo/img2_Thresh.png'
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:25:742:542:: -winname 'Thre'
+
+#  Glyph 'Image save SwapConv'
+Glyph:VGL_CL:vglSaveImage:localhost:26:882:362: -filename 'images/demo/img2_SwapConvolution.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:27:742:422:: -winname 'SwapConvolution'
+
+#  Glyph 'Image save SwapConvolutionDilateErode2SubMin'
+Glyph:VGL_CL:vglSaveImage:localhost:28:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMin.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlcakHatMin'
+
+#  Glyph 'Image save SwapConvolutionDilateErode2SubMinThresh'
+Glyph:VGL_CL:vglSaveImage:localhost:28:882:362: -filename 'images/demo/img2_SwapConvolutionDilateErode2SubMinThresh.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:29:742:422:: -winname 'SwapConvolutionBlcakHatMinThresh'
+
+#  Connections 'Applying SwapRgb’
+NodeConnection:data:1:RETVAL:2:img
+NodeConnection:data:1:RETVAL:3:src
+NodeConnection:data:2:RETVAL:3:dst
+
+# Connections ‘Show in Swap’
+NodeConnection:data:3:dst:22:image
+NodeConnection:data:3:dst:23:image
+
+#  Connections 'Applying Threshold'
+NodeConnection:data:3:dst:4:img
+NodeConnection:data:3:dst:5:src
+NodeConnection:data:4:RETVAL:5:dst
+
+# Connections ‘Show in Threshold'
+NodeConnection:data:5:dst:24:image
+NodeConnection:data:5:dst:25:image
+
+# Connections ‘Applying Convolution'
+NodeConnection:data:3:dst:6:img
+NodeConnection:data:3:dst:7:img_input
+NodeConnection:data:6:RETVAL:7:img_output
+
+# Connections ‘Show in Convolution'
+NodeConnection:data:7:img_output:26:image
+NodeConnection:data:7:img_output:27:image
+
+#Connections 'Applying Dilate'
+NodeConnection:data:7:img_output:8:img
+NodeConnection:data:7:img_output:9:img_input
+NodeConnection:data:8:RETVAL:9:img_output
+
+#Connections 'Applying Erode'
+NodeConnection:data:9:img_output:10:img
+NodeConnection:data:9:img_output:11:img_input
+NodeConnection:data:10:RETVAL:11:img_output
+
+#Connections 'Applying Dilate'
+NodeConnection:data:11:img_output:12:img
+NodeConnection:data:11:img_output:13:img_input
+NodeConnection:data:12:RETVAL:13:img_output
+
+#Connections 'Applying Erode'
+NodeConnection:data:13:img_output:14:img
+NodeConnection:data:13:img_output:15:img_input
+NodeConnection:data:14:RETVAL:15:img_output
+
+#Connections 'Applying Sub'
+NodeConnection:data:15:img_output:16:img
+NodeConnection:data:15:img_output:17:img_input
+NodeConnection:data:16:RETVAL:17:img_output
+
+#Connections 'Applying Min'
+NodeConnection:data:17:img_output:18:img
+NodeConnection:data:17:img_output:19:img_input
+NodeConnection:data:18:RETVAL:19:img_output
+
+# Connections ‘Show in SwapConvolutionBlcakHatMin'
+NodeConnection:data:19:img_output:28:image
+NodeConnection:data:19:img_output:29:image
+
+#Connections 'Applying Threshold'
+NodeConnection:data:19:img_output:20:img
+NodeConnection:data:19:img_output:21:src
+NodeConnection:data:20:RETVAL:21:dst
+
+# Connections ‘Show in SwapConvolutionBlcakHatMinThresh'
+NodeConnection:data:21:dst:30:image
+NodeConnection:data:21:dst:31:image
+
+AnnotationsBegin
+AnnotationsEnd
+
+WorkspaceEnd: 1.0

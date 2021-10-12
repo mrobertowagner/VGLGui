@@ -425,7 +425,7 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
 
 # File to be read
 
-vfile = 'demo.wksp'
+vfile = 'drive.wksp'
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory

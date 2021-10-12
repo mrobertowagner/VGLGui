@@ -1,7 +1,7 @@
 import my
 import cv2
 import numpy as np
-
+import time as t
 
 def close(im, kernel, iterations=1):
   imdil = cv2.dilate(im, kernel, iterations)
@@ -37,45 +37,69 @@ def reconstruct(im):
   return imt1
 
 
+msg = ""
+media = 0.0
+nsteps = 1000
 
 TEST1 = False
 TEST2 = False
 TEST3 = True
 
 if __name__ == "__main__":
-  filename = "images/eye.png"
+  filename = "images/01_test.png"
   img = my.imread(filename)
   imgray = my.imreadgray(filename)
 
-  if (TEST1):
-    h = my.hist(img)
-    my.showhist(h, 10)
-
-  if (TEST2):
-    my.imshow(my.histeq(imgray))
 
   if (TEST3):
-    #1 extração do canal verde
-    imgreen = img[:,:,1]
+    msg = ""
+    media = 0.0
+    nsteps = 1
+  
+    kernel = np.ones((5, 5), np.uint8)
 
-    #2 suavização
-    imconv = smooth(imgreen, 5)
+    #1 Convolution
+    imconv = smooth(img, 5)
+
+    for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                imconv = smooth(img, 5)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+
     my.imshow(imconv)
 
-    #3 black hat
-    kernel = np.ones((5, 5), np.uint8)
-    imbh = blackhat(imsmooth, kernel, iterations=2)
+    #2 Dilate    
+    imdil = cv2.dilate(imconv, kernel, 1)
 
-    my.imshow(imbh)
+    for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                imdil = cv2.dilate(imconv, kernel, 1)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+    msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
-    #4 black hat menos imagem de entrada
-    result = imbh - imsmooth  
-    my.imshow(my.histeq(result))
+    my.imshow(imdil)
 
-    #5 threshold    
-    imthresh = my.thresh(result, 3)
-    my.imshow(imthresh)
+    #3 Erode
+    imerode = cv2.erode(imdil, kernel, 1)
 
-    #6 opening by reconstruction: erosão seguida da dilatação condicional até estabilização
-    imopenrec = reconstruct(imthresh)
-    my.imshow(imopenrec)
+    for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                imerode = cv2.erode(imdil, kernel, 1)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+    msg = msg + "Erode runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    my.imshow(imerode)
+
+print(msg)

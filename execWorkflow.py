@@ -47,15 +47,10 @@ def tratnum (num):
         listnumpy = np.array(listnum,np.float32)
     return listnumpy
 
-def rgb2gray(im):
-    result = np.dot(im[...,:3], [0.299, 0.587, 0.114])
-    result[result > 255] = 255
-    np.round(result)
-    return np.uint8(result)
 
 msg = ""
 media = 0.0
-nsteps = 1
+nsteps = 1000
 vl.vglClInit() 
 
 # Update the status of glyph entries
@@ -214,7 +209,7 @@ for vGlyph in lstGlyph:
             p = 0
             inicio = t.time()
             while(p<nsteps):
-                #vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(3/255))  
+                vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))  
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
@@ -294,8 +289,7 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
-        msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
 
@@ -307,21 +301,20 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClMin_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        vglClMin_img_buffer = vglClThreshold_img_output
+        
         
         # Apply Min function
-        vglClMin(vglClMin_img_input, vglClMin_img_buffer,vglClMin_img_output  )
+        vglClMin(vglClMin_img_input, vglClMin_img_output,vglClMin_img_output  )
 
         for i in range(0, 5):
             p = 0
             inicio = t.time()
             while(p<nsteps):
-                #vglClMin(vglClMin_img_input,vglClMin_img_output, vglClMin_img_output)
+                vglClMin(vglClMin_img_input, vglClMin_img_output,vglClMin_img_output)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
-        msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+        msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
@@ -333,10 +326,19 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         vglClSum_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        # Apply SwapRgb function
-        vglClSum_img_input = vglClConvolution_img_output
-        vglClSum(vglClSum_img_input,vglClSum_img_output,vglClSum_img_output)      
+        # Apply Sumfunction
         
+        vglClSum(vglClSum_img_input,vglClSum_img_output,vglClSum_img_output) 
+
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                vglClSum(vglClMin_img_input, vglClMin_img_output,vglClMin_img_output)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Sum Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"        
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
@@ -353,6 +355,18 @@ for vGlyph in lstGlyph:
         vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
 
         vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+                vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Closing Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+
 
         #desalocar blackhat_buffer
 
@@ -378,7 +392,24 @@ for vGlyph in lstGlyph:
             vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
             vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
             vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-            
+
+        
+        for i in range(0, 5):
+            p = 0
+            inicio = t.time()
+            while(p<nsteps):
+                vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+                for n in range(40):
+                    vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+                    vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+                    vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[1].getValue()))
+                    vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+                p = p + 1
+            fim = t.time()
+            media = media + (fim - inicio)
+        msg = msg + "Reconstruct Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+
+
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Rec_buffer)
 

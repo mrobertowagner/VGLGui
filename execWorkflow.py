@@ -207,14 +207,14 @@ for vGlyph in lstGlyph:
         vglClThreshold_img_output = getImageInputByIdName(vGlyph.glyph_id, 'dst')
 
         # Apply Threshold function
-        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))
+        vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(3/255))
 
         #Tempo de execução
         for i in range(0, 5):
             p = 0
             inicio = t.time()
             while(p<nsteps):
-                vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))  
+                vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(3/255))  
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
@@ -275,14 +275,14 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'vglClSub': #Function Sub
 
         # Search the input image by connecting to the source glyph
-        vglClSub_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        vglClSub_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
         
         # Search the output image by connecting to the source glyph
         vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         vglClSub_img_input1 = vglLoadImage_img_input
         # Apply Max function
-        vglClSub(vglClSwapRgb_img_input,vglClSub_img_input1,vglClSub_img_output  )
+        vglClSub(vglClSub_img_input,vglClSub_img_input1,vglClSub_img_output  )
 
         for i in range(0, 5):
             p = 0
@@ -295,7 +295,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_input1)
 
 
     elif vGlyph.func == 'vglClMin': #Function Min

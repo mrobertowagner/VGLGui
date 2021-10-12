@@ -279,6 +279,8 @@ for vGlyph in lstGlyph:
         
         # Search the output image by connecting to the source glyph
         vglClSub_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        
+        vglClSub_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         vglClSub_img_input1 = vglLoadImage_img_input
         # Apply Max function
@@ -295,7 +297,7 @@ for vGlyph in lstGlyph:
         msg = msg + "Tempo de execução da Sub\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         msg = msg + "Max runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_input1)
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
 
 
     elif vGlyph.func == 'vglClMin': #Function Min

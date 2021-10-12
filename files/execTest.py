@@ -79,8 +79,9 @@ def salvando2d(img, name):
 	vl.vglSaveImage(name, img)
 
 
-img_in_path = 'images/demo/teste.png'
-img_out_path= 'images/demo/'
+img_in_path1 = 'images/demo1/img2_Convolution.png'
+img_in_path2 = 'images/demo1/img2_BlackHat.png'
+img_out_path= 'images/demo1/'
 
 msg = ""
 
@@ -89,44 +90,51 @@ msg = ""
 # [0, 1, 0, 1, 1, 1, 0, 1, 0]
 #[0.125,  0.500, 0.125, 0.500, 1.000, 0.500, 0.125,  0.500, 0.125]
 #[0,0,0.125,0,0, 0,0,0.500,0,0,.125,0.500,1.000,0.500,.125,0,0,0.500,0,0,0,0,0.125,0,0]
-[0,0,0.125,0,0, 0,0,0.500,0,0,.125,0.500,1.000,0.500,.125,0,0,0.500,0,0,0,0,0.125,0,0]
+#[0,0,0.125,0,0, 0,0,0.500,0,0,.125,0.500,1.000,0.500,.125,0,0,0.500,0,0,0,0,0.125,0,0]
 
 
-[0.0030, 0.0133, 0.0219, 0.0133, 0.0030,0.0133, 0.0596, 0.0983, 0.0596, 0.0133,0.0219, 0.0983, 0.1621, 0.0983, 0.0219,0.0133, 0.0596, 0.0983,0.0596, 0.0133,0.0030, 0.0133, 0.0219, 0.0133, 0.0030]
+#[0.0030, 0.0133, 0.0219, 0.0133, 0.0030,0.0133, 0.0596, 0.0983, 0.0596, 0.0133,0.0219, 0.0983, 0.1621, 0.0983, 0.0219,0.0133, 0.0596, 0.0983,0.0596, 0.0133,0.0030, 0.0133, 0.0219, 0.0133, 0.0030]
 
 vl.vglClInit()
 
 
-'''
-img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
-vl.vglLoadImage(img_input)
-if( img_input.getVglShape().getNChannels() == 3 ):
-    vl.rgb_to_rgba(img_input)
 
-vl.vglClUpload(img_input)
+img_input1 = vl.VglImage(img_in_path1, None, vl.VGL_IMAGE_2D_IMAGE())
+vl.vglLoadImage(img_input1)
+if( img_input1.getVglShape().getNChannels() == 3 ):
+    vl.rgb_to_rgba(img_input1)
 
-img_output = vl.create_blank_image_as(img_input)
-img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
+vl.vglClUpload(img_input1)
+
+
+img_input2 = vl.VglImage(img_in_path2, None, vl.VGL_IMAGE_2D_IMAGE())
+vl.vglLoadImage(img_input2)
+if( img_input2.getVglShape().getNChannels() == 3 ):
+    vl.rgb_to_rgba(img_input2)
+
+vl.vglClUpload(img_input2)
+
+
+img_output = vl.create_blank_image_as(img_input1)
+img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input1) )
 vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
-#vglClInvert(img_input,img_output1)
-#salvando2d(img_output1, img_out_path+"img-vglClInvert.png")
+imshow(VglImage.get_ipl(img_input1))
+imshow(VglImage.get_ipl(img_input2))
 
-vglClThreshold(img_input,img_output,np.float32(0.5))
-salvando2d(img_output, img_out_path+"img-Threshold.png")
+vglClSub(img_input2,img_input1,img_output)
 
-#salvando2d(img_output3, img_out_path+"img-vglClS.png")
+salvando2d(img_output, img_out_path+"img-Sub1.png")
+imshow(VglImage.get_ipl(img_output))
+
+
+
 '''
-
-
-
-
-
 filename = 'images/demo/'
   
 image_path = 'images/demo'
 
-'''
+
 # Getting the kernel to be used in Top-Hat
 filterSize =(3, 3)
 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, 
@@ -147,8 +155,6 @@ cv2.imshow("tophat", tophat_img)
 status = cv2.imwrite('/home/Documentos/teste11.png',tophat_img)
 #print(status)
 cv2.waitKey(5000)
-'''
-
 
 input_image = cv2.imread("images/demo/imgf.png")
 ret, thresh1 = cv2.threshold(input_image, 3, 255, cv2.THRESH_BINARY) 
@@ -156,9 +162,6 @@ ret, thresh1 = cv2.threshold(input_image, 3, 255, cv2.THRESH_BINARY)
 cv2.imshow('Binary Threshold', thresh1)
 cv2.waitKey(5000)
 
-
-
-'''
 kernel = np.ones((3,3), np.uint8) 
   
 img_erosion = cv2.erode(thresh1, kernel, iterations=1) 
@@ -170,5 +173,3 @@ cv2.waitKey(5000)
 cv2.imshow('Dilation', img_dilation) 
 cv2.waitKey(5000)
 '''
-
-

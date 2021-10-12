@@ -15,6 +15,6 @@ __kernel void vglClSub(__read_only image2d_t img_input1,__read_only image2d_t im
   minus.x = max(p1.x - p2.x,0.0f);
   minus.y = max(p1.y - p2.y,0.0f);
   minus.z = max(p1.z - p2.z,0.0f);
-  minus.w = max(p1.w - p2.w,0.0f);
+  minus.w = 1.0;
   write_imagef(img_output, coords, minus);
 }

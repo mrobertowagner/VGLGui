@@ -36,7 +36,7 @@ def reconstruct(im):
     c = c + 1
   return imt1
 
-    
+
 
 TEST1 = False
 TEST2 = False
@@ -59,12 +59,14 @@ if __name__ == "__main__":
     imgreen = img[:,:,1]
 
     #2 suavização
-    imsmooth = smooth(imgreen, 5)
-    my.imshow(imsmooth)
+    imconv = smooth(imgreen, 5)
+    my.imshow(imconv)
 
     #3 black hat
     kernel = np.ones((5, 5), np.uint8)
     imbh = blackhat(imsmooth, kernel, iterations=2)
+
+    my.imshow(imbh)
 
     #4 black hat menos imagem de entrada
     result = imbh - imsmooth  

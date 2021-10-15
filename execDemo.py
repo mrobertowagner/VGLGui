@@ -54,7 +54,7 @@ if __name__ == "__main__":
   if (TEST3):
     msg = ""
     media = 0.0
-    nsteps = 1
+    nsteps = 1000
   
     kernel = np.ones((5, 5), np.uint8)
 
@@ -64,12 +64,12 @@ if __name__ == "__main__":
     for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<nsteps):
+            while(p<1000):
                 imconv = smooth(img, 5)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Convolution runtime\t "+str( round((media/5), 9) ) +"s\n"
 
     my.imshow(imconv)
 
@@ -79,12 +79,12 @@ if __name__ == "__main__":
     for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<nsteps):
+            while(p<1000):
                 imdil = cv2.dilate(imconv, kernel, 1)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Dilate runtime\t "+str( round((media/5), 9) ) +"s\n"
 
     my.imshow(imdil)
 
@@ -94,12 +94,12 @@ if __name__ == "__main__":
     for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<nsteps):
+            while(p<1000):
                 imerode = cv2.erode(imdil, kernel, 1)
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Erode runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Erode runtime\t "+str( round((media/5), 9) ) +"s\n"
     my.imshow(imerode)
 
 print(msg)

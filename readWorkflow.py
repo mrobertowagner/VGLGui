@@ -2,6 +2,7 @@
 # File type: structure.txt
 
 #
+import sys
 import re
 import os
 import string
@@ -425,7 +426,7 @@ def procCreateConnection(procCreateConnection_voutput_Glyph_ID, procCreateConnec
 
 # File to be read
 
-vfile = 'drive.wksp'
+vfile = sys.argv[1]
 
 vGlyph = objGlyph               #Glyph in memory 
 vGlyphPar = objGlyphParameters  #Glyph parameters in memory

@@ -47,7 +47,7 @@ if __name__ == "__main__":
   img = my.imread(filename)
   imgray = my.imreadgray(filename)
   media = 0.0
-  nsteps = 1
+  nsteps = 1000
   msg = ""
   if (TEST1):
     h = my.hist(img)
@@ -68,7 +68,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Extraction runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Extraction runtime\t "+str( round((media/5), 9) ) +"s\n"
 
     #2 suavização
     imsmooth = smooth(imgreen, 5)
@@ -81,7 +81,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Convolution runtime\t "+str( round((media/5), 9) ) +"s\n"
 
     my.imshow(imsmooth)
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Closing runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
+    msg = msg + "Closing runtime\t "+str( round((media/5), 9) ) +"s\n"
 
     my.imshow(imbh)
 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"  
+    msg = msg + "Sub Runtime\t "+str( round((media/5), 9) ) +"s\n"  
 
     my.imshow(my.histeq(result))
 
@@ -127,7 +127,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Treshold Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n" 
+    msg = msg + "Treshold Runtime\t "+str( round((media/5), 9) ) +"s\n" 
 
     my.imshow(imthresh)
 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Reconstruct Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n" 
+    msg = msg + "Reconstruct Runtime\t "+str( round((media/5), 9) ) +"s\n" 
 
     my.imshow(imopenrec)
 

@@ -110,8 +110,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)  
-        msg = msg + "Blur runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)  
+        msg = msg + "Blur runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
@@ -137,8 +137,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Erode runtime \t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Erode runtime \t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
@@ -164,8 +164,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Convolution runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
@@ -192,8 +192,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Dilate runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
@@ -218,8 +218,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Threshold runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Threshold runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
@@ -244,8 +244,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "SwapRgb runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "SwapRgb runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
@@ -269,8 +269,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Invert runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Invert runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
@@ -297,8 +297,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Sub Runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
 
@@ -323,8 +323,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Sub Runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
@@ -348,8 +348,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Sum Runtime\t "+str( round((media/5), 9) ) +"s\n"        
+        total = total + ((media/5)*1000)
+        msg = msg + "Sum Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"        
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
@@ -376,8 +376,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Closing Runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Closing Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
 
         #desalocar blackhat_buffer
@@ -419,8 +419,8 @@ for vGlyph in lstGlyph:
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-        total = total + (media/5)
-        msg = msg + "Reconstruct Runtime\t "+str( round((media/5), 9) ) +"s\n"
+        total = total + ((media/5)*1000)
+        msg = msg + "Reconstruct Runtime\t "+str( round((media/5)*1000, 9) ) +"ms\n"
 
 
         # Actions after glyph execution
@@ -461,7 +461,5 @@ for vGlyph in lstGlyph:
 print("-------------------------------------------------------------")            
 print(msg)
 print("-------------------------------------------------------------")
-print("Total runtime "+str(round(total,2))+"s")
-print("-------------------------------------------------------------")
-print("Total runtime "+str(round(total*1000,2))+"ms")
+print("Total runtime "+str(round(total,2))+"ms")
 print("-------------------------------------------------------------")

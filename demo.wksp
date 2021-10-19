@@ -20,7 +20,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Convolution'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -41,22 +41,22 @@ Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
 Glyph:VGL_CL:vglClErode::localhost:7:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 5 -window_size_y 5
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/demoConvultion.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/demoConvultion.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'demoConvolution'
+Glyph:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'demoConvolution'
 
 #  Glyph 'Image save Dilate'
-ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/demoDilate.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/demoDilate.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'demoDilate'
+Glyph:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'demoDilate'
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/demoErode.png'
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'images/demoErode.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'demoErode'
+Glyph:VGL_CL:ShowImage::localhost:13:742:542:: -winname 'demoErode'
 
 
 #  Connections 'Applying Convolution’

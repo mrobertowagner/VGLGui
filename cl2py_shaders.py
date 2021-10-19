@@ -716,6 +716,24 @@ def vglClSum(img_input1, img_input2, img_output):
 
     vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())
 
+def vglClEqual(img_input1, img_input2, img_output):
+
+    vl.vglCheckContext(img_input1, vl.VGL_CL_CONTEXT())
+    vl.vglCheckContext(img_input2, vl.VGL_CL_CONTEXT())
+    vl.vglCheckContext(img_output, vl.VGL_CL_CONTEXT())
+
+    _program = vl.get_ocl_context().get_compiled_kernel("CL/vglClEqual.cl", "vglClEqual")
+    _kernel = _program.vglClEqual
+
+    _kernel.set_arg(0, img_input1.get_oclPtr())
+    _kernel.set_arg(1, img_input2.get_oclPtr())
+    _kernel.set_arg(2, img_output.get_oclPtr())
+
+    # THIS IS A BLOCKING COMMAND. IT EXECUTES THE KERNEL.
+    cl.enqueue_nd_range_kernel(vl.get_ocl().commandQueue, _kernel, img_input1.get_oclPtr().shape, None)
+
+    vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())
+
 """
     /** Swap R and B channels.
   */    

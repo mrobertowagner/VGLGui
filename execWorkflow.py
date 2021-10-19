@@ -239,7 +239,7 @@ for vGlyph in lstGlyph:
         for i in range(0, 5):
             p = 0
             inicio = t.time()
-            while(p<nstepss):
+            while(p<nsteps):
                 vglClSwapRgb(vglClSwapRgb_img_input,vglClSwapRgb_img_output)
                 p = p + 1
             fim = t.time()

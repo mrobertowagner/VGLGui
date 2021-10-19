@@ -28,7 +28,7 @@ def reconstruct(im):
   imt1 = cv2.dilate(imt0, kernel)
   is_equal = image_equal(imt0, imt1)
   while (not is_equal):
-    print(c)
+    #print(c)
     imt0 = imt1
     imdil = cv2.dilate(imt0, kernel)
     imt1 = np.minimum(imdil, im)
@@ -41,7 +41,7 @@ def reconstruct(im):
 TEST1 = False
 TEST2 = False
 TEST3 = True
-
+total = 0.0
 if __name__ == "__main__":
   filename = "images/01_test.png"
   img = my.imread(filename)
@@ -68,10 +68,11 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Extraction runtime\t "+str( round((media/5), 9) ) +"s\n"
+    #total = total + ((media/5)*1000)
+    #msg = msg + "Extraction runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
     #2 suavização
-    imsmooth = smooth(imgreen, 5)
+    imsmooth = smooth(img, 5)
 
     for i in range(0, 5):
             p = 0
@@ -81,9 +82,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Convolution runtime\t "+str( round((media/5), 9) ) +"s\n"
+    total = total + ((media/5)*1000)
+    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
-    my.imshow(imsmooth)
+    #my.imshow(imsmooth)
 
     #3 black hat
     kernel = np.ones((5, 5), np.uint8)
@@ -97,9 +99,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Closing runtime\t "+str( round((media/5), 9) ) +"s\n"
+    total = total + ((media/5)*1000)
+    msg = msg + "Closing runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
-    my.imshow(imbh)
+    #my.imshow(imbh)
 
     #4 black hat menos imagem de entrada
     result = imbh - imsmooth
@@ -112,9 +115,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Sub Runtime\t "+str( round((media/5), 9) ) +"s\n"  
+    total = total + ((media/5)*1000)
+    msg = msg + "Sub Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"  
 
-    my.imshow(my.histeq(result))
+    #my.imshow(my.histeq(result))
 
     #5 threshold    
     imthresh = my.thresh(result, 3)
@@ -127,9 +131,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Treshold Runtime\t "+str( round((media/5), 9) ) +"s\n" 
+    total = total + ((media/5)*1000)
+    msg = msg + "Threshold Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n" 
 
-    my.imshow(imthresh)
+    #my.imshow(imthresh)
 
     #6 opening by reconstruction: erosão seguida da dilatação condicional até estabilização
     imopenrec = reconstruct(imthresh)
@@ -142,8 +147,14 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Reconstruct Runtime\t "+str( round((media/5), 9) ) +"s\n" 
+    total = total + ((media/5)*1000)
+    msg = msg + "Reconstruct Runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n" 
 
-    my.imshow(imopenrec)
+    #my.imshow(imopenrec)
 
+
+print("-------------------------------------------------------------")            
 print(msg)
+print("-------------------------------------------------------------")
+print("Total runtime "+str(round(total,2))+"ms")
+print("-------------------------------------------------------------")

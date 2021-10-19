@@ -55,7 +55,7 @@ if __name__ == "__main__":
     msg = ""
     media = 0.0
     nsteps = 1000
-  
+    total = 0.0
     kernel = np.ones((5, 5), np.uint8)
 
     #1 Convolution
@@ -69,9 +69,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Convolution runtime\t "+str( round((media/5), 9) ) +"s\n"
+    total = total + ((media/5)*1000)
+    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
-    my.imshow(imconv)
+    #my.imshow(imconv)
 
     #2 Dilate    
     imdil = cv2.dilate(imconv, kernel, 1)
@@ -84,9 +85,10 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Dilate runtime\t "+str( round((media/5), 9) ) +"s\n"
+    total = total + ((media/5)*1000)
+    msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
 
-    my.imshow(imdil)
+    #my.imshow(imdil)
 
     #3 Erode
     imerode = cv2.erode(imdil, kernel, 1)
@@ -99,7 +101,13 @@ if __name__ == "__main__":
                 p = p + 1
             fim = t.time()
             media = media + (fim - inicio)
-    msg = msg + "Erode runtime\t "+str( round((media/5), 9) ) +"s\n"
-    my.imshow(imerode)
+    total = total + ((media/5)*1000)
+    msg = msg + "Erode runtime\t "+str( round((media/5)*1000,4) ) +"ms\n"
+    #my.imshow(imerode)
 
+
+print("-------------------------------------------------------------")            
 print(msg)
+print("-------------------------------------------------------------")
+print("Total runtime "+str(round(total,2))+"ms")
+print("-------------------------------------------------------------")

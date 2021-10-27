@@ -105,30 +105,6 @@ total = 0.0
 p = 0
 inicio = t.time()
 
-''' 
-for i in range(nsteps):
-    p = 0
-    inicio = t.time()
-    vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
-    p = p + 1
-    fim = t.time()
-    media = media + (fim - inicio)
-total = total + (((media/5)*1000)/nsteps)
-'''
-
-'''
-import time
-
-t1 = time.time()
-c = 0
-for i in range(nsteps):
-  vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
-  c+=
-tempoExec = time.time() - t1
-print("Tempo de execução: {} segundos".format(tempoExec/1000))
-
-'''
-
 from datetime import datetime
 
 n = 1000
@@ -148,66 +124,11 @@ print("Tempo de" +str(n)+ "execuções do metódo Convolution:" + str(med) + " m
 
 
 
-#msg = msg + "Convolution runtime\t "+str( round((((media/5)*1000)/nsteps), 4) ) +"ms\n"
-#print(msg)
-'''
-
-
-fileRead(lstGlyph,lstConnection)
-for vGlyph in lstGlyph:
-    if vGlyph.func == "vglClErode":
-        print(vGlyph.lst_par[0].getValue())
-        #print(type(tratnum(vGlyph.lst_par[0].getValue())))
-        #print(tratnum(vGlyph.lst_par[0].getValue()))
-        #print(vGlyph.lst_par[1].getName())
-        #print(type(vGlyph.lst_par[1].getValue()))
-
-
-
-
-#f = '11111'
-#g = tratnum(f)
-#print(g)
-
-#process(liststr)
-#r = re.compile(r'[^\d ]')
-#f = '-1,1,1,1@@,1,1!#!#!@!,1,1,1#!#!@!'
-
-#s = re.findall('-?\d+\.?\d*',f)
-#print(tratnum(s))
-#numeros  =  "".join(re.findall("\d+",f))
-#a = (r.sub('',f))
-#print(s)
-#print(numeros)
-
-fileRead(lstGlyph,lstConnection)
-for vGlyph in lstGlyph:
-    if vGlyph.func == "vglClErode":
-        print(vGlyph.lst_par[0].getValue())
-        txt = vGlyph.lst_par[0].getValue()
-        liststr = txt[1:-1]
-        print(liststr)
-        dados = []
-        for linha in liststr:
-            dados.append(int(linha))
-        print(dados)
-        print(type(dados))
-        w = np.array(dados,np.float32)
-        print(w)
-        print(type(w))
-print(w)
-'''
-
 #vglClConvolution(img_input, img_output, cv, np.uint32(3), np.uint32(3))
-
 #salvando2d(img_output, img_out_path+"img-vglClConvolution.jpg")
-#vl.rgb_to_rgba(img_output)
-
 
 #vglClErode(img_input,img_output, cv, np.uint32(3), np.uint32(3))
-
 #salvando2d(img_output, img_out_path+"img-vglClErodeCross1.png")
-
 
 #vglClThreshold(img_input,img_output,np.float32(0.5))
 #salvando2d(img_output, img_out_path+"img-vglClTreshold.png")

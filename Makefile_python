@@ -4,9 +4,17 @@ rundrive:
 rundemo:
 	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py demo.wksp 1000
 	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py demo.wksp 1000
+py:
+	cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./testeamostra.py
+
+runDrive:
+    ./execDrive.py 
+
+runDemo:
+    ./execDemo.py 
 
 runall:
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py demo.wksp 1000
 	#cd ~/Documentos/InterpretadorWorkflow/VGLGui/; ./execWorkflow.py drive.wksp 1000
-	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py demo.wksp 1000
-	cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py drive.wksp 1000
+	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py demo.wksp 1000
+	#cd ~/UFS/VglGui/VGLGui/; ./execWorkflow.py drive.wksp 1000

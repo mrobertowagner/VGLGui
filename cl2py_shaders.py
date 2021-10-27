@@ -19,6 +19,8 @@ import vgl_lib as vl
 #TO WORK WITH MAIN
 import numpy as np
 
+from vgl_lib.vglConst import IPL_DEPTH_1U
+
 
 """
     /** Convolution of src image by mask. Result is stored in dst image.
@@ -603,6 +605,50 @@ def vglClErode(img_input, img_output, convolution_window, window_size_x, window_
     mobj_convolution_window = None
     vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())
 
+
+"""
+    /** Function equal image.
+
+"""
+
+def vglClEqual (img_input1, img_input2, kernel_name):
+    
+    vl.vglCheckContext(img_input1, vl.VGL_CL_CONTEXT())
+    vl.vglCheckContext(img_input2, vl.VGL_CL_CONTEXT())
+
+    try:
+        mobj_kernel = cl.Buffer(vl.get_ocl().context, cl.mem_flags.READ_WRITE, kernel_name.str_)
+        cl.enqueue_copy(vl.get_ocl().commandQueue, mobj_kernel, kernel_name.tobytes(), is_blocking=True)
+        kernel_name = mobj_kernel
+    except Exception as e:
+        print("Error buffer.")
+        print(str(e))
+        exit()
+    
+    _program = vl.get_ocl_context().get_compiled_kernel("CL/vglClEqual.cl", "vglClEqual")
+    _kernel = _program.vglClEqual
+
+    _kernel.set_arg(0, img_input1.get_oclPtr())
+    _kernel.set_arg(1, img_input2.get_oclPtr())
+    _kernel.set_arg(2, kernel_name)
+
+    ndim = 2
+    if (img_input1.dim >2):
+        ndim= 3
+    
+    _worksize_0 = img_input1.getWidthIn()
+    if (img_input1.depth == IPL_DEPTH_1U):
+        _worksize_0 = img_input1.getWidthStep()
+
+    if (img_input2.depth == IPL_DEPTH_1U):
+        _worksize_0 = img_input2.getWidthStep()
+    
+    cl.enqueue_nd_range_kernel(vl.get_ocl().commandQueue, _kernel, kernel_name, None)
+
+    return kernel_name != 1
+
+
+
 """
     /** Negative of src image. Result is stored in dst image.
 
@@ -716,23 +762,8 @@ def vglClSum(img_input1, img_input2, img_output):
 
     vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())
 
-def vglClEqual(img_input1, img_input2, img_output):
 
-    vl.vglCheckContext(img_input1, vl.VGL_CL_CONTEXT())
-    vl.vglCheckContext(img_input2, vl.VGL_CL_CONTEXT())
-    vl.vglCheckContext(img_output, vl.VGL_CL_CONTEXT())
-
-    _program = vl.get_ocl_context().get_compiled_kernel("CL/vglClEqual.cl", "vglClEqual")
-    _kernel = _program.vglClEqual
-
-    _kernel.set_arg(0, img_input1.get_oclPtr())
-    _kernel.set_arg(1, img_input2.get_oclPtr())
-    _kernel.set_arg(2, img_output.get_oclPtr())
-
-    # THIS IS A BLOCKING COMMAND. IT EXECUTES THE KERNEL.
-    cl.enqueue_nd_range_kernel(vl.get_ocl().commandQueue, _kernel, img_input1.get_oclPtr().shape, None)
-
-    vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())
+    
 
 """
     /** Swap R and B channels.

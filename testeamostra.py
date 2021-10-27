@@ -2,12 +2,13 @@
 
 # OPENCL LIBRARY
 from numpy.lib.shape_base import get_array_wrap
+
 from vgl_lib import vglImage
 from vgl_lib.vglImage import VglImage, vglLoadImage
 from vgl_lib.struct_sizes import struct_sizes
 from vgl_lib import vglClImage
 from PIL import Image
-
+from cl2py_MM import *
 import pyopencl as cl
 
 
@@ -62,7 +63,7 @@ def salvando2d(img, name):
 	vl.vglSaveImage(name, img)
 
 
-img_in_path = "images/01_test.png"
+img_in_path = "images/driveTresh.png"
 img_in_path1 = "images/01_test.png"
 img_out_path= "images/"
 
@@ -89,11 +90,66 @@ img_output = vl.create_blank_image_as(img_input)
 img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
 vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
 
+e = ""
+
+convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
+											(1, 1,  1,  1,  1),
+											(1, 1,  1,  1,  1),
+											(1, 1,  1,  1,  1),
+											(1, 1,  1,  1,  1) ), np.float32)
+
+cv = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]    
+nsteps = 1000
+media = 0.0
+total = 0.0
+p = 0
+inicio = t.time()
+
+''' 
+for i in range(nsteps):
+    p = 0
+    inicio = t.time()
+    vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+    p = p + 1
+    fim = t.time()
+    media = media + (fim - inicio)
+total = total + (((media/5)*1000)/nsteps)
+'''
+
+'''
+import time
+
+t1 = time.time()
+c = 0
+for i in range(nsteps):
+  vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+  c+=
+tempoExec = time.time() - t1
+print("Tempo de execução: {} segundos".format(tempoExec/1000))
+
+'''
+
+from datetime import datetime
+
+n = 1000
+
+t0 = datetime.now()
+
+for i in range( n ):
+  vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+
+t1 = datetime.now()
+
+diff = t1 - t0
+
+med = (diff.total_seconds() * 1000) / n
+
+print("Tempo de" +str(n)+ "execuções do metódo Convolution:" + str(med) + " ms")
 
 
-vglClEqual(img_input1,img_input,img_output)
-print(img_output)
 
+#msg = msg + "Convolution runtime\t "+str( round((((media/5)*1000)/nsteps), 4) ) +"ms\n"
+#print(msg)
 '''
 
 

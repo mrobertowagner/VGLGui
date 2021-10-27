@@ -2,6 +2,7 @@ import my
 import cv2
 import numpy as np
 import time as t
+from datetime import datetime
 
 def close(im, kernel, iterations=1):
   imdil = cv2.dilate(im, kernel, iterations)
@@ -39,7 +40,7 @@ def reconstruct(im):
 
 msg = ""
 media = 0.0
-nsteps = 1000
+nSteps = 1000
 
 TEST1 = False
 TEST2 = False
@@ -50,64 +51,52 @@ if __name__ == "__main__":
   img = my.imread(filename)
   imgray = my.imreadgray(filename)
 
-
   if (TEST3):
     msg = ""
-    media = 0.0
     nsteps = 1000
-    total = 0.0
     kernel = np.ones((5, 5), np.uint8)
 
     #1 Convolution
     imconv = smooth(img, 5)
 
-    for i in range(0, 5):
-            p = 0
-            inicio = t.time()
-            while(p<1000):
-                imconv = smooth(img, 5)
-                p = p + 1
-            fim = t.time()
-            media = media + (fim - inicio)
-    total = total + ((media/5)*1000)
-    msg = msg + "Convolution runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
+    #Runtime
+    t0 = datetime.now()
+    for i in range( nSteps ):
+      imconv = smooth(img, 5)
+    t1 = datetime.now()
+    t = t1 - t0
+    media = (t.total_seconds() * 1000) / nSteps
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Convolution: " + str(media) + " ms\n"
 
     #my.imshow(imconv)
 
     #2 Dilate    
     imdil = cv2.dilate(imconv, kernel, 1)
 
-    for i in range(0, 5):
-            p = 0
-            inicio = t.time()
-            while(p<1000):
-                imdil = cv2.dilate(imconv, kernel, 1)
-                p = p + 1
-            fim = t.time()
-            media = media + (fim - inicio)
-    total = total + ((media/5)*1000)
-    msg = msg + "Dilate runtime\t "+str( round((media/5)*1000, 4) ) +"ms\n"
+    #Runtime
+    t0 = datetime.now()
+    for i in range( nSteps ):
+      imdil = cv2.dilate(imconv, kernel, 1)
+    t1 = datetime.now()
+    t = t1 - t0
+    media = (t.total_seconds() * 1000) / nSteps
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Dilate: " + str(media) + " ms\n"
 
     #my.imshow(imdil)
 
     #3 Erode
     imerode = cv2.erode(imdil, kernel, 1)
 
-    for i in range(0, 5):
-            p = 0
-            inicio = t.time()
-            while(p<1000):
-                imerode = cv2.erode(imdil, kernel, 1)
-                p = p + 1
-            fim = t.time()
-            media = media + (fim - inicio)
-    total = total + ((media/5)*1000)
-    msg = msg + "Erode runtime\t "+str( round((media/5)*1000,4) ) +"ms\n"
+    t0 = datetime.now()
+    for i in range( nSteps ):
+      imerode = cv2.erode(imdil, kernel, 1)
+    t1 = datetime.now()
+    t = t1 - t0
+    media = (t.total_seconds() * 1000) / nSteps
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Erode: " + str(media) + " ms\n"
     #my.imshow(imerode)
 
 
 print("-------------------------------------------------------------")            
 print(msg)
-print("-------------------------------------------------------------")
-print("Total runtime "+str(round(total,2))+"ms")
 print("-------------------------------------------------------------")

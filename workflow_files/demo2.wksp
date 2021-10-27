@@ -20,7 +20,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Dilate'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -53,34 +53,34 @@ Glyph:VGL_CL:vglCreateImage::localhost:10:562:122::
 Glyph:VGL_CL:vglClSub::localhost:11:382:182::
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/img2_Erode.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/img2_Erode.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Erode'
+Glyph:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'Erode'
 
 #  Glyph 'Image save Dilate'
-ExtPort:VGL_CL:vglSaveImage:localhost:14:882:362: -filename 'images/img2_ErodeDilate.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:14:882:362: -filename 'images/img2_ErodeDilate.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:15:742:422:: -winname 'ErodeDilate'
+Glyph:VGL_CL:ShowImage::localhost:15:742:422:: -winname 'ErodeDilate'
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:16:882:482: -filename 'images/img2_ErodeDilateErode.png'
+Glyph:VGL_CL:vglSaveImage:localhost:16:882:482: -filename 'images/img2_ErodeDilateErode.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:17:742:542:: -winname 'img2_ErodeDilateErode'
+Glyph:VGL_CL:ShowImage::localhost:17:742:542:: -winname 'img2_ErodeDilateErode'
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:18:882:482: -filename 'images/img2_ErodeDilateErodeDilate.png'
+Glyph:VGL_CL:vglSaveImage:localhost:18:882:482: -filename 'images/img2_ErodeDilateErodeDilate.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:19:742:542:: -winname 'img2_ErodeDilateErodeDilate'
+Glyph:VGL_CL:ShowImage::localhost:19:742:542:: -winname 'img2_ErodeDilateErodeDilate'
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:20:882:482: -filename 'images/img2_ErodeDilateErodeDilateSub.png'
+Glyph:VGL_CL:vglSaveImage:localhost:20:882:482: -filename 'images/img2_ErodeDilateErodeDilateSub.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:21:742:542:: -winname 'img2_ErodeDilateErodeDilateSub'
+Glyph:VGL_CL:ShowImage::localhost:21:742:542:: -winname 'img2_ErodeDilateErodeDilateSub'
 
 #  Connections 'Applying SwapRgb’
 NodeConnection:data:1:RETVAL:2:img

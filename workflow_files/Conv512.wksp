@@ -18,7 +18,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'standard_test_images/lena_color_512.tif' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Convolution 7x7'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -39,22 +39,22 @@ Glyph:VGL_CL:vglCreateImage::localhost:6:562:122::
 Glyph:VGL_CL:vglClDilate::localhost:7:382:182:: -convolution_window [5,5,5,5,5,5,5,5,5] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lenacolor512_Convolution13x13.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:8:882:362: -filename 'images/conv512x512/lenacolor512_Convolution13x13.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion13x3'
+Glyph:VGL_CL:ShowImage::localhost:9:742:422:: -winname 'lenacolor512_Convultion13x3'
 
 #  Glyph 'Image save Convolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/img2_Convolution3x1.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:10:882:362: -filename 'images/conv512x512/img2_Convolution3x1.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'img_Convolution3x1'
+Glyph:VGL_CL:ShowImage::localhost:11:742:422:: -winname 'img_Convolution3x1'
 
 #  Glyph 'Image save DilateConvolution'
-ExtPort:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/conv512x512/img23x1_DilateConvolution.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:12:882:362: -filename 'images/conv512x512/img23x1_DilateConvolution.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'img2_DilateConvolution'
+Glyph:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'img2_DilateConvolution'
 
 
 

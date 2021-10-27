@@ -20,7 +20,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-ExtPort:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/img2.png' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Erode'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -35,16 +35,16 @@ Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 Glyph:VGL_CL:vglClDilate::localhost:5:462:302:: -convolution_window [0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111, 0.11111111111] -window_size_x 3 -window_size_y 3
 
 #  Glyph 'Image save Erode'
-ExtPort:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Erode.png' 
+Glyph:VGL_CL:vglSaveImage:localhost:6:882:362: -filename 'images/img2_Erode.png' 
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Erode'
+Glyph:VGL_CL:ShowImage::localhost:7:742:422:: -winname 'Erode'
 
 #  Glyph 'Image save Erode and Dilate'
-ExtPort:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'images/img2_ErodeDilate.png'
+Glyph:VGL_CL:vglSaveImage:localhost:8:882:482: -filename 'images/img2_ErodeDilate.png'
 
 #  Glyph 'Image show'
-ExtPort:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'img2_ErodeDilate'
+Glyph:VGL_CL:ShowImage::localhost:9:742:542:: -winname 'img2_ErodeDilate'
 
 #  Connections 'Applying Erode’
 NodeConnection:data:1:RETVAL:2:img

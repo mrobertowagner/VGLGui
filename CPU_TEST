@@ -1,0 +1,20 @@
+demo.wksp
+
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo vglClConvolution: 0.554189 ms
+Tempo de 1000 execuções do metódo vglClDilate: 0.554472 ms
+Tempo de 1000 execuções do metódo vglClErode: 0.613631 ms
+
+-------------------------------------------------------------
+
+drive.wksp
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo vglClRgb2Gray: 0.131979 ms
+Tempo de 1000 execuções do metódo vglClConvolution: 0.551516 ms
+Tempo de 1000 execuções do metódo Closing: 1.09145 ms
+Tempo de 1000 execuções do metódo vglClSub: 0.157991 ms
+Tempo de 1000 execuções do metódo vglClThreshold: 0.247943 ms
+Tempo de 1000 execuções do metódo Reconstruct: 9.1e-05 ms
+
+-------------------------------------------------------------
+

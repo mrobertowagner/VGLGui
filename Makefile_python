@@ -1,9 +1,9 @@
 rundrive:
-	cd ~/Documentos/InterpretadorWorkflow/VGLGui; ./execWorkflow.py driveGray.wksp 1000
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py driveGray.wksp 100
 rundemo:
-	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demo.wksp 1
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demoGray.wksp 1
 runbench:
-	cd ~/Documents/repo/VGLGui; ./bench.py standard_test_images/lena_color_512.tif 100 output/
+	cd ~/Documents/repo/VGLGui; ./bench.py standard_test_images/lena_color_512.tif 1000 output/
 runtest:
 	cd ~/Documents/repo/VGLGui; ./testeamostra.py
 runpy:

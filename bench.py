@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
   if (len(sys.argv) < 4):
     img_in_path  = "standard_test_images/lena_color_512.tif"
-    nSteps       = 1
+    nSteps       = 1000
     img_out_path = "output"
   else:
     img_in_path = sys.argv[1]
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
   CPU = cl.device_type.CPU #2
   GPU = cl.device_type.GPU #4
-  vl.vglClInit(CPU)
+  vl.vglClInit(GPU)
 
   img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
   vl.vglLoadImage(img_input)
@@ -85,8 +85,8 @@ if __name__ == "__main__":
                                           (1/256, 4/256,  6/256,  4/256,  1/256) ), np.float32)
 
 
-  print("BEFORE vglClBlurSq3: shape = " + str(img_input.shape))
-  print(type(img_input))
+  #print("BEFORE vglClBlurSq3: shape = " + str(img_input.shape))
+  #print(type(img_input))
 
 
   #Blur

@@ -85,7 +85,7 @@ def vglCheckContext(img, context):
 		exit()
 	
 	if( vglIsInContext(img, context) ):
-		#print("vglCheckContext: image already in context", context)
+		print("vglCheckContext: image already in context", context)
 		return context
 	"""
 		HERE STARTS THE CASE-LIKE SEQUENCE FROM 

@@ -30,8 +30,12 @@ bin_image_pack_size = None
 """
 	EQUIVALENT TO vglClInit METHOD, FOUND ON
 	vglClImage.vglClInit().
+
+        default device_type is 2 (cl.device_type.CPU)
+        alternative is         4 (cl.device_type.GPU)
+
 """
-def vglClInit(ocl_context_a=None, ss_a=None, bin_image_pack_size_a=None):
+def vglClInit(device_type=2, ocl_context_a=None, ss_a=None, bin_image_pack_size_a=None):
 	global ocl
 	global ocl_context
 	global struct_sizes
@@ -39,7 +43,7 @@ def vglClInit(ocl_context_a=None, ss_a=None, bin_image_pack_size_a=None):
 	
 	# INITIATING OCL_CONTEXT
 	if( ocl_context is None ):
-		ocl_context = vl.opencl_context()
+		ocl_context = vl.opencl_context(device_type)
 		ocl = ocl_context.get_vglClContext_attributes()
 	else:
 		ocl_context = ocl_context_a

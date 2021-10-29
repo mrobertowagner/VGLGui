@@ -1,11 +1,11 @@
 rundrive:
-	cd ~/Documents/script/VGLGui; ./execWorkflow.py driveGray.wksp 1
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py driveGray.wksp 1
 rundemo:
-	cd ~/Documents/script/VGLGui; ./execWorkflow.py demo.wksp 1
-runtest:
-	cd ~/Documents/script/VGLGui; ./testeamostra.py
-runexec:
-	cd ~/Documents/script/VGLGui; ./execDaniel.py Conv512.wksp
-
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demo.wksp 1
 runbench:
-	cd ~/Documents/script/VGLGui; ./bench.py standard_test_images/lena_color_512.tif 100 output/
+	cd ~/Documents/repo/VGLGui; ./bench.py standard_test_images/lena_color_512.tif 100 output/
+runtest:
+	cd ~/Documents/repo/VGLGui; ./testeamostra.py
+runpy:
+	cd ~/Documents/repo/VGLGui; ./execDrive.py
+	cd ~/Documents/repo/VLGui; ./execDemo.py

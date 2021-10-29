@@ -468,8 +468,8 @@ def vglClConvolution(img_input, img_output, convolution_window, window_size_x, w
     _program = vl.get_ocl_context().get_compiled_kernel("CL/vglClConvolution.cl", "vglClConvolution")
     _kernel = _program.vglClConvolution
 
-    #img_input.list()
-    #img_output.list()
+    img_input.list()
+    img_output.list()
     #print( convolution_window  )
     #print(str(type(  img_input.get_oclPtr()  )))
     #print(str(type(  img_output.get_oclPtr()  )))

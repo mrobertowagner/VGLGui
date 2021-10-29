@@ -119,14 +119,14 @@ def vglClImageUpload(img):
 		shape  = ( img.getVglShape().getWidth(), img.getVglShape().getHeigth() )
 
 		imgFormat = cl.ImageFormat(vl.cl_channel_order(img), vl.cl_channel_type(img))
-		img.oclPtr = cl.Image(ocl.context, mf.READ_ONLY, imgFormat, shape)
+		img.oclPtr = cl.Image(ocl.context, mf.READ_WRITE, imgFormat, shape)
 	elif( img.getVglShape().getNFrames() > 1 ):
 		origin = ( 0, 0, 0 )
 		region = ( img.getVglShape().getWidth(), img.getVglShape().getHeigth(), img.getVglShape().getNFrames() )
 		shape = ( img.getVglShape().getWidth(), img.getVglShape().getHeigth(), img.getVglShape().getNFrames() )
 
 		imgFormat = cl.ImageFormat(vl.cl_channel_order(img), vl.cl_channel_type(img))
-		img.oclPtr = cl.Image(ocl.context, mf.READ_ONLY, imgFormat, shape)
+		img.oclPtr = cl.Image(ocl.context, mf.READ_WRITE, imgFormat, shape)
 	else:
 		print("vglClImageUpload: VglImage NFrames wrong. NFrames returns:", img.getVglShape().getNFrames() )
 		exit()
@@ -294,10 +294,10 @@ def get_similar_oclPtr_object(img):
 	if( isinstance(img.get_oclPtr(), cl.Image) ):
 		#print("get_similar_oclPtr_object: oclPtr is cl.Image.")
 		imgFormat = cl.ImageFormat(vl.cl_channel_order(img), vl.cl_channel_type(img))
-		opencl_device = cl.Image(ocl.context, mf.WRITE_ONLY, imgFormat, img.get_oclPtr().shape )
+		opencl_device = cl.Image(ocl.context, mf.READ_WRITE, imgFormat, img.get_oclPtr().shape )
 	elif isinstance(img.get_oclPtr(), cl.Buffer):
 		#print("get_similar_oclPtr_object: oclPtr is cl.Buffer.")
-		opencl_device = cl.Buffer(ocl.context, mf.WRITE_ONLY, img.get_ipl().nbytes)
+		opencl_device = cl.Buffer(ocl.context, mf.READ_WRITE, img.get_ipl().nbytes)
 	
 	return opencl_device
 

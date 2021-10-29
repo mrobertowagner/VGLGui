@@ -54,7 +54,7 @@ nSteps = int(sys.argv[2])
 msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
-vl.vglClInit(CPU) 
+vl.vglClInit(GPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:

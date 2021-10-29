@@ -468,14 +468,14 @@ def vglClConvolution(img_input, img_output, convolution_window, window_size_x, w
     _program = vl.get_ocl_context().get_compiled_kernel("CL/vglClConvolution.cl", "vglClConvolution")
     _kernel = _program.vglClConvolution
 
-    img_input.list()
-    img_output.list()
-    print( convolution_window  )
-    print(str(type(  img_input.get_oclPtr()  )))
-    print(str(type(  img_output.get_oclPtr()  )))
-    print(str(type(  mobj_convolution_window  )))
-    print(str(type(  window_size_x  )))
-    print(str(type(  window_size_y  )))
+    #img_input.list()
+    #img_output.list()
+    #print( convolution_window  )
+    #print(str(type(  img_input.get_oclPtr()  )))
+    #print(str(type(  img_output.get_oclPtr()  )))
+    #print(str(type(  mobj_convolution_window  )))
+    #print(str(type(  window_size_x  )))
+    #print(str(type(  window_size_y  )))
 
     _kernel.set_arg(0, img_input.get_oclPtr())
     _kernel.set_arg(1, img_output.get_oclPtr())
@@ -487,7 +487,7 @@ def vglClConvolution(img_input, img_output, convolution_window, window_size_x, w
     #print(img_input.get_oclPtr().shape)
     # THIS IS A BLOCKING COMMAND. IT EXECUTES THE KERNEL.
     cl.enqueue_nd_range_kernel(vl.get_ocl().commandQueue, _kernel, img_input.get_oclPtr().shape, None)
-    print("EXECUTOU CONVOLUTION")
+    #print("EXECUTOU CONVOLUTION")
 
     mobj_convolution_window = None
     vl.vglSetContext(img_output, vl.VGL_CL_CONTEXT())

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from vglClUtil import vglClEqual
 from vgl_lib import vglClImage
 from vgl_lib.vglImage import VglImage
 import pyopencl as cl       # OPENCL LIBRARY
@@ -13,7 +14,7 @@ import time as t
 import gc
 from datetime import datetime
 
-#os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
+os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
 
 # Actions after glyph execution
@@ -411,24 +412,31 @@ for vGlyph in lstGlyph:
         
         vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
         #gc.collect(Rec_buffer)
-
-        #Kludge to stabilize the image
-        for n in range(40):
+        #vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        
+        result = vglClEqual(Rec_buffer,Rec_img_input)
+        while(not result):
             vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
             vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-            vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+            result = vglClEqual(Rec_buffer,Rec_img_output)
+            
+
+        #Kludge to stabilize the image
+        #for n in range(40):
+         #   vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+          #  vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+           # vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            #vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
 
         #Runtime
         t0 = datetime.now()
 
         for i in range( nSteps ):
-          for n in range(40):
-                    vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-                    vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-                    vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-                    vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-
+            while(not result):
+              vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+              vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+              result = vglClEqual(Rec_buffer,Rec_img_output)
+ 
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps

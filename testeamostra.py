@@ -2,6 +2,7 @@
 
 # OPENCL LIBRARY
 from numpy.lib.shape_base import get_array_wrap
+from vglClUtil import vglClEqual
 
 from vgl_lib import vglImage
 from vgl_lib.vglImage import VglImage, vglLoadImage
@@ -10,7 +11,8 @@ from vgl_lib import vglClImage
 from PIL import Image
 from cl2py_MM import *
 import pyopencl as cl
-
+import os
+os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 
 
 # VGL LIBRARYS
@@ -64,7 +66,7 @@ def salvando2d(img, name):
 
 
 img_in_path = "images/driveTresh.png"
-img_in_path1 = "images/01_test.png"
+img_in_path1 = "images/driveThresh.png"
 img_out_path= "images/"
 
 msg = ""
@@ -107,7 +109,7 @@ inicio = t.time()
 
 from datetime import datetime
 
-n = 1000
+n = 1
 
 t0 = datetime.now()
 
@@ -122,8 +124,9 @@ med = (diff.total_seconds() * 1000) / n
 
 print("Tempo de" +str(n)+ "execuções do metódo Convolution:" + str(med) + " ms")
 
+result = vglClEqual(img_input,img_input)
 
-
+print(result)
 #vglClConvolution(img_input, img_output, cv, np.uint32(3), np.uint32(3))
 #salvando2d(img_output, img_out_path+"img-vglClConvolution.jpg")
 

@@ -170,7 +170,7 @@ if __name__ == "__main__":
   #Runtime
   t0 = datetime.now()
   for i in range( nSteps ):
-    vglClErodeimg_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+    vglClErode(img_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
   t1 = datetime.now()
   diff = t1 - t0
   med = (diff.total_seconds() * 1000) / nSteps

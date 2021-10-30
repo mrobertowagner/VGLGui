@@ -129,6 +129,56 @@ if __name__ == "__main__":
   salvando2d(img_output, img_out_path+"img-vglClConvolution_5x5.jpg")
   vl.rgb_to_rgba(img_output)
 
+  vglClDilate(img_input, img_output, convolution_window_2d_3x3, np.uint32(3), np.uint32(3))
+   #Runtime
+  t0 = datetime.now()
+  for i in range( nSteps ):
+    vglClDilate(img_input, img_output, convolution_window_2d_3x3, np.uint32(3), np.uint32(3))
+  t1 = datetime.now()
+  diff = t1 - t0
+  med = (diff.total_seconds() * 1000) / nSteps
+  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClDilate_3x3: " + str(med) + " ms\n"
+  salvando2d(img_output, img_out_path+"img-vglClDilate_3x3.jpg")
+  vl.rgb_to_rgba(img_output)
+
+  vglClDilate(img_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+  #Runtime
+  t0 = datetime.now()
+  for i in range( nSteps ):
+    vglClDilate(img_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+  t1 = datetime.now()
+  diff = t1 - t0
+  med = (diff.total_seconds() * 1000) / nSteps
+  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClDilate_5x5: " + str(med) + " ms\n"
+  
+  salvando2d(img_output, img_out_path+"img-vglClDilate_5x5.jpg")
+  vl.rgb_to_rgba(img_output)
+
+  vglClErode(img_input, img_output, convolution_window_2d_3x3, np.uint32(3), np.uint32(3))
+   #Runtime
+  t0 = datetime.now()
+  for i in range( nSteps ):
+    vglClErode(img_input, img_output, convolution_window_2d_3x3, np.uint32(3), np.uint32(3))
+  t1 = datetime.now()
+  diff = t1 - t0
+  med = (diff.total_seconds() * 1000) / nSteps
+  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClErode_3x3: " + str(med) + " ms\n"
+  salvando2d(img_output, img_out_path+"img-vglClErode_3x3.jpg")
+  vl.rgb_to_rgba(img_output)
+
+  vglClErode(img_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+  #Runtime
+  t0 = datetime.now()
+  for i in range( nSteps ):
+    vglClErodeimg_input, img_output, convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
+  t1 = datetime.now()
+  diff = t1 - t0
+  med = (diff.total_seconds() * 1000) / nSteps
+  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClErode_5x5: " + str(med) + " ms\n"
+  
+  salvando2d(img_output, img_out_path+"img-vglClErode_5x5.jpg")
+  vl.rgb_to_rgba(img_output)
+
 
   vglClInvert(img_input, img_output)
   #Runtime

@@ -101,27 +101,27 @@ convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1) ), np.float32)
 
-nSteps = 100
+nSteps = 1000
 inicio = t.time()
 
-
-print(vl.get_ocl().commandQueue.flush())
+vl.get_ocl().commandQueue.flush()
 t0 = datetime.now()
 for i in range(nSteps):
     vglClConvolution(img_input, img_output, convolution_window_2d_5x5, np.uint32(3), np.uint32(3))
+
+vl.get_ocl().commandQueue.flush()
 t1 = datetime.now()
 
 diff = t1 - t0
-
-
+print ("Total: "+str(diff.total_seconds()*1000))
 
 med = (diff.total_seconds() * 1000) / nSteps
 
-print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
+#print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
 
-result = vglClEqual(img_input,img_input)
+#result = vglClEqual(img_input,img_input)
 
-print(result)
+#print(result)
 #vglClConvolution(img_input, img_output, cv, np.uint32(3), np.uint32(3))
 #salvando2d(img_output, img_out_path+"img-vglClConvolution.jpg")
 

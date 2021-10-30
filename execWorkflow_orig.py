@@ -54,7 +54,7 @@ nSteps = int(sys.argv[2])
 msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
-vl.vglClInit(CPU) 
+vl.vglClInit(GPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:
@@ -130,11 +130,10 @@ for vGlyph in lstGlyph:
         vglClErode(vglClErode_img_input, vglClErode_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
         
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
         for i in range( nSteps ):
           vglClErode(vglClErode_img_input, vglClErode_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        vl.get_ocl().commandQueue.flush()
+
         t1 = datetime.now()
         t = t1 - t0
         media = (t.total_seconds() * 1000) / nSteps
@@ -156,11 +155,9 @@ for vGlyph in lstGlyph:
         vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
         for i in range( nSteps ):
           vglClConvolution(vglClConvolution_img_input, vglClConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        vl.get_ocl().commandQueue.flush()
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -182,12 +179,11 @@ for vGlyph in lstGlyph:
         vglClDilate(vglClDilate_img_input, vglClDilate_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
 
         for i in range( nSteps ):
           vglClDilate(vglClDilate_img_input, vglClDilate_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        vl.get_ocl().commandQueue.flush()
+
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -208,12 +204,10 @@ for vGlyph in lstGlyph:
         vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
 
         for i in range( nSteps ):
           vglClThreshold(vglClThreshold_img_input, vglClThreshold_img_output, np.float32(vGlyph.lst_par[0].getValue()))
-        vl.get_ocl().commandQueue.flush()
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -259,12 +253,10 @@ for vGlyph in lstGlyph:
         vglClRgb2Gray(vglClRgb2Gray_img_input ,vglClRgb2Gray_img_output)
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
 
         for i in range( nSteps ):
           vglClRgb2Gray(vglClRgb2Gray_img_input ,vglClRgb2Gray_img_output)
-        vl.get_ocl().commandQueue.flush()
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -316,11 +308,10 @@ for vGlyph in lstGlyph:
         vglClSub(vglClSub_img_input1,vglClSub_img_input2,vglClSub_img_output)
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
         for i in range( nSteps ):
           vglClSub(vglClSub_img_input1,vglClSub_img_input2,vglClSub_img_output)
-        vl.get_ocl().commandQueue.flush()
+
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -343,11 +334,10 @@ for vGlyph in lstGlyph:
         vglClMin(vglClMin_img_input, vglClMin_img_output,vglClMin_img_output  )
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
         for i in range( nSteps ):
           vglClMin(vglClMin_img_input, vglClMin_img_output,vglClMin_img_output  )
-        vl.get_ocl().commandQueue.flush()
+
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -396,13 +386,11 @@ for vGlyph in lstGlyph:
         #gc.collect(Closing_buffer)
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
         for i in range( nSteps ):
           vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
           vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
 
-        vl.get_ocl().commandQueue.flush()
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
@@ -441,17 +429,14 @@ for vGlyph in lstGlyph:
             #vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
 
         #Runtime
-        vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
 
         for i in range( nSteps ):
-            vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
             while(not result):
               vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
               vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
               result = vglClEqual(Rec_buffer,Rec_img_output)
-
-        vl.get_ocl().commandQueue.flush()
+ 
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps

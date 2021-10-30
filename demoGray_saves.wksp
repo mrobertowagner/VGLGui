@@ -69,7 +69,7 @@ NodeConnection:data:7:img_output:8:img
 NodeConnection:data:7:img_output:9:img_input
 NodeConnection:data:8:RETVAL:9:img_output
 
-#Connections 'Show Erode'
+#Connections 'Save Erode'
 NodeConnection:data:9:img_output:10:image
 
 AnnotationsBegin

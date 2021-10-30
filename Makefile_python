@@ -1,5 +1,5 @@
 rundrive:
-	cd ~/Documents/repo/VGLGui; ./execWorkflow.py driveGray.wksp 1000
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py driveGray.wksp 1
 rundemo:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demoGray_saves.wksp 1
 runbench:

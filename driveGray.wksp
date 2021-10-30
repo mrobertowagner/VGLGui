@@ -81,7 +81,7 @@ Glyph:VGL_CL:vglSaveImage::localhost:20:882:362:: -filename 'images/driveSub.png
 Glyph:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'driveSub'
 
 #  Glyph 'Image save Thresh'
-Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'images/driveTresh.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'images/driveThresh.png' 
 
 #  Glyph 'Image show'
 Glyph:VGL_CL:ShowImage::localhost:23:742:422:: -winname 'driveTresh'

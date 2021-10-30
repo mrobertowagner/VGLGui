@@ -65,7 +65,7 @@ NodeConnection:data:3:img_output:4:img
 NodeConnection:data:3:img_output:5:img_input
 NodeConnection:data:4:RETVAL:5:img_output
 
-#Connections 'Save Convolution'
+#Connections 'Save Erode'
 NodeConnection:data:5:img_output:10:image
 
 #Connections 'Applying Dilate'
@@ -73,7 +73,7 @@ NodeConnection:data:5:img_output:6:img
 NodeConnection:data:5:img_output:7:img_input
 NodeConnection:data:6:RETVAL:7:img_output
 
-#Connections 'Save Dilate'
+#Connections 'Save Erode'
 NodeConnection:data:7:img_output:11:image
 
 #Connections 'Applying Erode'

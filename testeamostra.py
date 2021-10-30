@@ -44,7 +44,7 @@ from matplotlib.image import imread
 
 from matplotlib import image
 
-
+from datetime import datetime
 def imshow(im):
     plot = mp.imshow(im, cmap=mp.gray(), origin="upper", vmin=0, vmax=255)
     plot.set_interpolation('nearest')
@@ -70,8 +70,9 @@ img_in_path1 = "images/driveThresh.png"
 img_out_path= "images/"
 
 msg = ""
-
-vl.vglClInit()
+CPU = cl.device_type.CPU #2
+GPU = cl.device_type.GPU #4
+vl.vglClInit(GPU)
 
 img_input = vl.VglImage(img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
 vl.vglLoadImage(img_input)
@@ -80,7 +81,7 @@ if( img_input.getVglShape().getNChannels() == 3 ):
 
 vl.vglClUpload(img_input)
 
-
+'''
 img_input1 = vl.VglImage(img_in_path1, None, vl.VGL_IMAGE_2D_IMAGE())
 vl.vglLoadImage(img_input1)
 if( img_input1.getVglShape().getNChannels() == 3 ):
@@ -88,11 +89,11 @@ if( img_input1.getVglShape().getNChannels() == 3 ):
 
 vl.vglClUpload(img_input1)
 
+
+'''
 img_output = vl.create_blank_image_as(img_input)
 img_output.set_oclPtr( vl.get_similar_oclPtr_object(img_input) )
 vl.vglAddContext(img_output, vl.VGL_CL_CONTEXT())
-
-e = ""
 
 convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1),
@@ -100,29 +101,23 @@ convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1) ), np.float32)
 
-cv = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]    
-nsteps = 1000
-media = 0.0
-total = 0.0
-p = 0
+nSteps = 100
 inicio = t.time()
 
-from datetime import datetime
 
-n = 1
-
+print(vl.get_ocl().commandQueue.from_int_ptr())
 t0 = datetime.now()
-
-for i in range( n ):
-  vglClConvolution(img_input, img_output,convolution_window_2d_5x5, np.uint32(5), np.uint32(5))
-
+for i in range(nSteps):
+    vglClConvolution(img_input, img_output, convolution_window_2d_5x5, np.uint32(3), np.uint32(3))
 t1 = datetime.now()
 
 diff = t1 - t0
 
-med = (diff.total_seconds() * 1000) / n
 
-print("Tempo de" +str(n)+ "execuções do metódo Convolution:" + str(med) + " ms")
+
+med = (diff.total_seconds() * 1000) / nSteps
+
+print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
 
 result = vglClEqual(img_input,img_input)
 

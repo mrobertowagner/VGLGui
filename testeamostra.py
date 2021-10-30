@@ -105,7 +105,7 @@ nSteps = 100
 inicio = t.time()
 
 
-print(vl.get_ocl().commandQueue.from_int_ptr())
+print(vl.get_ocl().commandQueue.flush())
 t0 = datetime.now()
 for i in range(nSteps):
     vglClConvolution(img_input, img_output, convolution_window_2d_5x5, np.uint32(3), np.uint32(3))

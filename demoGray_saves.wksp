@@ -55,6 +55,9 @@ Glyph:VGL_CL:vglSaveImage:localhost:11:882:482: -filename 'dilate.png'
 #  Glyph 'Image save Erode'
 Glyph:VGL_CL:vglSaveImage:localhost:12:882:482: -filename 'erode.png'
 
+#  Glyph 'Image Show Erode'
+Glyph:VGL_CL:ShowImage:localhost:13:882:482: -winame 'erode.png'
+
 #  Connections 'Applying Rgb2Gray’
 NodeConnection:data:1:RETVAL:2:img
 NodeConnection:data:1:RETVAL:3:img_input
@@ -83,6 +86,7 @@ NodeConnection:data:8:RETVAL:9:img_output
 
 #Connections 'Save Erode'
 NodeConnection:data:9:img_output:12:image
+NodeConnection:data:9:img_output:13:image
 
 AnnotationsBegin
 AnnotationsEnd

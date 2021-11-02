@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 import my
 import cv2
 import numpy as np
@@ -34,7 +35,7 @@ def reconstruct(im):
     imdil = cv2.dilate(imt0, kernel)
     imt1 = np.minimum(imdil, im)
     is_equal = image_equal(imt0, imt1)
-    c = c + 1
+    #c = c + 1
   return imt1
 
 
@@ -43,12 +44,21 @@ TEST1 = False
 TEST2 = False
 TEST3 = True
 total = 0.0
+msg = ""
 if __name__ == "__main__":
+  nSteps = 1000
   filename = "images/01_test.png"
   img = my.imread(filename)
   imgray = my.imreadgray(filename)
+  t0 = datetime.now()
+  for i in range( nSteps ):
+    imgray = my.imreadgray(filename)
+  t1 = datetime.now()
+  t = t1 - t0
+  media = (t.total_seconds() * 1000) / nSteps
+  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
   media = 0.0
-  nSteps = 1000
+  
   msg = ""
   if (TEST1):
     h = my.hist(img)

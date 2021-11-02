@@ -1,0 +1,10 @@
+
+demo.py
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo Rgb2Gray: 2.755495 ms
+Tempo de 1000 execuções do metódo Convolution: 0.397052 ms
+Tempo de 1000 execuções do metódo Dilate: 0.35671 ms
+Tempo de 1000 execuções do metódo Erode: 0.373913 ms
+
+-------------------------------------------------------------
+

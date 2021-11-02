@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import my
 import cv2
 import numpy as np
@@ -8,6 +9,11 @@ def close(im, kernel, iterations=1):
   imdil = cv2.dilate(im, kernel, iterations)
   result = cv2.erode(imdil, kernel, iterations)
   return result
+
+def rgb2gray(rgb):
+  r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
+  gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
+  return gray
 
 def blackhat(im, kernel, iterations=1):
   result = close(im, kernel, iterations)
@@ -47,13 +53,21 @@ TEST2 = False
 TEST3 = True
 
 if __name__ == "__main__":
-  filename = "images/01_test.png"
+  filename = "images/01.png"
   img = my.imread(filename)
   imgray = my.imreadgray(filename)
+  
 
   if (TEST3):
     msg = ""
-    nsteps = 1000
+    t0 = datetime.now()
+    for i in range( nSteps ):
+      imgray = rgb2gray(img)
+    t1 = datetime.now()
+    t = t1 - t0
+    media = (t.total_seconds() * 1000) / nSteps
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
+    
     kernel = np.ones((5, 5), np.uint8)
 
     #1 Convolution

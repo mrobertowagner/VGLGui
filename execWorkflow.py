@@ -308,11 +308,7 @@ for vGlyph in lstGlyph:
 
         vglClSub_img_input2 = getImageInputByIdName(vGlyph.glyph_id, 'img_input2')
 
-        # Apply Sub Function
-        #vl.vglCheckContext(vglClSub_img_input1 ,vl.VGL_RAM_CONTEXT())
-        #vl.vglCheckContext(vglClSub_img_input2 ,vl.VGL_RAM_CONTEXT())
-        #vl.vglCheckContext(vglClSub_img_output ,vl.VGL_RAM_CONTEXT())
-        
+        # Apply Sub Function       
         vglClSub(vglClSub_img_input1,vglClSub_img_input2,vglClSub_img_output)
 
         #Runtime

@@ -46,19 +46,10 @@ TEST3 = True
 total = 0.0
 msg = ""
 if __name__ == "__main__":
-  nSteps = 1000
+  nSteps = 10
   filename = "images/01_test.png"
   img = my.imread(filename)
-  imgray = my.imreadgray(filename)
-  t0 = datetime.now()
-  for i in range( nSteps ):
-    imgray = my.imreadgray(filename)
-  t1 = datetime.now()
-  t = t1 - t0
-  media = (t.total_seconds() * 1000) / nSteps
-  msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
-  media = 0.0
-
+  
   msg = ""
   if (TEST1):
     h = my.hist(img)
@@ -69,7 +60,16 @@ if __name__ == "__main__":
 
   if (TEST3):
     #1 extração do canal verde
-    imgreen = img[:,:,1]
+    #imgreen = img[:,:,1]
+
+    imgray = my.imreadgray(filename)
+    t0 = datetime.now()
+    for i in range( nSteps ):
+      imgray = my.imreadgray(filename)
+    t1 = datetime.now()
+    t = t1 - t0
+    media = (t.total_seconds() * 1000) / nSteps
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
 
     #2 suavização
     imsmooth = smooth(img, 5)
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Black Hat: " + str(media) + " ms\n"
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Closing: " + str(media) + " ms\n"
 
     #my.imshow(imbh)
 

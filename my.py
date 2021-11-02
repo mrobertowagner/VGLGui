@@ -4,7 +4,7 @@ import numpy as np
 import math as m
 import time as t
 
-#from importlib import reload
+from importlib import reload
 #reload(my)
 
 version = 3

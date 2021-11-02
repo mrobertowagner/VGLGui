@@ -60,6 +60,7 @@ if __name__ == "__main__":
 
   if (TEST3):
     msg = ""
+    
     t0 = datetime.now()
     for i in range( nSteps ):
       imgray = rgb2gray(img)

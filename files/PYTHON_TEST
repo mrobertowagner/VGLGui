@@ -8,3 +8,13 @@ Tempo de 1000 execuções do metódo Erode: 0.373913 ms
 
 -------------------------------------------------------------
 
+
+drive.py
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo Convolution: 2.54497 ms
+Tempo de 1000 execuções do metódo Black Hat: 0.781776 ms
+Tempo de 1000 execuções do metódo Sub: 0.140412 ms
+Tempo de 1000 execuções do metódo Threshold: 2.751147 ms
+Tempo de 1000 execuções do metódo Reconstruct: 75.53368 ms
+
+-------------------------------------------------------------

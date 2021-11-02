@@ -29,7 +29,7 @@ def reconstruct(im):
   imt0 = imero
   imt1 = cv2.dilate(imt0, kernel)
   is_equal = image_equal(imt0, imt1)
-  while (not is_equal):
+  while (not is_equal.all()):
     #print(c)
     imt0 = imt1
     imdil = cv2.dilate(imt0, kernel)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
   media = (t.total_seconds() * 1000) / nSteps
   msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
   media = 0.0
-  
+
   msg = ""
   if (TEST1):
     h = my.hist(img)
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     #my.imshow(my.histeq(result))
 
-    #5 threshold    
+    #5 threshold
     imthresh = my.thresh(result, 3)
 
     #Runtime
@@ -138,11 +138,11 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Threshold: " + str(media) + " ms\n"
+    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Reconstruct: " + str(media) + " ms\n"
 
     #my.imshow(imopenrec)
 
 
-print("-------------------------------------------------------------")            
+print("-------------------------------------------------------------")
 print(msg)
 print("-------------------------------------------------------------")

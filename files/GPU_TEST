@@ -8,6 +8,15 @@ Tempo de 1000 execuções do metódo vglClErode: 0.558864 ms
 
 -------------------------------------------------------------
 
+demo com o vl.get_ocl().commandQueue.finish()
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo vglClRgb2Gray: 0.138439 ms
+Tempo de 1000 execuções do metódo vglClConvolution: 0.569952 ms
+Tempo de 1000 execuções do metódo vglClDilate: 0.567538 ms
+Tempo de 1000 execuções do metódo vglClErode: 0.565183 ms
+
+-------------------------------------------------------------
+
 
 drive.wksp
 -------------------------------------------------------------
@@ -20,5 +29,14 @@ Tempo de 1000 execuções do metódo Reconstruct: 0.500494 ms
 
 -------------------------------------------------------------
 
+drive com o vl.get_ocl().commandQueue.finish()
+-------------------------------------------------------------
+Tempo de 1000 execuções do metódo vglClRgb2Gray: 0.134618 ms
+Tempo de 1000 execuções do metódo vglClConvolution: 0.55175 ms
+Tempo de 1000 execuções do metódo Closing: 1.095577 ms
+Tempo de 1000 execuções do metódo vglClSub: 0.17342 ms
+Tempo de 1000 execuções do metódo vglClThreshold: 0.247531 ms
+Tempo de 1000 execuções do metódo Reconstruct: 0.493596 ms
 
+-------------------------------------------------------------
 

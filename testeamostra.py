@@ -103,13 +103,13 @@ convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 
 nSteps = 1000
 inicio = t.time()
+#vl.get_ocl().commandQueue.flush()
 
-vl.get_ocl().commandQueue.flush()
 t0 = datetime.now()
 for i in range(nSteps):
     vglClConvolution(img_input, img_output, convolution_window_2d_5x5, np.uint32(3), np.uint32(3))
 
-vl.get_ocl().commandQueue.flush()
+vl.get_ocl().commandQueue.finish()
 t1 = datetime.now()
 
 diff = t1 - t0

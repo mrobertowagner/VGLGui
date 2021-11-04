@@ -112,7 +112,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         t = t1 - t0
         media = (t.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClBlurSq3: " + str(media) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClBlurSq3: " + str(media) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
@@ -139,7 +139,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         t = t1 - t0
         media = (t.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClErode: " + str(media) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClErode: " + str(media) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
@@ -165,7 +165,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClConvolution: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClConvolution: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
@@ -192,7 +192,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClDilate: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClDilate: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
@@ -218,7 +218,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClThreshold: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClThreshold: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
@@ -242,7 +242,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClSwapRgb: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSwapRgb: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
@@ -269,7 +269,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClRgb2Gray: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClRgb2Gray: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClRgb2Gray_img_output)
@@ -293,7 +293,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClInvert: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClInvert: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
@@ -321,7 +321,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClSub: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSub: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
@@ -348,7 +348,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClMin: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClMin: " + str(med) + " ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
@@ -371,7 +371,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo vglClSum: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSum: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
@@ -403,7 +403,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Closing: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método Closing: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
@@ -446,7 +446,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Reconstruct: " + str(med) + " ms\n"
+        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método Reconstruct: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Rec_buffer)

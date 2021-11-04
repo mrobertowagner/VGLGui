@@ -10,12 +10,12 @@ Tempo de 1000 execuções do metódo vglClErode: 80.145627 ms
 
 drive.wksp
 -------------------------------------------------------------
-Tempo de 1000 execuções do metódo vglClRgb2Gray: 0.224258 ms
-Tempo de 1000 execuções do metódo vglClConvolution: 72.967996 ms
-Tempo de 1000 execuções do metódo Closing: 160.234313 ms
-Tempo de 1000 execuções do metódo vglClSub: 0.263842 ms
-Tempo de 1000 execuções do metódo vglClThreshold: 0.39987 ms
-Tempo de 1000 execuções do metódo Reconstruct: 33.501734 ms
+Tempo de 1000 execuções do metódo vglClRgb2Gray: 6.066878 ms
+Tempo de 1000 execuções do metódo vglClConvolution: 72.531956 ms
+Tempo de 1000 execuções do metódo Closing: 160.012321 ms
+Tempo de 1000 execuções do metódo vglClSub: 9.303993 ms
+Tempo de 1000 execuções do metódo vglClThreshold: 5.850525 ms
+Tempo de 1000 execuções do metódo Reconstruct: 81.928168 ms
 
 -------------------------------------------------------------
 

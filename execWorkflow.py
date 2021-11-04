@@ -55,7 +55,7 @@ msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
 
-vl.vglClInit(GPU) 
+vl.vglClInit(CPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:
@@ -417,16 +417,17 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
+        Rec_imt0 = vl.create_blank_image_as(Rec_img_input)
+        Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
         Rec_buffer = vl.create_blank_image_as(Rec_img_input)
+        #vglClErode(Rec_img_input, Rec_buffer1, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        vglClErode(Rec_img_input, Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        #vglClDilate( Rec_imt0, Rec_imt1 , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
         
-        vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        #gc.collect(Rec_buffer)
-        #vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        
-        result = vglClEqual(Rec_buffer,Rec_img_input)
+        result = vglClEqual( Rec_buffer, Rec_img_input )
         while(not result):
-            vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
+            vglClDilate( Rec_buffer , Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClMin(Rec_img_output , Rec_img_input, Rec_buffer)
             result = vglClEqual(Rec_buffer,Rec_img_output)
             
 
@@ -443,6 +444,7 @@ for vGlyph in lstGlyph:
 
         for i in range( nSteps ):
             vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            result = vglClEqual( Rec_buffer, Rec_img_input )
             while(not result):
               vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
               vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)

@@ -60,15 +60,15 @@ if __name__ == "__main__":
 
   if (TEST3):
     msg = ""
-    
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     t0 = datetime.now()
     for i in range( nSteps ):
-      imgray = rgb2gray(img)
+      imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
-    
+    #my.imshow(imgray)
     kernel = np.ones((5, 5), np.uint8)
 
     #1 Convolution

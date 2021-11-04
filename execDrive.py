@@ -46,8 +46,8 @@ TEST3 = True
 total = 0.0
 msg = ""
 if __name__ == "__main__":
-  nSteps = 10
-  filename = "images/01_test.png"
+  nSteps = 1000
+  filename = "images/01.png"
   img = my.imread(filename)
   
   msg = ""
@@ -59,25 +59,24 @@ if __name__ == "__main__":
     my.imshow(my.histeq(imgray))
 
   if (TEST3):
-    #1 extração do canal verde
-    #imgreen = img[:,:,1]
 
-    imgray = my.imreadgray(filename)
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    #my.imshow(imgray)
     t0 = datetime.now()
     for i in range( nSteps ):
-      imgray = my.imreadgray(filename)
+      imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
 
     #2 suavização
-    imsmooth = smooth(img, 5)
+    imsmooth = smooth(imgray, 5)
 
     #Runtime
     t0 = datetime.now()
     for i in range( nSteps ):
-      imsmooth = smooth(img, 5)
+      imsmooth = smooth(imgray, 5)
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps

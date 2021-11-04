@@ -429,14 +429,6 @@ for vGlyph in lstGlyph:
             vglClDilate( Rec_buffer , Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
             vglClMin(Rec_img_output , Rec_img_input, Rec_buffer)
             result = vglClEqual(Rec_buffer,Rec_img_output)
-            
-
-        #Kludge to stabilize the image
-        #for n in range(40):
-         #   vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-          #  vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-           # vglClDilate(Rec_buffer, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            #vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
 
         #Runtime
         vl.get_ocl().commandQueue.flush()

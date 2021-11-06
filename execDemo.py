@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
 import my
 import cv2
@@ -67,21 +68,21 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
     #my.imshow(imgray)
     kernel = np.ones((5, 5), np.uint8)
 
     #1 Convolution
-    imconv = smooth(img, 5)
+    imconv = smooth(imgray, 5)
 
     #Runtime
     t0 = datetime.now()
     for i in range( nSteps ):
-      imconv = smooth(img, 5)
+      imconv = smooth(imgray, 5)
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Convolution: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metódo Convolution: " + str(media) + " ms\n"
 
     #my.imshow(imconv)
 
@@ -95,7 +96,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Dilate: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metódo Dilate: " + str(media) + " ms\n"
 
     #my.imshow(imdil)
 
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Erode: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metódo Erode: " + str(media) + " ms\n"
     #my.imshow(imerode)
 
 

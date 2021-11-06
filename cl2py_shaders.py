@@ -788,7 +788,7 @@ def vglClThreshold(src, dst, thresh, top = 1.0):
     vl.vglCheckContext(dst, vl.VGL_CL_CONTEXT())
     # EVALUATING IF thresh IS IN CORRECT TYPE
     if( not isinstance(thresh, np.float32) ):
-        print("vglClThreshold: Warning: thresh not np.float32! Trying to convert...")
+        #print("vglClThreshold: Warning: thresh not np.float32! Trying to convert...")
         try:
             thresh = np.float32(thresh)
         except Exception as e:
@@ -797,7 +797,7 @@ def vglClThreshold(src, dst, thresh, top = 1.0):
             exit()
     # EVALUATING IF top IS IN CORRECT TYPE
     if( not isinstance(top, np.float32) ):
-        print("vglClThreshold: Warning: top not np.float32! Trying to convert...")
+        #print("vglClThreshold: Warning: top not np.float32! Trying to convert...")
         try:
             top = np.float32(top)
         except Exception as e:

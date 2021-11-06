@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python2
 import my
 import cv2
@@ -46,8 +47,8 @@ TEST3 = True
 total = 0.0
 msg = ""
 if __name__ == "__main__":
-  nSteps = 1000
-  filename = "images/01.png"
+  nSteps = 10
+  filename = "images/1_good.jpg"
   img = my.imread(filename)
   
   msg = ""
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Rgb2Gray: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Rgb2Gray: " + str(media) + " ms\n"
 
     #2 suavização
     imsmooth = smooth(imgray, 5)
@@ -80,7 +81,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Convolution: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metodo Convolution: " + str(media) + " ms\n"
 
     #my.imshow(imsmooth)
 
@@ -95,7 +96,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Closing: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Closing: " + str(media) + " ms\n"
 
     #my.imshow(imbh)
 
@@ -109,7 +110,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Sub: " + str(media) + " ms\n"
+    msg = msg + "Tempo de " +str(nSteps)+ " execucoes do metodo Sub: " + str(media) + " ms\n"
 
     #my.imshow(my.histeq(result))
 
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Threshold: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Threshold: " + str(media) + " ms\n"
 
     #my.imshow(imthresh)
 
@@ -137,7 +138,7 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execuções do metódo Reconstruct: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Reconstruct: " + str(media) + " ms\n"
 
     #my.imshow(imopenrec)
 

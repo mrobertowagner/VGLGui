@@ -55,7 +55,7 @@ msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
 
-vl.vglClInit(CPU) 
+vl.vglClInit(GPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:
@@ -95,6 +95,7 @@ for vGlyph in lstGlyph:
         GlyphExecutedUpdate(vGlyph.glyph_id, vglCreateImage_RETVAL)
 
     elif vGlyph.func == 'vglClBlurSq3': #Function blur
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClBlurSq3_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -112,13 +113,14 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         t = t1 - t0
         media = (t.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClBlurSq3: " + str(media) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClBlurSq3: " + str(media) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClBlurSq3_img_output)
 
 
     elif vGlyph.func == 'vglClErode': #Function Erode
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClErode_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -139,12 +141,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         t = t1 - t0
         media = (t.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClErode: " + str(media) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClErode: " + str(media) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
 
     elif vGlyph.func == 'vglClConvolution': #Function Convolution
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -165,12 +168,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClConvolution: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClConvolution: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
 
     elif vGlyph.func == 'vglClDilate': #Function Dilate
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         vglClDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -192,12 +196,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClDilate: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClDilate: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         vglClThreshold_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
@@ -218,12 +223,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClThreshold: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClThreshold: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClThreshold_img_output)
     
     elif vGlyph.func == 'vglClSwapRgb': #Function SwapRGB
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         vglClSwapRgb_img_input = getImageInputByIdName(vGlyph.glyph_id, 'src')
@@ -242,13 +248,14 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSwapRgb: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClSwapRgb: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSwapRgb_img_output)
 
 
-    elif vGlyph.func == 'vglClRgb2Gray': #Function SwapRGB
+    elif vGlyph.func == 'vglClRgb2Gray': #Function Rgb2Gray
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         vglClRgb2Gray_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -269,12 +276,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClRgb2Gray: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClRgb2Gray: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClRgb2Gray_img_output)
     
     elif vGlyph.func == 'vglClInvert': #Function Invert
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClInvert_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -293,12 +301,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClInvert: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClInvert: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClInvert_img_output)
 
     elif vGlyph.func == 'vglClSub': #Function Sub
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClSub_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input1')
@@ -321,13 +330,14 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSub: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClSub: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSub_img_output)
 
 
     elif vGlyph.func == 'vglClMin': #Function Min
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         vglClMin_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -348,11 +358,12 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClMin: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClMin: " + str(med) + " ms\n"
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClMin_img_output)
 
     elif vGlyph.func == 'vglClSum': #Function Sum
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         vglClSum_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -371,12 +382,13 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método vglClSum: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClSum: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClSum_img_output)
 
     elif vGlyph.func == 'Closing': #Function Closing
+        print("A função " + vGlyph.func +"está sendo executada")
 
         # Search the input image by connecting to the source glyph
         Closing_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -403,13 +415,14 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método Closing: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método Closing: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
 
 
     elif vGlyph.func == 'Reconstruct': #Function Reconstruct
+        print("A função " + vGlyph.func +"está sendo executada")
     
         # Search the input image by connecting to the source glyph
         Rec_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
@@ -446,7 +459,7 @@ for vGlyph in lstGlyph:
         t1 = datetime.now()
         diff = t1 - t0
         med = (diff.total_seconds() * 1000) / nSteps
-        msg = msg + "Tempo de " +str(nSteps)+ " execuções do método Reconstruct: " + str(med) + " ms\n"
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método Reconstruct: " + str(med) + " ms\n"
 
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Rec_buffer)

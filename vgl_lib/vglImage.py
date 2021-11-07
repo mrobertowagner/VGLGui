@@ -77,7 +77,7 @@ class VglImage(object):
       self.clForceAsBuf = vl.IMAGE_CL_OBJECT()
     elif( not((self.clForceAsBuf is vl.IMAGE_CL_OBJECT() )
          or (self.clForceAsBuf is vl.IMAGE_ND_ARRAY() ) ) ):
-      print("VglImage: Error! Unexistent image treatment. Use vl.IMAGE_CL_OBJECT() or vl.IMAGE_ND_ARRAY()!")
+      #print("VglImage: Error! Unexistent image treatment. Use vl.IMAGE_CL_OBJECT() or vl.IMAGE_ND_ARRAY()!")
       exit()
 
     if(self.ndim is None):
@@ -90,18 +90,18 @@ class VglImage(object):
     else:
       print("vglImage: Warning! Image is not 2D or 3D. Execution will continue.")
     
-    print(":::-->path", imgPath)
-    print(":::-->dept", depth)
-    print(":::-->ndim", ndim)
-    print(":::-->forc", clForceAsBuf)
+    #print(":::-->path", imgPath)
+    #print(":::-->dept", depth)
+    #print(":::-->ndim", ndim)
+    #print(":::-->forc", clForceAsBuf)
 
-  def list(self):
+  def prinfInfo(self): #printInfo
     print("=========")
     print("VglImage:")
     print("  ipl          = " + str(self.ipl))
     print("  ndim         = " + str(self.ndim))
     print("  shape        = " + str(self.shape))
-    print("  vglShape     = " + str(self.vglShape))
+    self.vglShape.printInfo()
     print("  depth        = " + str(self.depth))
     print("  nChannels    = " + str(self.nChannels))
     print("  has_mipmap   = " + str(self.has_mipmap))
@@ -323,7 +323,7 @@ def create_vglShape(img):
   EQUIVALENT TO vglImage.3To4Channels()
 """
 def rgb_to_rgba(img):
-  print("::[RGB -> RGBA]")
+  #print("::[RGB -> RGBA]")
   ipl_rgba = np.empty((img.vglShape.getHeigth(), img.vglShape.getWidth(), 4), img.ipl.dtype)
 
   ipl_rgba[:,:,0] = img.ipl[:,:,0]
@@ -338,7 +338,7 @@ def rgb_to_rgba(img):
   EQUIVALENT TO vglImage.3To4Channels()
 """
 def rgba_to_rgb(img):
-  print("::[RGBA -> RGB]")
+  #print("::[RGBA -> RGB]")
   if( (img.ipl[0,0,:].size < 4) | (img.ipl[0,0,:].size > 4) ):
     print("vglImage: rgba_to_rgb: Error: IMAGE IS NOT RGBA.")
     exit()

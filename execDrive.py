@@ -47,7 +47,7 @@ TEST3 = True
 total = 0.0
 msg = ""
 if __name__ == "__main__":
-  nSteps = 10
+  nSteps = 1000
   filename = "images/1_good.jpg"
   img = my.imread(filename)
   
@@ -70,6 +70,7 @@ if __name__ == "__main__":
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Rgb2Gray: " + str(media) + " ms\n"
+    total = total + media
 
     #2 suavização
     imsmooth = smooth(imgray, 5)
@@ -82,6 +83,7 @@ if __name__ == "__main__":
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do metodo Convolution: " + str(media) + " ms\n"
+    total = total + media
 
     #my.imshow(imsmooth)
 
@@ -97,6 +99,7 @@ if __name__ == "__main__":
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Closing: " + str(media) + " ms\n"
+    total = total + media
 
     #my.imshow(imbh)
 
@@ -110,7 +113,8 @@ if __name__ == "__main__":
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo de " +str(nSteps)+ " execucoes do metodo Sub: " + str(media) + " ms\n"
+    msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Sub: " + str(media) + " ms\n"
+    total = total + media
 
     #my.imshow(my.histeq(result))
 
@@ -125,6 +129,7 @@ if __name__ == "__main__":
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Threshold: " + str(media) + " ms\n"
+    total = total + media
 
     #my.imshow(imthresh)
 
@@ -139,10 +144,16 @@ if __name__ == "__main__":
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do metodo Reconstruct: " + str(media) + " ms\n"
+    total = total + media
 
     #my.imshow(imopenrec)
 
-
+with open('files/PYTHON_TEST.txt', 'w') as arquivo:
+    #print(msg)
+    print(msg, file=arquivo)
+    msg1 = "Valor total do tempo médio: "+str(total)
+    print(msg1, file=arquivo)
 print("-------------------------------------------------------------")
 print(msg)
 print("-------------------------------------------------------------")
+print("Valo total médio: "+ str(total))

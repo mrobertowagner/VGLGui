@@ -285,20 +285,34 @@ def cl_channel_order(img):
 	THE SAME SIZE AS THE INPUT IMAGE, FOR 
 	EXAMPLE.
 """
-def get_similar_oclPtr_object(img):
+def get_similar_oclPtr_object(img, nChannels=None):
 	global ocl
 	mf = cl.mem_flags
 
-	opencl_device = None
+	channel_order = None
+	if (nChannels is None):
+		print("ENTROU EM NONE")
+		channel_order = vl.cl_channel_order(img)
+	elif (nChannels == 1):
+		print("ENTROU EM 1")
+		channel_order = cl.channel_order.LUMINANCE
+	elif(nChannels == 2):
+		channel_order = cl.channel_order.RG
+	elif(nChannels == 3):
+		channel_order = cl.channel_order.RGB
+	elif(nChannels == 4):
+		channel_order = cl.channel_order.RGBA
 
+
+	opencl_device = None
 	if( isinstance(img.get_oclPtr(), cl.Image) ):
 		#print("get_similar_oclPtr_object: oclPtr is cl.Image.")
-		imgFormat = cl.ImageFormat(vl.cl_channel_order(img), vl.cl_channel_type(img))
+		imgFormat = cl.ImageFormat(channel_order, vl.cl_channel_type(img))
 		opencl_device = cl.Image(ocl.context, mf.READ_WRITE, imgFormat, img.get_oclPtr().shape )
 	elif isinstance(img.get_oclPtr(), cl.Buffer):
 		#print("get_similar_oclPtr_object: oclPtr is cl.Buffer.")
 		opencl_device = cl.Buffer(ocl.context, mf.READ_WRITE, img.get_ipl().nbytes)
-	
+
 	return opencl_device
 
 """
@@ -309,14 +323,37 @@ def get_similar_oclPtr_object(img):
 """
 def create_blank_image_as(img):
 	image = vl.VglImage(img.filename, img.depth, img.ndim, img.clForceAsBuf)
-	image.ipl		= np.asarray(img.ipl, img.ipl.dtype)
-	image.shape		= img.shape
-	image.vglShape	= img.vglShape
-	image.depth		= img.depth
-	image.nChannels	= img.nChannels
-	image.has_mipmap= img.has_mipmap
-	image.inContext	= vl.VGL_BLANK_CONTEXT()
+	image.ipl	 = np.asarray(img.ipl, img.ipl.dtype)
+	image.shape	 = img.shape
+	image.vglShape	 = img.vglShape
+	image.depth	 = img.depth
+	image.nChannels	 = img.nChannels
+	image.has_mipmap = img.has_mipmap
+	image.inContext	 = vl.VGL_BLANK_CONTEXT()
 
+	return image
+
+"""
+	IT RETURNS A vl.Image OBJECT, WITH SIMILAR
+	PROPERTIES AS THE img SENT AS ARGUMENT.
+	img.ipl IS NOT SET, BUT OTHER PROPERTIES ARE.
+	THE img.inContext IS SET AS VGL_BLANK_CONTEXT().
+"""
+def create_blank_image_as_gray(img):
+	image = vl.VglImage(img.filename, img.depth, img.ndim, img.clForceAsBuf)
+	image.ipl	 = np.array((img.ipl.shape[0], img.ipl.shape[1]), img.ipl.dtype)
+	image.shape	 = img.shape
+	#image.vglShape	 = vl.vglShape.VglShape.vglCreateShape(s, img.vglShape.ndim)
+	image.vglShape   = vl.VglShape()
+	image.vglShape.constructor2DShape(1, img.ipl.shape[1], img.ipl.shape[0])
+	
+	image.depth	 = img.depth
+	image.nChannels	 = 1
+	image.has_mipmap = img.has_mipmap
+	image.inContext	 = vl.VGL_BLANK_CONTEXT()
+
+	image.set_oclPtr( vl.get_similar_oclPtr_object(img, 1) )
+	
 	return image
 
 """

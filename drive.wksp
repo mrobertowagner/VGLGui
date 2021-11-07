@@ -99,7 +99,7 @@ NodeConnection:data:2:RETVAL:3:img_output
 
 # Connections ‘Show in Rgb2Gray'
 NodeConnection:data:3:img_output:14:image
-NodeConnection:data:3:img_output:15:image
+
 
 #Connections 'Applying Convolution'
 NodeConnection:data:3:img_output:4:img
@@ -108,7 +108,7 @@ NodeConnection:data:4:RETVAL:5:img_output
 
 # Connections ‘Show in Convolution'
 NodeConnection:data:5:img_output:16:image
-NodeConnection:data:5:img_output:17:image
+
 NodeConnection:data:5:img_output:9:img_input2
 
 # Connections ‘Applying Closing'
@@ -118,7 +118,7 @@ NodeConnection:data:6:RETVAL:7:img_output
 
 # Connections ‘Show in Closing'
 NodeConnection:data:7:img_output:18:image
-NodeConnection:data:7:img_output:19:image
+
 
 #Connections 'Applying Sub'
 NodeConnection:data:7:img_output:8:img
@@ -127,7 +127,7 @@ NodeConnection:data:8:RETVAL:9:img_output
 
 # Connections ‘Show in Sub'
 NodeConnection:data:9:img_output:20:image
-NodeConnection:data:9:img_output:21:image
+
 
 #Connections 'Applying Threshold'
 NodeConnection:data:9:img_output:10:img
@@ -136,7 +136,7 @@ NodeConnection:data:10:RETVAL:11:dst
 
 # Connections ‘Show in Threshold'
 NodeConnection:data:11:dst:22:image
-NodeConnection:data:11:dst:23:image
+
 
 #Connections 'Applying Reconstruct'
 NodeConnection:data:11:dst:12:img
@@ -145,7 +145,7 @@ NodeConnection:data:12:RETVAL:13:img_output
 
 # Connections ‘Show in Reconstruct'
 NodeConnection:data:13:img_output:24:image
-NodeConnection:data:13:img_output:25:image
+
 
 
 

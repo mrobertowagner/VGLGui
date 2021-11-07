@@ -49,6 +49,21 @@ class VglShape(object):
 		self.bps = 8
 
 	"""
+		printInfo()
+
+		Print vglShape contents.
+	"""
+	def printInfo(self, msg=""):
+                print("  =========")
+                print("  VglShape: " + msg)
+                print("    shape        = " + str(self.shape))
+                print("    offset       = " + str(self.offset))
+                print("    ndim         = " + str(self.ndim))
+                print("    size         = " + str(self.size))
+                print("    bps          = " + str(self.bps))
+
+
+	"""
 		EQUIVALENT TO vglShape.vglCreateShape()
 
 		TAKES SHAPE, NDIM AND BPS (DEFAULT TO 8)

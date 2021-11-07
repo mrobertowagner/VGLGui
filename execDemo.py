@@ -47,7 +47,7 @@ def reconstruct(im):
 
 msg = ""
 media = 0.0
-nSteps = 1000
+nSteps = 10
 
 TEST1 = False
 TEST2 = False

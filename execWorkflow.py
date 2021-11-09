@@ -179,6 +179,8 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
 
+    
+
     elif vGlyph.func == 'vglClNConvolution': #Function Convolution
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
@@ -191,20 +193,22 @@ for vGlyph in lstGlyph:
         vglClNConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         Conv_buffer = vl.create_blank_image_as(vglClNConvolution_img_input)
+        convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
+											(2/16, 4/16, 2/16),
+											(1/16, 2/16, 1/16) ), np.float32)
 
         # Apply Convolution function
         #vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
-        n = 25
-        p = 0
-        while(p<n):
-          vglClConvolution(vglClNConvolution_img_input, Conv_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-          vglClConvolution(Conv_buffer, vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-          p = p +1
-          GlyphExecutedUpdate(vGlyph.glyph_id, vglClNConvolution_img_output)
+        nn =50
+        for i in range(nn):
+            vglClConvolution(vglClNConvolution_img_input, Conv_buffer,convolution_window_2d_3x3, np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClConvolution(Conv_buffer, vglClNConvolution_img_output,convolution_window_2d_3x3, np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            
+            
           
         
-        imshow(VglImage.get_ipl(vglClNConvolution_img_input))
-        GlyphExecutedUpdate(vGlyph.glyph_id, vglClNConvolution_img_output)
+        
+        GlyphExecutedUpdate(vGlyph.glyph_id, Conv_buffer)
 
     elif vGlyph.func == 'vglClDilate': #Function Dilate
         print("-------------------------------------------------")

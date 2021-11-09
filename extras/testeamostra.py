@@ -2,7 +2,7 @@
 
 # OPENCL LIBRARY
 from numpy.lib.shape_base import get_array_wrap
-from vglClUtil import vglClEqual
+#from vglClUtil import vglClEqual
 
 from vgl_lib import vglImage
 from vgl_lib.vglImage import VglImage, vglLoadImage
@@ -65,7 +65,7 @@ def salvando2d(img, name):
 	vl.vglSaveImage(name, img)
 
 
-img_in_path = "images/driveTresh.png"
+img_in_path = "artigo/driveRgb2gray.png"
 img_in_path1 = "images/driveThresh.png"
 img_out_path= "images/"
 
@@ -100,7 +100,9 @@ convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1),
 											(1, 1,  1,  1,  1) ), np.float32)
-
+convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
+											(2/16, 4/16, 2/16),
+											(1/16, 2/16, 1/16) ), np.float32)
 nSteps = 1000
 inicio = t.time()
 #vl.get_ocl().commandQueue.flush()
@@ -116,7 +118,15 @@ diff = t1 - t0
 print ("Total: "+str(diff.total_seconds()*1000))
 
 med = (diff.total_seconds() * 1000) / nSteps
+n= 20
+buffer = vl.create_blank_image_as(img_input)
+for i in range(n):
+    vglClConvolution(img_input, img_output,convolution_window_2d_3x3, 3, 3)
+    buffer = img_output
+    
+    
 
+imshow(VglImage.get_ipl(buffer))
 #print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
 
 #result = vglClEqual(img_input,img_input)

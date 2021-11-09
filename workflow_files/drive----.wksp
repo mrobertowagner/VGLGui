@@ -1,0 +1,132 @@
+# VisionGL Visual Programming Workspace
+#
+# VisionGL workspace file (/home/dataVglGui2.wksp) was created 
+# on Mon Oct 2 10:07:34 2021
+# by user VisionGL
+
+WorkspaceBegin: 1.0
+
+VariablesBegin:
+
+#
+# list of currently declared variables
+#
+
+width_size = 2342
+height_size = 1144
+
+VariablesEnd:
+
+#  Glyph 'Image load'
+Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/01_test.png' -iscolor 1 -has_mipmap 0
+
+#  Glyph 'Create Image Convolution'
+Glyph:VGL_CL:vglCreateImage::localhost:2:562:242::
+
+#  Glyph 'vglClConvolution'
+Glyph:VGL_CL:vglClConvolution::localhost:3:462:302:: -convolution_window [0.0030, 0.0133, 0.0219, 0.0133, 0.0030,0.0133, 0.0596, 0.0983, 0.0596, 0.0133,0.0219, 0.0983, 0.1621, 0.0983, 0.0219,0.0133, 0.0596, 0.0983,0.0596, 0.0133,0.0030, 0.0133, 0.0219, 0.0133, 0.0030] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Closing'
+Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
+
+#  Glyph 'Closing'
+Glyph:VGL_CL:Closing::localhost:5:382:182:: -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 5 -window_size_y 5
+
+#  Glyph 'Create Image Sub'
+Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::
+
+#  Glyph 'vglClSub'
+Glyph:VGL_CL:vglClSub::localhost:7:462:302::
+
+#  Glyph 'Create Image Threshold'
+Glyph:VGL_CL:vglCreateImage::localhost:8:562:242::
+
+#  Glyph 'vglClThreshold'
+Glyph:VGL_CL:vglClThreshold::localhost:9:462:302:: -thresh 0.011764 -top 1
+
+#  Glyph 'Create Image Reconstruct'
+Glyph:VGL_CL:vglCreateImage::localhost:10:562:242::
+
+#  Glyph 'Reconstruct'
+Glyph:VGL_CL:Reconstruct::localhost:11:462:302:: -convolution_window [1,1,1,1,1,1,1,1,1] -window_size_x 3 -window_size_y 3
+
+#  Glyph 'Image save Convolution'
+Glyph:VGL_CL:vglSaveImage::localhost:12:882:362:: -filename 'images/driveConvolution.png'
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:13:742:422:: -winname 'driveConvolution'
+
+#  Glyph 'Image save Closing'
+Glyph:VGL_CL:vglSaveImage::localhost:14:882:482:: -filename 'images/driveClosing.png'
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:15:742:542:: -winname 'driveClosing'
+
+#  Glyph 'Image save Sub'
+Glyph:VGL_CL:vglSaveImage::localhost:16:882:362:: -filename 'images/driveSub.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:17:742:422:: -winname 'driveSub'
+
+#  Glyph 'Image save Thresh'
+Glyph:VGL_CL:vglSaveImage::localhost:18:882:362:: -filename 'images/driveTresh.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:19:742:422:: -winname 'driveTresh'
+
+#  Glyph 'Image save Recons'
+Glyph:VGL_CL:vglSaveImage::localhost:20:882:362:: -filename 'images/driveReconstruct.png' 
+
+#  Glyph 'Image show'
+Glyph:VGL_CL:ShowImage::localhost:21:742:422:: -winname 'driveReconstruct'
+
+#  Connections 'Applying Convolution’
+NodeConnection:data:1:RETVAL:2:img
+NodeConnection:data:1:RETVAL:3:img_input
+NodeConnection:data:2:RETVAL:3:img_output
+
+# Connections ‘Show in Convolution'
+NodeConnection:data:3:img_output:12:image
+NodeConnection:data:3:img_output:13:image
+NodeConnection:data:3:img_output:7:img_input2
+
+# Connections ‘Applying Closing'
+NodeConnection:data:3:img_output:4:img
+NodeConnection:data:3:img_output:5:img_input
+NodeConnection:data:4:RETVAL:5:img_output
+
+# Connections ‘Show in Closing'
+NodeConnection:data:5:img_output:14:image
+NodeConnection:data:5:img_output:15:image
+
+#Connections 'Applying Sub'
+NodeConnection:data:5:img_output:6:img
+NodeConnection:data:5:img_output:7:img_input1
+NodeConnection:data:6:RETVAL:7:img_output
+
+# Connections ‘Show in Sub'
+NodeConnection:data:7:img_output:16:image
+NodeConnection:data:7:img_output:17:image
+
+#Connections 'Applying Threshold'
+NodeConnection:data:7:img_output:8:img
+NodeConnection:data:7:img_output:9:src
+NodeConnection:data:8:RETVAL:9:dst
+
+# Connections ‘Show in Threshold'
+NodeConnection:data:9:dst:18:image
+NodeConnection:data:9:dst:19:image
+
+#Connections 'Applying Reconstruct'
+NodeConnection:data:9:dst:10:img
+NodeConnection:data:9:dst:11:img_input
+NodeConnection:data:10:RETVAL:11:img_output
+
+# Connections ‘Show in Reconstruct'
+NodeConnection:data:11:img_output:20:image
+NodeConnection:data:11:img_output:21:image
+
+AnnotationsBegin
+AnnotationsEnd
+
+WorkspaceEnd: 1.0

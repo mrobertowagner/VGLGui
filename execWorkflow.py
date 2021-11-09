@@ -179,6 +179,33 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClConvolution_img_output)
 
+    elif vGlyph.func == 'vglClNConvolution': #Function Convolution
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
+
+        # Search the input image by connecting to the source glyph
+        vglClNConvolution_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClNConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        Conv_buffer = vl.create_blank_image_as(vglClNConvolution_img_input)
+
+        # Apply Convolution function
+        #vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
+        n = 25
+        p = 0
+        while(p<n):
+          vglClConvolution(vglClNConvolution_img_input, Conv_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+          vglClConvolution(Conv_buffer, vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+          p = p +1
+          GlyphExecutedUpdate(vGlyph.glyph_id, vglClNConvolution_img_output)
+          
+        
+        imshow(VglImage.get_ipl(vglClNConvolution_img_input))
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClNConvolution_img_output)
+
     elif vGlyph.func == 'vglClDilate': #Function Dilate
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
@@ -458,30 +485,40 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        Rec_imt0 = vl.create_blank_image_as(Rec_img_input)
         Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
         Rec_buffer = vl.create_blank_image_as(Rec_img_input)
-        #vglClErode(Rec_img_input, Rec_buffer1, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        vglClErode(Rec_img_input, Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-        #vglClDilate( Rec_imt0, Rec_imt1 , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
         
-        result = vglClEqual( Rec_buffer, Rec_img_input )
-        while(not result):
-            vglClDilate( Rec_buffer , Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            vglClMin(Rec_img_output , Rec_img_input, Rec_buffer)
-            result = vglClEqual(Rec_buffer,Rec_img_output)
+        vglClErode(Rec_img_input, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        result = 0
+        count = 0
+        while (not result ):
+          if ((count % 2) == 0):
+            vglClDilate( Rec_img_output , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClMin(Rec_buffer , Rec_img_input, Rec_imt1)
+          else:
+            vglClDilate( Rec_imt1 , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
+          result = vglClEqual(Rec_imt1, Rec_img_output)
+          count = count + 1 
 
         #Runtime
         vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
 
         for i in range( nSteps ):
-            vglClErode(Rec_img_input, Rec_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            result = vglClEqual( Rec_buffer, Rec_img_input )
-            while(not result):
-              vglClDilate(Rec_buffer, Rec_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-              vglClMin(Rec_img_output, Rec_img_input, Rec_buffer)
-              result = vglClEqual(Rec_buffer,Rec_img_output)
+          result = 0
+          count = 0
+          while (not result ):
+            if ((count % 2) == 0):
+              vglClDilate( Rec_img_output , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+              vglClMin(Rec_buffer , Rec_img_input, Rec_imt1)
+            else:
+              vglClDilate( Rec_imt1 , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+              vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
+            result = vglClEqual(Rec_imt1, Rec_img_output)
+            count = count + 1 
+            
 
         vl.get_ocl().commandQueue.finish()
         t1 = datetime.now()
@@ -491,7 +528,7 @@ for vGlyph in lstGlyph:
         total = total + media
 
         # Actions after glyph execution
-        GlyphExecutedUpdate(vGlyph.glyph_id, Rec_buffer)
+        GlyphExecutedUpdate(vGlyph.glyph_id,Rec_img_output)
 
     elif vGlyph.func == 'ShowImage':
 

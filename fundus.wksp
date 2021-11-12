@@ -81,31 +81,31 @@ Glyph:VGL_CL:vglCreateImage::localhost:20:562:242::
 Glyph:VGL_CL:Reconstruct::localhost:21:462:302::  -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 17 -window_size_y 17
 
 #  Glyph 'Image save Rbg2Gray'
-Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo/driveRgb2gray.png'
+Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo/fundusRgb2gray.png'
 
 #  Glyph 'Image save Convolution'
-Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo/driveConvolution.png'
+Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo/fundusConvolution.png'
 
 #  Glyph 'Image save Dilate_1x51'
-Glyph:VGL_CL:vglSaveImage::localhost:24:882:482:: -filename 'artigo/driveDilate_1x51.png'
+Glyph:VGL_CL:vglSaveImage::localhost:24:882:482:: -filename 'artigo/fundusDilate_1x51.png'
 
 #  Glyph 'Image save Dilate 51x1'
-Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo/driveDilate.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo/fundusDilate.png' 
 
 #  Glyph 'Image save Erode 1x51'
-Glyph:VGL_CL:vglSaveImage::localhost:26:882:362:: -filename 'artigo/driveErode_1x51.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:26:882:362:: -filename 'artigo/fundusErode_1x51.png' 
 
 #  Glyph 'Image save Erode 51x1'
-Glyph:VGL_CL:vglSaveImage::localhost:27:882:362:: -filename 'artigo/driveErode.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:27:882:362:: -filename 'artigo/fundusErode.png' 
 
 #  Glyph 'Image save Sub'
-Glyph:VGL_CL:vglSaveImage::localhost:28:882:362:: -filename 'artigo/driveSub.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:28:882:362:: -filename 'artigo/fundusSub.png' 
 
 #  Glyph 'Image save Thresh'
-Glyph:VGL_CL:vglSaveImage::localhost:29:882:362:: -filename 'artigo/driveThresh.png'
+Glyph:VGL_CL:vglSaveImage::localhost:29:882:362:: -filename 'artigo/fundusThresh.png'
 
 #  Glyph 'Image save Rec'
-Glyph:VGL_CL:vglSaveImage::localhost:30:882:362:: -filename 'artigo/driveRec.png'
+Glyph:VGL_CL:vglSaveImage::localhost:30:882:362:: -filename 'artigo/fundusRec.png'
 
 #  Connections 'Applying Rgb2Gray’
 NodeConnection:data:1:RETVAL:2:img

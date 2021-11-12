@@ -48,9 +48,9 @@ if __name__ == "__main__":
   """
 
   if (len(sys.argv) < 4):
-    img_in_path  = "standard_test_images/lena_color_512.tif"
+    img_in_path  = "images/standard_test_images/lena_color_512.tif"
     nSteps       = 1000
-    img_out_path = "output"
+    img_out_path = "images/output"
   else:
     img_in_path = sys.argv[1]
     nSteps    = int(sys.argv[2])

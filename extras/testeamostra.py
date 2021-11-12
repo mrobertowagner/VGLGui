@@ -64,8 +64,13 @@ def salvando2d(img, name):
 	
 	vl.vglSaveImage(name, img)
 
-
-img_in_path = "artigo/driveRgb2gray.png"
+def tratnum (num):
+    listnum = []
+    for line in num:
+        listnum.append(float(line))
+        listnumpy = np.array(listnum,np.float32)
+    return listnumpy
+img_in_path = "images/standard_test_images/lena_color_256.tif"
 img_in_path1 = "images/driveThresh.png"
 img_out_path= "images/"
 
@@ -103,31 +108,18 @@ convolution_window_2d_5x5 = np.array((	(1, 1,  1,  1,  1),
 convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
 											(2/16, 4/16, 2/16),
 											(1/16, 2/16, 1/16) ), np.float32)
-nSteps = 1000
+nSteps = 50
 inicio = t.time()
 #vl.get_ocl().commandQueue.flush()
+cw =['0.0625','0.0125','0.0625','0.125','0.25','0.125','0.0625','0.00125','0.0625']
+cv1 = '0.0625,0.0125,0.0625,0.125,0.25,0.125,0.0625,0.00125,0.0625'
+tratnum(cw)
+print(cw)
+vglClConvolution(img_input, img_output, tratnum(cv1), np.uint32(3), np.uint32(3))
 
-t0 = datetime.now()
-for i in range(nSteps):
-    vglClConvolution(img_input, img_output, convolution_window_2d_5x5, np.uint32(3), np.uint32(3))
-
-vl.get_ocl().commandQueue.finish()
-t1 = datetime.now()
-
-diff = t1 - t0
-print ("Total: "+str(diff.total_seconds()*1000))
-
-med = (diff.total_seconds() * 1000) / nSteps
-n= 20
-buffer = vl.create_blank_image_as(img_input)
-for i in range(n):
-    vglClConvolution(img_input, img_output,convolution_window_2d_3x3, 3, 3)
-    buffer = img_output
-    
     
 
-imshow(VglImage.get_ipl(buffer))
-#print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
+#imshow(VglImage.get_ipl(img_output))#print("Tempo d e" +str(nSteps)+ " execuções do metódo Convolution: " + str(med) + " ms")
 
 #result = vglClEqual(img_input,img_input)
 

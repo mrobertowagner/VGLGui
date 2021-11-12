@@ -50,6 +50,19 @@ def tratnum (num):
         listnumpy = np.array(listnum,np.float32)
     return listnumpy
 
+def tratnum1 (num):
+    listnum = []
+    for line in num:
+        listnum.append(float(line.replace(',', '.')))
+        listnumpy = np.array(listnum,np.float32)
+    return listnumpy
+
+def trat (num):
+    listnum = []
+    for line in num:
+        listnum.append(float(line))
+    return listnum
+
 nSteps = int(sys.argv[2])
 msg = ""
 CPU = cl.device_type.CPU #2
@@ -150,6 +163,61 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClErode_img_output)
 
+
+
+    elif vGlyph.func == 'vglClNErode': #Function Convolution
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
+
+        # Search the input image by connecting to the source glyph
+        vglClNErode_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClNErode_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        # Apply Convolution function
+        #vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
+        
+        Erode_buffer = vl.create_blank_image_as(vglClNErode_img_input)
+        
+        
+        #print(tratnum(np.array(vGlyph.lst_par[0].getValue()))
+        if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClErode(vglClNErode_img_input,  Erode_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClErode(Erode_buffer, vglClNErode_img_output , tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        else:
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClErode(vglClNErode_img_input,  vglClNErode_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClErode(vglClNErode_img_output,Erode_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClErode(Erode_buffer,  vglClNErode_img_output ,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        #Runtime
+        vl.get_ocl().commandQueue.flush()
+        t0 = datetime.now()
+        for i in range (nSteps):
+            
+            if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+                for i in range (int(vGlyph.lst_par[3].getValue())):
+                    vglClErode(vglClNErode_img_input,  Erode_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClErode(Erode_buffer, vglClNErode_img_output , tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            else:
+                for i in range (int(vGlyph.lst_par[3].getValue())):
+                    vglClErode(vglClNErode_img_input,  vglClNErode_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClErode(vglClNErode_img_output,Erode_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClErode(Erode_buffer,  vglClNErode_img_output ,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            
+        vl.get_ocl().commandQueue.finish()
+        t1 = datetime.now()
+        diff = t1 - t0
+        media = (diff.total_seconds() * 1000) / nSteps
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClNErode: " + str(media) + " ms\n"
+        total = total + media
+        
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id,vglClNErode_img_output)
+
     elif vGlyph.func == 'vglClConvolution': #Function Convolution
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
@@ -192,23 +260,45 @@ for vGlyph in lstGlyph:
         # Search the output image by connecting to the source glyph
         vglClNConvolution_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
-        Conv_buffer = vl.create_blank_image_as(vglClNConvolution_img_input)
-        convolution_window_2d_3x3 = np.array((	(1/16, 2/16, 1/16),
-											(2/16, 4/16, 2/16),
-											(1/16, 2/16, 1/16) ), np.float32)
-
         # Apply Convolution function
         #vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
-        nn =50
-        for i in range(nn):
-            vglClConvolution(vglClNConvolution_img_input, Conv_buffer,convolution_window_2d_3x3, np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            vglClConvolution(Conv_buffer, vglClNConvolution_img_output,convolution_window_2d_3x3, np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
-            
-            
-          
+        Conv_buffer = vl.create_blank_image_as(vglClNConvolution_img_input)
         
+    
+        if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClConvolution(vglClNConvolution_img_input,  Conv_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClConvolution(Conv_buffer, vglClNConvolution_img_output, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        else:
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClConvolution(vglClNConvolution_img_input,  vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClConvolution(vglClNConvolution_img_output,Conv_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClConvolution(Conv_buffer, vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        #Runtime
+        vl.get_ocl().commandQueue.flush()
+        t0 = datetime.now()
+        for i in range (nSteps):
+            
+            if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+                for i in range (int(vGlyph.lst_par[3].getValue())):
+                    vglClConvolution(vglClNConvolution_img_input,  Conv_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClConvolution(Conv_buffer, vglClNConvolution_img_output, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            else:
+                for i in range (int(vGlyph.lst_par[3].getValue())):
+                    vglClConvolution(vglClNConvolution_img_input,  vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClConvolution(vglClNConvolution_img_output,Conv_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                    vglClConvolution(Conv_buffer, vglClNConvolution_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            
+        vl.get_ocl().commandQueue.finish()
+        t1 = datetime.now()
+        diff = t1 - t0
+        media = (diff.total_seconds() * 1000) / nSteps
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClNConvolution: " + str(media) + " ms\n"
+        total = total + media
         
-        GlyphExecutedUpdate(vGlyph.glyph_id, Conv_buffer)
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id,vglClNConvolution_img_output)
 
     elif vGlyph.func == 'vglClDilate': #Function Dilate
         print("-------------------------------------------------")
@@ -239,6 +329,57 @@ for vGlyph in lstGlyph:
         total = total + media
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, vglClDilate_img_output)
+
+    elif vGlyph.func == 'vglClNDilate': #Function Convolution
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
+
+        # Search the input image by connecting to the source glyph
+        vglClNDilate_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        
+        # Search the output image by connecting to the source glyph
+        vglClNDilate_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        # Apply Convolution function
+        #vl.vglCheckContext(vglClConvolution_img_output,vl.VGL_CL_CONTEXT())
+        
+        Dilate_buffer = vl.create_blank_image_as(vglClNDilate_img_input)
+        
+        
+        #print(tratnum(np.array(vGlyph.lst_par[0].getValue()))
+        if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClDilate(vglClNDilate_img_input, Dilate_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(Dilate_buffer, vglClNDilate_img_output , tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        else:
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClDilate(vglClNDilate_img_input,  vglClNDilate_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(vglClNDilate_img_output, Dilate_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(Dilate_buffer, vglClNDilate_img_output ,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        #Runtime
+        vl.get_ocl().commandQueue.flush()
+        t0 = datetime.now()
+        if ((int(vGlyph.lst_par[3].getValue()) % 2)== 0):
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClDilate(vglClNDilate_img_input, Dilate_buffer,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(Dilate_buffer, vglClNDilate_img_output , tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        else:
+            for i in range (int(vGlyph.lst_par[3].getValue())):
+                vglClDilate(vglClNDilate_img_input,  vglClNDilate_img_output,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(vglClNDilate_img_output, Dilate_buffer, tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+                vglClDilate(Dilate_buffer, vglClNDilate_img_output ,tratnum(vGlyph.lst_par[0].getValue()), np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            
+        vl.get_ocl().commandQueue.finish()
+        t1 = datetime.now()
+        diff = t1 - t0
+        media = (diff.total_seconds() * 1000) / nSteps
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método vglClNDilate: " + str(media) + " ms\n"
+        total = total + media
+        
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, vglClNDilate_img_output )
 
     elif vGlyph.func == 'vglClThreshold': #Function Threshold
         print("-------------------------------------------------")

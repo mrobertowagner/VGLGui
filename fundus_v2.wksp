@@ -30,7 +30,7 @@ Glyph:VGL_CL:vglClRgb2Gray::localhost:3:382:182::
 Glyph:VGL_CL:vglCreateImage::localhost:4:562:242::
 
 #  Glyph 'vglClConvolution'
-Glyph:VGL_CL:vglClNConvolution::localhost:5:462:302:: -convolution_window [0.0625,0.0125,0.0625,0.125,0.25,0.125,0.0625,0.00125,0.0625] -windwos 3 -windows 3 -n 51
+Glyph:VGL_CL:vglClNConvolution::localhost:5:462:302:: -convolution_window [0.0625,0.0125,0.0625,0.125,0.25,0.125,0.0625,0.00125,0.0625] -windwos 3 -windows 3 -n 25
 
 #  Glyph 'Create Image Dilate'
 Glyph:VGL_CL:vglCreateImage::localhost:6:562:242::

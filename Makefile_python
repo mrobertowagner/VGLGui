@@ -1,15 +1,14 @@
 runnew:
-	cd ~/Documents/repo/VGLGui; ./execWorkflow.py workflow_files/newdrive-.wksp 1
-
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus_v2.wksp 1
 runfundus:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus.wksp 1
 rundemo:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demo.wksp 1000
 runbench:
-	cd ~/Documents/repo/VGLGui; ./bench.py standard_test_images/lena_color_512.tif 1000 output/
+	cd ~/Documents/repo/VGLGui; ./bench.py images/standard_test_images/lena_color_512.tif 1000 output/
 runtest:
 	cd ~/Documents/repo/VGLGui; ./testeamostra.py
-rundrivepy:
-	./execDrive.py
+runfunduspy:
+	./execFundus.py
 rundemopy:
 	./execDemo.py

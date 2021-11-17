@@ -86,14 +86,9 @@ Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo/fundusRgb2gr
 #  Glyph 'Image save Convolution'
 Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo/fundusConvolution.png'
 
-#  Glyph 'Image save Dilate_1x51'
-Glyph:VGL_CL:vglSaveImage::localhost:24:882:482:: -filename 'artigo/fundusDilate_1x51.png'
 
 #  Glyph 'Image save Dilate 51x1'
 Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo/fundusDilate.png' 
-
-#  Glyph 'Image save Erode 1x51'
-Glyph:VGL_CL:vglSaveImage::localhost:26:882:362:: -filename 'artigo/fundusErode_1x51.png' 
 
 #  Glyph 'Image save Erode 51x1'
 Glyph:VGL_CL:vglSaveImage::localhost:27:882:362:: -filename 'artigo/fundusErode.png' 
@@ -125,56 +120,59 @@ NodeConnection:data:5:img_output:6:img
 NodeConnection:data:5:img_output:7:img_input
 NodeConnection:data:6:RETVAL:7:img_output
 
+#Connections 'Save Convolution'
 NodeConnection:data:7:img_output:23:image
 NodeConnection:data:7:img_output:17:img_input2
 
-#Connections Dilate
+#Connections 'Applying Dilate 1x51'
 NodeConnection:data:7:img_output:8:img
 NodeConnection:data:7:img_output:9:img_input
 NodeConnection:data:8:RETVAL:9:img_output
 
-#Connections Dilate
+#Connections 'Applying Dilate 51x1'
 NodeConnection:data:9:img_output:10:img
 NodeConnection:data:9:img_output:11:img_input
 NodeConnection:data:10:RETVAL:11:img_output
 
+#Connections 'Save Dilate'
 NodeConnection:data:11:img_output:25:image
 
-#Connections ‘Erode'
+#Connections ‘Applying Erode 1x51'
 NodeConnection:data:11:img_output:12:img
 NodeConnection:data:11:img_output:13:img_input
 NodeConnection:data:12:RETVAL:13:img_output
 
-# Connections ‘Erode'
+# Connections ‘Applying Erode 51x1'
 NodeConnection:data:13:img_output:14:img
 NodeConnection:data:13:img_output:15:img_input
 NodeConnection:data:14:RETVAL:15:img_output
 
+#Connections 'Save Erode'
 NodeConnection:data:15:img_output:27:image
 
-# Connections ‘Sub'
+# Connections ‘Applying Sub'
 NodeConnection:data:15:img_output:16:img
 NodeConnection:data:15:img_output:17:img_input1
 NodeConnection:data:16:RETVAL:17:img_output
 
+#Connections 'Save Sub'
 NodeConnection:data:17:img_output:28:image
 
-# Connections ‘Thresh'
+# Connections ‘Applying Thresh'
 NodeConnection:data:17:img_output:18:img
 NodeConnection:data:17:img_output:19:src
 NodeConnection:data:18:RETVAL:19:dst
 
-# Connections ‘Show in Thresh'
+# Connections ‘Save Thresh'
 NodeConnection:data:19:dst:29:image
 
-#Connections 'Rec'
+#Connections 'Applying Rec'
 NodeConnection:data:19:dst:20:img
 NodeConnection:data:19:dst:21:img_input
 NodeConnection:data:20:RETVAL:21:img_output
 
+#Connections 'Save Rec'
 NodeConnection:data:21:img_output:30:image
-
-
 
 
 AnnotationsBegin

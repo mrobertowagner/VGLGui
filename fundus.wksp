@@ -86,7 +86,6 @@ Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo/fundusRgb2gr
 #  Glyph 'Image save Convolution'
 Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo/fundusConvolution.png'
 
-
 #  Glyph 'Image save Dilate 51x1'
 Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo/fundusDilate.png' 
 

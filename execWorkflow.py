@@ -675,6 +675,63 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id,Rec_img_output)
 
+
+
+##CONTROL
+
+
+    elif vGlyph.func == 'count':
+
+        ## CONTROL::COUNT::1:255:377::-inital_value 0 -final_value 10 increment 1
+        
+        
+
+        initial_value = int(vGlyph.lst_par[0].getValue())
+        final_value = int(vGlyph.lst_par[1].getValue())
+        increment = int(vGlyph.lst_par[2].getValue())
+        for i in range (initial_value, final_value,increment):
+            print(i)
+
+            
+        
+
+
+    elif vGlyph.func == 'merge':
+
+        # Returns edge image based on glyph id
+        merge_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input1')
+
+        merge_img_input2 = getImageInputByIdName(vGlyph.glyph_id, 'img_input2')
+
+        merge_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+    
+
+         # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id,merge_img_output)
+        #GlyphExecutedUpdate(vGlyph.glyph_id,merge_img_input1)
+
+    elif vGlyph.func == 'trigger':
+
+        # Returns edge image based on glyph id
+        tinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input1') ##verificar convernção
+
+        trinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input2') ##verificar convernção
+
+        toutput = getImageInputByIdName(vGlyph.glyph_id, 'img_output') ##verificar convernção
+
+        if trinput is not None:
+            GlyphExecutedUpdate(vGlyph.glyph_id,toutput)
+            
+
+
+    
+
+         # Actions after glyph execution
+        #GlyphExecutedUpdate(vGlyph.glyph_id,toutput)
+        #GlyphExecutedUpdate(vGlyph.glyph_id,merge_img_input1)
+
+
     elif vGlyph.func == 'ShowImage':
 
         # Returns edge image based on glyph id

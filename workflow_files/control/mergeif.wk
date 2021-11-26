@@ -1,0 +1,99 @@
+# Khoros Visual Programming Workspace
+#
+# cantata workspace file (/usr/khoros2.0/dip_course_alpha/html-course/k2tools/cantata/merge/merge-if-else.wk) was created 
+# on Mon May  1 11:33:24 1995
+# by user rjordan
+#
+VariablesBegin:
+
+
+#
+# list of currently declared variables
+#
+
+# Simple expression 'i'
+i = 0
+
+
+VariablesEnd:
+
+#GlyphBegin
+
+
+#  Glyph 'User defined'
+Glyph:DESIGN:user_def::3:85:165::  -o $DIP/data/angio1.viff
+
+
+#  Conditional 'If Else'
+Conditional:CONDITIONAL:if_else::7:205:185:: -condition 'i>0' 
+
+
+#  Conditional 'Merge Paths'
+Conditional:CONDITIONAL:merge::11:525:185:: 
+
+
+#  Glyph 'AND'
+Glyph:DATAMANIP:kbitand::15:385:145:: -real '128' 
+
+
+#  Glyph 'Display Image'
+Glyph:ENVISION:putimage::19:685:185:: -use_cmap 1 -x '400' -y '10' 
+
+
+#  Glyph 'Comment Icon'
+Glyph:DESIGN:comment::23:145:105:: -comment '1) Open the pane of the "If Else" construct and in the\n   "IF Conditional Expression" box define the expression\n   i > 0 .  Close the pane.\n2) Click on the "Variables" button to access the pane that \n   allows the user to define and initialize variables.\n3) In the "Expression" box define the expression : i=0 .\n4) Evaluate the expression by clicking on the "Evaluate"\n   button. \n5) Reset the workspace environment.\n6) Execute the visual program.\n7) To modify the variable value and re-execute the visual\n   program repeat steps 3 to 6. ' 
+
+
+#  Glyph 'Thresh Above'
+Glyph:DATAMANIP:kthreshabove::27:385:265:: -uc '128' -fval '128' -tval '0' 
+
+
+#  Glyph 'Histogram'
+Glyph:DATAMANIP:khisto::31:625:285:: -bins '256' -binwidth '1.0000000000' -min '0.0000000000' -w -h 
+
+
+#  Glyph '2D Plot'
+Glyph:ENVISION:putplot2::35:725:285:: -axis2d -x '690' -width '400' -y '10' -height '300' 
+
+#GlyphEnd
+#ConnectionBegin
+
+
+#  'User defined'
+NodeConnection:3:o:7:i:
+
+
+
+#  'If Else'
+NodeConnection:7:o1:15:i1:
+
+NodeConnection:7:o2:27:i:
+
+
+
+#  'Merge Paths'
+NodeConnection:11:o:19:i:
+NodeConnection:11:o:31:i:
+
+
+
+#  'AND'
+NodeConnection:15:o:11:i1:
+
+
+
+#  'Thresh Above'
+NodeConnection:27:o:11:i2:
+
+
+
+#  'Histogram'
+NodeConnection:31:o:35:i:
+
+
+#ConnectionEnd
+
+#ExternalConnectionEnd
+
+AnnotationsBegin
+AnnotationsEnd

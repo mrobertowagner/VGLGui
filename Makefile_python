@@ -12,3 +12,5 @@ runfunduspy:
 	./execFundus.py
 rundemopy:
 	./execDemo.py
+runcontrol:
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py trigger.wk 1

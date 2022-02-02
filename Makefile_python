@@ -1,7 +1,7 @@
 runnew:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus_v2.wksp 1
 runfundus:
-	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus.wksp 1
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus.wksp 1000
 rundemo:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demo.wksp 1000
 runbench:

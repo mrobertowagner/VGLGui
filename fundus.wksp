@@ -81,25 +81,25 @@ Glyph:VGL_CL:vglCreateImage::localhost:20:562:242::
 Glyph:VGL_CL:Reconstruct::localhost:21:462:302::  -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 17 -window_size_y 17
 
 #  Glyph 'Image save Rbg2Gray'
-Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo/fundusRgb2gray.png'
+Glyph:VGL_CL:vglSaveImage::localhost:22:882:362:: -filename 'artigo1/fundusRgb2gray.png'
 
 #  Glyph 'Image save Convolution'
-Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo/fundusConvolution.png'
+Glyph:VGL_CL:vglSaveImage::localhost:23:882:362:: -filename 'artigo1/fundusConvolution.png'
 
 #  Glyph 'Image save Dilate'
-Glyph:VGL_CL:vglSaveImage::localhost:24:882:362:: -filename 'artigo/fundusDilate.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:24:882:362:: -filename 'artigo1/fundusDilate.png' 
 
 #  Glyph 'Image save Erode'
-Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo/fundusErode.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:25:882:362:: -filename 'artigo1/fundusErode.png' 
 
 #  Glyph 'Image save Sub'
-Glyph:VGL_CL:vglSaveImage::localhost:26:882:362:: -filename 'artigo/fundusSub.png' 
+Glyph:VGL_CL:vglSaveImage::localhost:26:882:362:: -filename 'artigo1/fundusSub.png' 
 
 #  Glyph 'Image save Thresh'
-Glyph:VGL_CL:vglSaveImage::localhost:27:882:362:: -filename 'artigo/fundusThresh.png'
+Glyph:VGL_CL:vglSaveImage::localhost:27:882:362:: -filename 'artigo1/fundusThresh.png'
 
 #  Glyph 'Image save Rec'
-Glyph:VGL_CL:vglSaveImage::localhost:28:882:362:: -filename 'artigo/fundusRec.png'
+Glyph:VGL_CL:vglSaveImage::localhost:28:882:362:: -filename 'artigo1/fundusRec.png'
 
 #  Connections 'Applying Rgb2Gray’
 NodeConnection:data:1:RETVAL:2:img

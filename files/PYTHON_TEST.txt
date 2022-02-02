@@ -1,12 +1,12 @@
-Tempo médio de 1000 execuções do método Rgb2Gray: 5.517805 ms
-Tempo médio de 1000 execuções do método Convolution: 362.447285 ms
-Tempo médio de 1000 execuções do método Convolution: 351.725309 ms
-Tempo médio de 1000 execuções do método Dilate: 15.381383 ms
-Tempo médio de 1000 execuções do método Dilate: 18.564541999999996 ms
-Tempo médio de 1000 execuções do método Erode: 15.956668 ms
-Tempo médio de 1000 execuções do método Erode: 18.900209 ms
-Tempo médio de 1000 execucoes do método Sub: 4.009784 ms
-Tempo médio de 1000 execucoes do método Threshold: 38.446886 ms
-Tempo médio de 1000 execucoes do método Reconstruct: 1080.362276 ms
+Tempo médio de 1000 execuções do método Rgb2Gray: 12.435655 ms
+Tempo médio de 1000 execuções do método Convolution: 371.988465 ms
+Tempo médio de 1000 execuções do método Convolution: 359.248022 ms
+Tempo médio de 1000 execuções do método Dilate: 17.123581 ms
+Tempo médio de 1000 execuções do método Dilate: 20.522661 ms
+Tempo médio de 1000 execuções do método Erode: 17.083157 ms
+Tempo médio de 1000 execuções do método Erode: 20.585289 ms
+Tempo médio de 1000 execucoes do método Sub: 6.3877 ms
+Tempo médio de 1000 execucoes do método Threshold: 43.950296 ms
+Tempo médio de 1000 execucoes do método Reconstruct: 1080.2602 ms
 
-Valor total do tempo médio: 1911.312147
+Valor total do tempo médio: 1949.5850259999997

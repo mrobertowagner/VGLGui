@@ -68,7 +68,7 @@ msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
 total = 0.0
-vl.vglClInit(GPU) 
+vl.vglClInit(CPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:
@@ -629,41 +629,51 @@ for vGlyph in lstGlyph:
 
         # Search the output image by connecting to the source glyph
         Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-
+        elemento = tratnum(vGlyph.lst_par[0].getValue())
+        x = np.uint32(vGlyph.lst_par[1].getValue())
+        y = np.uint32(vGlyph.lst_par[2].getValue())
+        
         Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
         Rec_buffer = vl.create_blank_image_as(Rec_img_input)
         
-        vglClErode(Rec_img_input, Rec_img_output, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+        vglClErode(Rec_img_input, Rec_img_output, elemento, x, y)
 
         result = 0
         count = 0
         while (not result ):
           if ((count % 2) == 0):
-            vglClDilate( Rec_img_output , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClDilate( Rec_img_output , Rec_buffer, elemento, x, y)
             vglClMin(Rec_buffer , Rec_img_input, Rec_imt1)
           else:
-            vglClDilate( Rec_imt1 , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+            vglClDilate( Rec_imt1 , Rec_buffer , elemento, x, y)
             vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
           result = vglClEqual(Rec_imt1, Rec_img_output)
-          count = count + 1 
+          count = count + 1
+        print("contador",count)
+       
 
         #Runtime
         vl.get_ocl().commandQueue.flush()
         t0 = datetime.now()
-
+        Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
+        Rec_buffer = vl.create_blank_image_as(Rec_img_input)
         for i in range( nSteps ):
+          
+          vglClErode(Rec_img_input, Rec_img_output, elemento, x, y)
+
           result = 0
           count = 0
           while (not result ):
             if ((count % 2) == 0):
-              vglClDilate( Rec_img_output , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+              vglClDilate( Rec_img_output , Rec_buffer ,elemento, x, y)
               vglClMin(Rec_buffer , Rec_img_input, Rec_imt1)
             else:
-              vglClDilate( Rec_imt1 , Rec_buffer , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+              vglClDilate( Rec_imt1 , Rec_buffer , elemento, x, y)
               vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
             result = vglClEqual(Rec_imt1, Rec_img_output)
-            count = count + 1 
-            
+            count = count + 1
+          
+          #print("contador reconstrcut",count)  
 
         vl.get_ocl().commandQueue.finish()
         t1 = datetime.now()

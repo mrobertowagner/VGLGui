@@ -36,21 +36,8 @@ def reconstruct(im):
     imdil = cv2.dilate(imt0, kernel)
     imt1 = np.minimum(imdil, im)
     is_equal = image_equal(imt0, imt1)
-    #c = c + 1
+    c = c + 1
   return imt1
-
-def convolve(image, kernel):
-	# grab the spatial dimensions of the image, along with
-	# the spatial dimensions of the kernel
-	(iH, iW) = image.shape[:2]
-	(kH, kW) = kernel.shape[:2]
-	# allocate memory for the output image, taking care to
-	# "pad" the borders of the input image so the spatial
-	# size (i.e., width and height) are not reduced
-	pad = (kW - 1) // 2
-	image = cv2.copyMakeBorder(image, pad, pad, pad, pad,
-		cv2.BORDER_REPLICATE)
-	output = np.zeros((iH, iW), dtype="float32")
 
 def tratnum (num):
     listnum = []
@@ -65,24 +52,18 @@ TEST3 = True
 total = 0.0
 msg = ""
 if __name__ == "__main__":
-  nSteps = 1000
+  nSteps = 10
   filename = "images/1_good.jpg"
   img = my.imread(filename)
   
   msg = ""
-  if (TEST1):
-    h = my.hist(img)
-    my.showhist(h, 10)
-
-  if (TEST2):
-    my.imshow(my.histeq(imgray))
-
   if (TEST3):
     kernel_t = cv2.getGaussianKernel(51, 1)
     
     #print(kernel_t)
     kernel_size = 51
     gauss = cv2.getGaussianKernel(kernel_size, 0)
+    #print(gauss)
     
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     #my.imshow(imgray)
@@ -98,7 +79,6 @@ if __name__ == "__main__":
     #2 suavização
     #imsmooth1 = smooth(imgray, 15)
     imsmooth = cv2.sepFilter2D(imgray,-1,gauss,gauss)
-    #imsmooth1 = convolve(imgray, tratnum(kernel_15x15))
 
     #Runtime
     t0 = datetime.now()
@@ -109,29 +89,21 @@ if __name__ == "__main__":
     media = (t.total_seconds() * 1000) / nSteps
     msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método Convolution: " + str(media) + " ms\n"
     total = total + media
+    my.imshow(imsmooth)
 
-    imsmooth2 = cv2.sepFilter2D(imsmooth,-1,gauss,gauss)
+   
+   
     
-    #Runtime
-    t0 = datetime.now()
-    for i in range( nSteps ):
-      imsmooth2 = cv2.sepFilter2D(imsmooth,-1,gauss,gauss)
-    t1 = datetime.now()
-    t = t1 - t0
-    media = (t.total_seconds() * 1000) / nSteps
-    msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método Convolution: " + str(media) + " ms\n"
-    total = total + media
-    
-    #my.imshow(imsmooth)
+    #y.imshow(imsmooth)
     kernel_51 = np.ones((51, 1), np.uint8)
     kernel_1 = np.ones((1, 51), np.uint8)
 
-    imdil_1 = cv2.dilate(imsmooth2, kernel_51, 1)
+    imdil_1 = cv2.dilate(imsmooth, kernel_51, 1)
 
     #Runtime
     t0 = datetime.now()
     for i in range( nSteps ):
-      imdil_1 = cv2.dilate(imsmooth2, kernel_51, 1)
+      imdil_1 = cv2.dilate(imsmooth, kernel_51, 1)
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
@@ -178,12 +150,12 @@ if __name__ == "__main__":
 
   
 
-    result = imerode_51 - imsmooth2
+    result = imerode_51 - imsmooth
 
     #Runtime
     t0 = datetime.now()
     for i in range( nSteps ):
-      result = imerode_51 - imsmooth2
+      result = imerode_51 - imsmooth
     t1 = datetime.now()
     t = t1 - t0
     media = (t.total_seconds() * 1000) / nSteps
@@ -209,6 +181,7 @@ if __name__ == "__main__":
 
     #6 opening by reconstruction: erosão seguida da dilatação condicional até estabilização
     imopenrec = reconstruct(imthresh)
+    my.imshow(imopenrec)
 
     #Runtime
     t0 = datetime.now()
@@ -220,7 +193,7 @@ if __name__ == "__main__":
     msg = msg + "Tempo médio de " +str(nSteps)+ " execucoes do método Reconstruct: " + str(media) + " ms\n"
     total = total + media
 
-    #my.imshow(imopenrec)
+
 
 with open('files/PYTHON_TEST_NEW.txt', 'w') as arquivo:
     print(msg)

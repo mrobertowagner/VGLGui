@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 
     //First call to Convolution 3x3
     TimerStart();
-    vglClConvolution(gray, conv, (float*) kernel151, 1, 51);
+    vglClConvolution(gray, conv, (float*) kernel151, 5, 5);
     vglClFlush();
     printf("First call to          Convolution 5x5:         %s\n", getTimeElapsedInSeconds());
 

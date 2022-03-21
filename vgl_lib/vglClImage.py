@@ -63,7 +63,7 @@ def vglClInit(device_type=2, ocl_context_a=None, ss_a=None, bin_image_pack_size_
 	or (bin_image_pack_size_a == vl.PACK_SIZE_64()) ):
 		bin_image_pack_size = bin_image_pack_size_a
 	elif( bin_image_pack_size_a is None ):
-		print("vglClInit: Warning: Assuming bin_image_pack_size as 8")
+		#print("vglClInit: Warning: Assuming bin_image_pack_size as 8")
 		bin_image_pack_size = vl.PACK_SIZE_8()
 	else:
 		print("vglClInit: Error! bin_image_pack_size not 8, 32 or 64. Ending execution.")
@@ -112,7 +112,7 @@ def vglClImageUpload(img):
 	mf = cl.mem_flags
 
 	# IMAGE VARS
-	print("-> vglClImageUpload: Starting.")
+	#print("-> vglClImageUpload: Starting.")
 	if( img.getVglShape().getNFrames() == 1 ):
 		origin = ( 0, 0, 0 )
 		region = ( img.getVglShape().getWidth(), img.getVglShape().getHeigth(), 1 )
@@ -133,7 +133,7 @@ def vglClImageUpload(img):
 
 	# COPYING NDARRAY IMAGE TO OPENCL IMAGE OBJECT
 	cl.enqueue_copy(ocl.commandQueue, img.get_oclPtr(), img.get_ipl(), origin=origin, region=region, is_blocking=True)
-	print("<- vglClImageUpload: Ending.\n")
+	#print("<- vglClImageUpload: Ending.\n")
 
 """
 	THIS METHOD TAKES THE DEVICE-SIDE OPENCL IMAGE AND
@@ -145,7 +145,7 @@ def vglClImageDownload(img):
 	global ocl 
 
 	# MAKE IMAGE DOWNLOAD HERE
-	print("-> vglClImageDownload: Starting")
+	#print("-> vglClImageDownload: Starting")
 
 	if( img.getVglShape().getNFrames() == 1 ):
 		origin = ( 0, 0, 0 )
@@ -175,7 +175,7 @@ def vglClImageDownload(img):
 			buffer = np.frombuffer( buffer, img.get_ipl().dtype ).reshape( img.getVglShape().getNFrames(), img.getVglShape().getHeigth(), img.getVglShape().getWidth(), img.getVglShape().getNChannels() )
 
 	img.ipl = buffer
-	print("<- vglClImageDownload: Ending.\n")
+	#print("<- vglClImageDownload: Ending.\n")
 	vl.create_vglShape(img)
 
 """

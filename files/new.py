@@ -6,7 +6,7 @@ import numpy as np
 import time as t
 from datetime import datetime
 from skimage import io, color, morphology
-
+import ia870 as mm
 import skimage
 
 def close(im, kernel, iterations=1):
@@ -37,7 +37,7 @@ def image_equal(im0, im1):
   return (sum(sum(im0 != im1)) == 0)
 
 def reconstruct(im):
-  kernel = np.ones((25, 25), np.uint8)
+  kernel = np.ones((17,17), np.uint8)
   imero =  cv2.erode(im, kernel)
   c = 0
   imt0 = imero
@@ -84,7 +84,23 @@ def dilcond(img):
   result = cv2.min(imgdil,img)
 
   return result
-  
+
+
+
+def imshow_components(labels):
+    # Map component labels to hue val
+    label_hue = np.uint8(179*labels/np.max(labels))
+    blank_ch = 255*np.ones_like(label_hue)
+    labeled_img = cv2.merge([label_hue, blank_ch, blank_ch])
+
+    # cvt to BGR for display
+    labeled_img = cv2.cvtColor(labeled_img, cv2.COLOR_HSV2BGR)
+
+    # set bg label to black
+    labeled_img[label_hue==0] = 0
+
+    cv2.imshow('labeled.png', labeled_img)
+    cv2.waitKey()
 '''
 01 a = mmreadgray(’galeao.jpg’)
 02 b = mmopenth( a, mmsedisk(5))
@@ -126,13 +142,13 @@ if __name__ == "__main__":
     tophat = cv2.morphologyEx(close, cv2.MORPH_TOPHAT,disk)
     imopenth = tophat
     print("openth")
-    my.imshow(imopenth)
+    #my.imshow(imopenth)
 
     #PASSO 2 - THREHSOLD
 
     imthresh = my.thresh(imopenth, 0.117664)
     print("thresh")
-    my.imshow(imthresh)
+    #my.imshow(imthresh)
     
 
 
@@ -143,7 +159,7 @@ if __name__ == "__main__":
     
     
     print("hitmiss")
-    my.imshow(hitmiss)
+    #my.imshow(hitmiss)
     kernel17 = np.ones((17,17), np.uint8)
     kernel5151 = np.ones((51,51), np.uint8)
 
@@ -171,20 +187,20 @@ if __name__ == "__main__":
     '''
     
 
-    kernel11 = np.ones((3,3), np.uint8)
+    kernel11 = np.ones((1,1), np.uint8)
     open_11 = cv2.morphologyEx(hitmiss, cv2.MORPH_OPEN, kernel11)
     close_11 = cv2.morphologyEx(open_11, cv2.MORPH_CLOSE, kernel11)
-    #my.imshow(close_11)
+    my.imshow(close_11)
 
-    kernel15 = np.ones((5,5),np.uint8)
+    kernel15 = np.ones((3,3),np.uint8)
     open_15  = cv2.morphologyEx(close_11, cv2.MORPH_OPEN, kernel15)
     close_15 = cv2.morphologyEx(open_15, cv2.MORPH_CLOSE, kernel15)
-   # my.imshow(close_15)
+    my.imshow(close_15)
     
-    kernel19 = np.ones((7,7),np.uint8)
+    kernel19 = np.ones((5,5),np.uint8)
     open_19  = cv2.morphologyEx(close_15, cv2.MORPH_OPEN, kernel19)
     close_19 = cv2.morphologyEx(open_19 , cv2.MORPH_CLOSE, kernel19)    
-    #my.imshow(close_19)
+    my.imshow(close_19)
 
     kernel11 = np.ones((11,11), np.uint8)
     open1 = cv2.morphologyEx(close_19, cv2.MORPH_OPEN, kernel11)
@@ -192,13 +208,14 @@ if __name__ == "__main__":
 
     print("cond dil")
     cond = conddil(close1)
-    resu = cv2.max(cond,close_15)
+    resu = cv2.max(cond,close1)
     my.imshow(resu)
 
     rresu = reconstruct(resu)
     my.imshow(rresu)
     
-    #re = reconstruct(resu)
+    re = reconstruct(rresu)
+    my.imshow(re)
 
 
 

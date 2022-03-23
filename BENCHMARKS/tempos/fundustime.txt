@@ -15,7 +15,7 @@ Tempo médio de 1000 execucoes do método Threshold: 45.864931 ms
 Tempo médio de 1000 execucoes do método Reconstruct: 1107.729044 ms
 
 -------------------------------------------------------------
-Valo total médio: 1945.673153
+Valo total médio: 15912.38
 
 
 

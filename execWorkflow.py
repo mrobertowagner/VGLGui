@@ -13,6 +13,8 @@ from readWorkflow import *
 import time as t
 import gc
 from datetime import datetime
+from areaopen import *
+import ia870 as ia
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
@@ -618,21 +620,112 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
 
+    
+    elif vGlyph.func == 'Closeth': #Function Closing
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
 
-    elif vGlyph.func == 'Reconstruct': #Function Reconstruct
+        # Search the input image by connecting to the source glyph
+        Closing_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+
+        # Search the output image by connecting to the source glyph
+        Closing_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        
+        Closing_buffer = vl.create_blank_image_as(Closing_img_input)
+
+        vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        vglClSub(Closing_img_output, Closing_img_input, Closing_img_output)
+
+        #gc.collect(Closing_buffer)
+
+        #Runtime
+        vl.get_ocl().commandQueue.flush()
+        t0 = datetime.now()
+        for i in range( nSteps ):
+          vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+          vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+          vglClSub(Closing_img_output, Closing_img_input, Closing_img_output)
+
+        vl.get_ocl().commandQueue.finish()
+        t1 = datetime.now()
+        diff = t1 - t0
+        media = (diff.total_seconds() * 1000) / nSteps
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método CloseTh: " + str(media) + " ms\n"
+        total = total + media
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
+
+
+
+    elif vGlyph.func == 'Closeth': #Function Closing
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
+
+        # Search the input image by connecting to the source glyph
+        Closing_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+
+        # Search the output image by connecting to the source glyph
+        Closing_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        
+        Closing_buffer = vl.create_blank_image_as(Closing_img_input)
+
+        vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+        vglClSub(Closing_img_output, Closing_img_input, Closing_img_output)
+
+        #gc.collect(Closing_buffer)
+
+        #Runtime
+        vl.get_ocl().commandQueue.flush()
+        t0 = datetime.now()
+        for i in range( nSteps ):
+          vglClDilate(Closing_img_input, Closing_buffer, tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+          vglClErode(Closing_buffer, Closing_img_output , tratnum(vGlyph.lst_par[0].getValue()),np.uint32(vGlyph.lst_par[1].getValue()), np.uint32(vGlyph.lst_par[2].getValue()))
+
+          vglClSub(Closing_img_output, Closing_img_input, Closing_img_output)
+
+        vl.get_ocl().commandQueue.finish()
+        t1 = datetime.now()
+        diff = t1 - t0
+        media = (diff.total_seconds() * 1000) / nSteps
+        msg = msg + "Tempo médio de " +str(nSteps)+ " execuções do método CloseTh: " + str(media) + " ms\n"
+        total = total + media
+
+        # Actions after glyph execution
+        GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
+
+    elif vGlyph.func == 'Infrec': #Function Reconstruct
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
         print("-------------------------------------------------")
     
         # Search the input image by connecting to the source glyph
-        Rec_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+        Infrec_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input1')
+
+        Infrec_img_input2 = getImageInputByIdName(vGlyph.glyph_id, 'img_input2')
 
         # Search the output image by connecting to the source glyph
-        Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
-        elemento = tratnum(vGlyph.lst_par[0].getValue())
-        x = np.uint32(vGlyph.lst_par[1].getValue())
-        y = np.uint32(vGlyph.lst_par[2].getValue())
-        
+        Infrec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+
+        n_pixel = np.uint32(vGlyph.lst_par[0].getValue())
+
+
+
+        #################################################
+        #       CODIGO DA INFREC                        #
+        #                                               #
+        #################################################
         Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
         Rec_buffer = vl.create_blank_image_as(Rec_img_input)
         
@@ -685,6 +778,26 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id,Rec_img_output)
 
+    elif vGlyph.func == 'AreaOpen': #Function Reconstruct
+        print("-------------------------------------------------")
+        print("A função " + vGlyph.func +" está sendo executada")
+        print("-------------------------------------------------")
+    
+        # Search the input image by connecting to the source glyph
+        Rec_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
+
+        # Search the output image by connecting to the source glyph
+        Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        elemento = tratnum(vGlyph.lst_par[0].getValue())
+        x = np.uint32(vGlyph.lst_par[1].getValue())
+        y = np.uint32(vGlyph.lst_par[2].getValue())
+        imshow(VglImage.get_ipl(Rec_img_input))
+        
+        Rec_img_output = iaareaopen(Rec_img_input,1000,ia.iasebox())
+
+
+        GlyphExecutedUpdate(vGlyph.glyph_id,Rec_img_output)
+
 
 
 ##CONTROL
@@ -724,11 +837,11 @@ for vGlyph in lstGlyph:
     elif vGlyph.func == 'trigger':
 
         # Returns edge image based on glyph id
-        tinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input1') ##verificar convernção
+        tinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input1')  ##verificar
 
-        trinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input2') ##verificar convernção
+        trinput = getImageInputByIdName(vGlyph.glyph_id, 'img_input2') ##verificar
 
-        toutput = getImageInputByIdName(vGlyph.glyph_id, 'img_output') ##verificar convernção
+        toutput = getImageInputByIdName(vGlyph.glyph_id, 'img_output') ##verificar
 
         if trinput is not None:
             GlyphExecutedUpdate(vGlyph.glyph_id,toutput)

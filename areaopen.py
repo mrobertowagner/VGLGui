@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
 import my
 import cv2
@@ -11,107 +10,41 @@ import skimage
 import matplotlib.pyplot as plt
 from PIL import Image
 import queue
-def close(im, kernel, iterations=1):
-  imdil = cv2.erode(im, kernel, iterations)
-  result = cv2.dilate(imdil, kernel, iterations)
-  return result
-
-def closeth (im, kernel, iterations=1):
-  
-  imdil = cv2.dilate(im,kernel,iterations)
-  imerod = cv2.erode(imdil,kernel,iterations)
-  result = imerod - im
-  return result
+import time as t
+import gc
+from datetime import datetime
+from areaopen import *
+import ia870 as ia
 
 
-def openth (im, kernel, iterations=1):
-  
-  
-  imerod = cv2.erode(im,kernel,iterations)
-  imdil = cv2.dilate(imerod,kernel,iterations)
-  result = imdil - im
-  return result
+from numpy import *
 
-def rgb2gray(rgb):
-  r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
-  gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
-  return gray
+def seshow(B, option="NORMAL"):
+    from ia870 import iaisbinary, iaintersec, iagray, iabinary
+    from ia870 import iasedil, iaero, iabshow
 
-def blackhat(im, kernel, iterations=1):
-  result = close(im, kernel, iterations)
-  return result
+    option = option.upper()
+    if option=='NON-FLAT':
+        y = array([0],int32)
+        if iaisbinary(B):
+            B = iaintersec( iagray(B,'int32'),0)
+    elif option=='NORMAL':
+        if iaisbinary(B):    y=iabinary([1])
+        else:
+           y=array([0],int32)
+    elif option=='EXPAND':
+        assert iaisbinary(B), 'This option is only available with flat SE'
+        y = iasedil( iabinary([1]),B)
+        b1= iabinary(y>=0)
+        b0= b1<0
+        b0[shape(b0)[0]//2, shape(b0)[1]//2] = 1
+        y = iabshow(b1,y,b0)
+        return y
+    else:
+        print('iaseshow: not a valid flag: NORMAL, EXPAND or NON-FLAT')
 
-def smooth(im, diam=3):
-  result = cv2.GaussianBlur(im, (diam, diam), 0)
-  return(result)
-
-def image_equal(im0, im1):
-  return (sum(sum(im0 != im1)) == 0)
-
-
-def infrec (im,aux):
-  kernel = np.ones((13,13), np.uint8)
-  imero =  aux
-  c = 0
-  imt0 = imero
-  imt1 = cv2.dilate(imt0, kernel)
-  is_equal = image_equal(imt0, imt1)
-  while (not is_equal.all()):
-    #print(c)
-    imt0 = imt1
-    imdil = cv2.erode(imt0, kernel)
-    imt1 = np.maximum(imdil, im)
-    is_equal = image_equal(imt0, imt1)
-    c = c + 1
-  return imt1
-
-
-def iaisequal(f1, f2, MSG=None):
-
-    if f1.shape != f2.shape:
-      return False
-    return numpy.all(f1 == f2)
-def reconstruct(im):
-  kernel = np.ones((11,11), np.uint8)
-  imero =  cv2.erode(im, kernel)
-  c = 0
-  imt0 = imero
-  imt1 = cv2.dilate(imt0, kernel)
-  is_equal = image_equal(imt0, imt1)
-  while (not is_equal.all()):
-    #print(c)
-    imt0 = imt1
-    imdil = cv2.dilate(imt0, kernel)
-    imt1 = np.minimum(imdil, im)
-    is_equal = image_equal(imt0, imt1)
-    c = c + 1
-  return imt1
-
-
-def infrec(f1,f2,n=1):
-  secross = cv2.getStructuringElement(cv2.MORPH_CROSS,(3,3))
-  y = np.minimum(f1,f2)
-
-  for i in range(n):
-    aux = y
-    y1 = cv2.dilate(f1,secross)
-    y = np.minimum(y1,f2)
-    if iaisequal(y,aux): break
-
-  return y
-
-  
-
-
-def iaisequal(f1, f2, MSG=None):
-
-    if f1.shape != f2.shape:
-      return False
-    return np.all(f1 == f2)
-  
-
-
-
+    y = iasedil(y,B)
+    return y
 
 def blob(f, measurement, output="image"):
     #import numpy
@@ -154,8 +87,6 @@ def blob(f, measurement, output="image"):
 
 def label(f, Bc=None):
     if Bc is None: Bc = secross()
-    if not isbinary(f):
-        f = (f > 0)
     f = pad4n(f, Bc, 0)
     neighbours = se2flatidx(f,Bc)
     labeled = f * 0
@@ -222,7 +153,6 @@ def sesum(B=None, N=1):
         NB = sedilate(NB,B)
     return NB
 
-
 def areaopen(f, a, Bc=None):
     if Bc is None: Bc = secross()
     fr = label(f,Bc)    
@@ -236,7 +166,6 @@ def areaopen(f, a, Bc=None):
         break
       y = union(y, gray(fo,datatype(f),k))
     return y
-
 def pad4n(f, Bc, value, scale=1):
     
     from numpy import ones, array
@@ -271,6 +200,10 @@ def find_area(area, i):
         i = area[i]
     area[lista] = i
     return i
+
+
+
+
 def iasecross(r=1):
     from ia870.iasesum import iasesum
     from ia870.iabinary import iabinary
@@ -282,9 +215,7 @@ def iasecross(r=1):
 
 
 def iase2off(Bc,option='neigh'):
-  
     '''Converts structuring element to list of neighbor offsets in graph image'''
-    print("TAMANHO BC",len(Bc.shape))
     if len(Bc.shape) == 2:
         h,w = Bc.shape
         hc,wc = h//2,w//2
@@ -328,7 +259,6 @@ def iaNlut(s,offset):
     s - image shape
     offset - offset matrix, 2 columns (dh,dw) by n. of neighbors rows
     '''
-    print("TAMANHO IANLUT",len(s))
     if len(s)== 2:
         H,W = s
         n = H*W
@@ -365,40 +295,17 @@ def iaNlut(s,offset):
 
 
 def iaareaopen(f,a,Bc=iasecross()):
-    np.set_printoptions(threshold=np.inf)
     a = -a
-    #print(a)
     s = f.shape
-    print(len(f))
-    print("Shape =",s)
     g = np.zeros_like(f).ravel()
-    print("Zeros=",g)
-    print("NUMEROS DE ZEROS=",len(g))
-    
-    print("RAVEl=",f.ravel())
-    print("NUMEROS DE RAVEL=",len(f.ravel()))
     f1 = np.concatenate((f.ravel(),np.array([0])))
-    #f1 = np.array(np.zeros(17915904))
-    print("F1 =",f1)
-    print("NUMEROS F1=",len(f1))
-    print("Area Img =",f1.size)
-    if (f1 == f+1):
-      print("DKASIJDSAIO")
-    else:
-      print("NEGATIVO")
     area = -np.ones((f1.size,), np.int32)
-    print("Area=",area)
-    print("TAMANHO DA AREA",len(area))
     N = iaNlut(s, iase2off(Bc))
-    print("Valor N=",N)
     pontos = f1.nonzero()[0]
-    print("Pontos=",pontos)
     pontos = pontos[np.lexsort((np.arange(0,-len(pontos),-1),f1[pontos]))[::-1]]
-    print("Pontos2=",pontos)
     for p in pontos:
         for v in N[p]:
             if f1[p] < f1[v] or (f1[p] == f1[v] and v < p):
-                #print(len(N[p]))
                 rv = find_area(area, v)
                 if rv != p:
                     if area[rv] > a or f1[p] == f1[rv]:
@@ -412,7 +319,6 @@ def iaareaopen(f,a,Bc=iasecross()):
         else:
             if area[p] <= a:
                 g[p] = f1[p]
-    #print(g.reshape(s))
     return g.reshape(s)
   
 def find_area(area, i):
@@ -425,82 +331,6 @@ def find_area(area, i):
 
 
 
-TEST3 = True
 
-if __name__ == "__main__":
-  filename = "images/galeao.jpg"
-  f_pil = Image.open('images/img2.png').convert('L') # must be read as grayscale
-  #f_pil = Image.open('images/1_good.jpg').convert('L') # must be read as grayscale
-  img = my.imread(filename)
-  imgray = my.imreadgray(filename)
-  recimg = "images/rec.png" 
-  
-
-  if (TEST3):
-    
-    f = np.array(f_pil)
-    
-    
-    disk = cv2.getStructuringElement(2, (51,51))
-    image1 = Image.open("images/img2.png").convert("1")
-    
-    #PASSO 1 - OPENTH
-    #imopenth = closeth(imgray,disk,1)
-    imcloseth = closeth(f,disk)
-    
-    #my.imshow(imcloseth)
-    print("CloseTh")
-    #th=ia.iacloseth(f,ia.iasedisk(31))
-
-
-    bin1=my.thresh(f,2)
-    #my.imshow(bin1)
-    #bin1 = ia.iathreshad(imopenth,30)
-   
-    #my.imshow(bin1)
-    #print("Threshold ")
-
-
-    #rec = reconstruct(bin1)
-    #my.imshow(rec)
-    #print("Reconstrucao pós fechamento")
-
-    
-    kernel1 = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
-    hitmiss = cv2.morphologyEx(bin1, cv2.MORPH_HITMISS, kernel1)
-    
-    #my.imshow(hitmiss)
-    #print("Hit-Miss")
-    
-    #y = areaopen(hitmiss,4,secross())
-    #m=
-    m = iaareaopen(bin1,1000,kernel1)
-    my.imshow(m)
-    print("RODOU")
-    #m =ia.iaareaopen(hitmiss,1000,ia.iasebox()) 
-    #my.imshow(m)
-    #print("AreaOpen")
-    #kernel = np.ones((17,17), np.uint8)
-    
-    #tophat_img = cv2.morphologyEx(m, cv2.MORPH_BLACKHAT, kernel)
-    #my.imshow(tophat_img)
-
-  
-    
-    g = ia.iainfrec(ia.iagray(m),imcloseth)
-    #g = infrec(ia.iagray(m),imcloseth)
-    #g = imreconstruct (ia.iagray(m), imcloseth) #dilatação condicional
-    #my.imshow(g)
-    print("Infrec")
-
-
-    
-    h = my.thresh(g, 4.5)
-    #my.imshow(h)
-    print("Thresh")
-
-    #my.imshow(rec)
-  
-    
 
 

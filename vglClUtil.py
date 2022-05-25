@@ -72,9 +72,9 @@ def vglClEqual(img_input1, img_input2):
     import time
     #time.sleep(1)
 
-    #print("mobj_equal  = %d" % mobj_equal)
+    print("mobj_equal  = %d" % mobj_equal)
     cl.enqueue_copy(vl.get_ocl().commandQueue, mobj_equal, mobj_ptr, is_blocking=True)
-    #print("mobj_equal  = %d" % mobj_equal)
+    print("mobj_equal  = %d" % mobj_equal)
     return mobj_equal
         
 

@@ -1,5 +1,7 @@
 runnew:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus_v2.wksp 1
+runlotufu:
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py area.wksp 1
 runfundus:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus.wksp 1
 rundemo:

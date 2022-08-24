@@ -13,8 +13,8 @@ from readWorkflow import *
 import time as t
 import gc
 from datetime import datetime
-from areaopen import *
-import ia870 as ia
+#from areaopen import *
+#import ia870 as ia
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
@@ -705,20 +705,23 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id, Closing_img_output)
 
-    elif vGlyph.func == 'Infrec': #Function Reconstruct
+    elif vGlyph.func == 'Reconstruct': #Function Reconstruct
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
         print("-------------------------------------------------")
     
         # Search the input image by connecting to the source glyph
-        Infrec_img_input1 = getImageInputByIdName(vGlyph.glyph_id, 'img_input1')
+        Rec_img_input = getImageInputByIdName(vGlyph.glyph_id, 'img_input')
 
-        Infrec_img_input2 = getImageInputByIdName(vGlyph.glyph_id, 'img_input2')
+        
 
         # Search the output image by connecting to the source glyph
-        Infrec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
+        Rec_img_output = getImageInputByIdName(vGlyph.glyph_id, 'img_output')
 
         n_pixel = np.uint32(vGlyph.lst_par[0].getValue())
+        elemento = tratnum(vGlyph.lst_par[0].getValue())
+        x = np.uint32(vGlyph.lst_par[1].getValue())
+        y = np.uint32(vGlyph.lst_par[2].getValue())
 
 
 
@@ -742,7 +745,7 @@ for vGlyph in lstGlyph:
             vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
           result = vglClEqual(Rec_imt1, Rec_img_output)
           count = count + 1
-        print("contador",count)
+        #print("contador",count)
        
 
         #Runtime
@@ -778,7 +781,7 @@ for vGlyph in lstGlyph:
         # Actions after glyph execution
         GlyphExecutedUpdate(vGlyph.glyph_id,Rec_img_output)
 
-    elif vGlyph.func == 'AreaOpen': #Function Reconstruct
+    elif vGlyph.func == 'AreaOpen': 
         print("-------------------------------------------------")
         print("A função " + vGlyph.func +" está sendo executada")
         print("-------------------------------------------------")

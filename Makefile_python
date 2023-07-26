@@ -3,9 +3,9 @@ runnew:
 runlotufu:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py area.wksp 1
 runfundus:
-	cd ~/Documents/visiongl/src/VGLGui; ./execWorkflow.py fundus.wksp 1
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py fundus.wksp 1
 rundemo:
-	cd ~/Documents/TCC_1/visiongl/src/VGLGui; ./execWorkflow.py demo.wksp 1
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py demo.wksp 1000
 runbench:
 	cd ~/Documents/repo/VGLGui; ./bench.py images/standard_test_images/lena_color_512.tif 1000 output/
 runtest:

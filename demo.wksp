@@ -13,7 +13,7 @@ height_size = 1144
 VariablesEnd:
 
 #  Glyph 'Image load'
-Glyph:VGL_CL:vglLoadImage:localhost:1:302:82: -filename 'images/goodQuality/1_good.JPG' -iscolor 1 -has_mipmap 0
+Glyph:VGL_CL:vglLoadImage::localhost:1:302:82:: -filename 'images/goodQuality/1_good.JPG' -iscolor 1 -has_mipmap 0
 
 #  Glyph 'Create Image Rgb2Gray'
 Glyph:VGL_CL:vglCreateImage::localhost:2:562:122::
@@ -58,16 +58,16 @@ Glyph:VGL_CL:vglCreateImage::localhost:14:562:242::
 Glyph:VGL_CL:vglClErode::localhost:15:462:302::  -convolution_window [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] -window_size_x 51 -window_size_y 1
 
 #  Glyph 'Image save Convolution'
-Glyph:VGL_CL:vglSaveImage:localhost:16:882:482: -filename 'conv.png'
+Glyph:VGL_CL:vglSaveImage::localhost:16:882:482:: -filename 'conv.png'
 
 #  Glyph 'Image save Dilate'
-Glyph:VGL_CL:vglSaveImage:localhost:17:882:482: -filename 'dilate.png'
+Glyph:VGL_CL:vglSaveImage::localhost:17:882:482:: -filename 'dilate.png'
 
 #  Glyph 'Image save Erode'
-Glyph:VGL_CL:vglSaveImage:localhost:18:882:482: -filename 'erode.png'
+Glyph:VGL_CL:vglSaveImage::localhost:18:882:482:: -filename 'erode.png'
 
 #  Glyph 'Image Show Erode'
-Glyph:VGL_CL:ShowImage:localhost:19:882:482: -winame 'erode.png'
+Glyph:VGL_CL:ShowImage::localhost:19:882:482:: -winame 'erode.png'
 
 #  Connections 'Applying Rgb2Gray’
 NodeConnection:data:1:RETVAL:2:img

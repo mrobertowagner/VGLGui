@@ -1,8 +1,0 @@
-Tempo médio de 1000 execucoes do metodo Rgb2Gray: 8.364592 ms
-Tempo médio de 1000 execuções do metodo Convolution: 7.100313 ms
-Tempo médio de 1000 execucoes do metodo Closing: 14.030546 ms
-Tempo médio de 1000 execucoes do metodo Sub: 3.992676 ms
-Tempo médio de 1000 execucoes do metodo Threshold: 43.414797 ms
-Tempo médio de 1000 execucoes do metodo Reconstruct: 999.2384 ms
-
-Valor total do tempo médio: 1076.141324

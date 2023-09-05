@@ -1,8 +1,0 @@
-Tempo médio de 10 execuções do método vglClRgb2Gray: 1.4783 ms
-Tempo médio de 10 execuções do método vglClConvolution: 24.6941 ms
-Tempo médio de 10 execuções do método Closing: 35.616 ms
-Tempo médio de 10 execuções do método vglClSub: 1.1891 ms
-Tempo médio de 10 execuções do método vglClThreshold: 1.1891 ms
-Tempo médio de 10 execuções do método Reconstruct: 19.4821 ms
-
-Valor total do tempo médio: 83.6487

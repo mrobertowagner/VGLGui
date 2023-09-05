@@ -6,7 +6,7 @@ __kernel void vglClEqual(__read_only image2d_t img_input1, __read_only image2d_t
 {
     //int output[1];
     if(output[0] == 0) return;
-      printf("%d", output[0]);
+    //  printf("%d", output[0]);
 
     int2 coords = (int2)(get_global_id(0), get_global_id(1));
     const sampler_t smp = CLK_NORMALIZED_COORDS_FALSE | //Natural coordinates
@@ -16,7 +16,7 @@ __kernel void vglClEqual(__read_only image2d_t img_input1, __read_only image2d_t
     float4 p2 = read_imagef(img_input2, smp, coords);
     if (!(p1.x == p2.x))
     {
-        printf("x NEQ! @ (%d, %d): p1 = %f != %f = p2\n", coords.x, coords.y, p1.x, p2.x);
+        //printf("x NEQ! @ (%d, %d): p1 = %f != %f = p2\n", coords.x, coords.y, p1.x, p2.x);
         output[0] = 0;
     }
     if (!(p1.y == p2.y))

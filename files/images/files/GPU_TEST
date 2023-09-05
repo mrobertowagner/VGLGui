@@ -1,0 +1,48 @@
+demo.wksp
+
+-------------------------------------------------------------
+Tempo de 1000 execuções do método vglClRgb2Gray: 0.139753 ms
+Tempo de 1000 execuções do método vglClConvolution: 0.559099 ms
+Tempo de 1000 execuções do método vglClDilate: 0.551685 ms
+Tempo de 1000 execuções do método vglClErode: 0.558864 ms
+
+-------------------------------------------------------------
+
+
+
+drive.wksp
+-------------------------------------------------------------
+Tempo de 1000 execuções do método vglClRgb2Gray: 0.138008 ms
+Tempo de 1000 execuções do método vglClConvolution: 0.568366 ms
+Tempo de 1000 execuções do método Closing: 1.146405 ms
+Tempo de 1000 execuções do método vglClSub: 0.168545 ms
+Tempo de 1000 execuções do método vglClThreshold: 0.25787 ms
+Tempo de 1000 execuções do método Reconstruct: 2.10328 ms
+
+-------------------------------------------------------------
+
+
+
+01_good.jpg
+
+-------------------------------------------------------------
+Tempo médio de 10 execucoes do metodo Rgb2Gray: 8.265400000000001 ms
+Tempo médio de 10 execuções do metodo Convolution: 10.3992 ms
+Tempo médio de 10 execucoes do metodo Closing: 19.8512 ms
+Tempo de 10 execucoes do metodo Sub: 5.4897 ms
+Tempo médio de 10 execucoes do metodo Threshold: 60.1746 ms
+Tempo médio de 10 execucoes do metodo Reconstruct: 1066.2487999999998 ms
+
+-------------------------------------------------------------
+
+
+Tempo médio de 1000 execuções do método vglClRgb2Gray: 1.369133 ms
+Tempo médio de 1000 execuções do método vglClConvolution: 4.029394 ms
+Tempo médio de 1000 execuções do método Closing: 7.924532 ms
+Tempo médio de 1000 execuções do método vglClSub: 1.03797 ms
+Tempo médio de 1000 execuções do método vglClThreshold: 1.03797 ms
+Tempo médio de 1000 execuções do método Reconstruct: 7.928798 ms
+
+Valor total do tempo médio: 23.327797
+
+

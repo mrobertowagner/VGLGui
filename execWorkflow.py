@@ -84,7 +84,7 @@ for vGlyph in lstGlyph:
     if vGlyph.func == 'vglLoadImage':
 
         # Read "-filename" entry from glyph vglLoadImage
-        vglLoadImage_img_in_path = vGlyph.lst_par[0].getValue()               
+        vglLoadImage_img_in_path = vGlyph.lst_par[0].getValue()           
         vglLoadImage_img_input = vl.VglImage(vglLoadImage_img_in_path, None, vl.VGL_IMAGE_2D_IMAGE())
 
         vl.vglLoadImage(vglLoadImage_img_input)

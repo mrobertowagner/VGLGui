@@ -6,6 +6,8 @@ runfundus:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py ./SAMPLES/fundus.wksp 1
 rundemo:
 	cd ~/Documents/repo/VGLGui; ./execWorkflow.py ./SAMPLES/demo.wksp 1
+runexmp:
+	cd ~/Documents/repo/VGLGui; ./execWorkflow.py ./SAMPLES/exmp.wksp 1
 runbench:
 	cd ~/Documents/repo/VGLGui; ./bench.py images/standard_test_images/lena_color_512.tif 1000 output/
 runtest:

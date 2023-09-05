@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from vglClUtil import vglClEqual
+from vgl_lib.vglClUtil import vglClEqual
 from vgl_lib import vglClImage
 from vgl_lib.vglImage import VglImage
 import pyopencl as cl       # OPENCL LIBRARY
@@ -13,8 +13,7 @@ from readWorkflow import *
 import time as t
 import gc
 from datetime import datetime
-#from areaopen import *
-#import ia870 as ia
+
 
 os.environ['PYOPENCL_COMPILER_OUTPUT'] = '1'
 sys.path.append(os.getcwd())
@@ -70,7 +69,7 @@ msg = ""
 CPU = cl.device_type.CPU #2
 GPU = cl.device_type.GPU #4
 total = 0.0
-vl.vglClInit(CPU) 
+vl.vglClInit(GPU) 
 
 # Update the status of glyph entries
 for vGlyph in lstGlyph:
@@ -723,30 +722,6 @@ for vGlyph in lstGlyph:
         x = np.uint32(vGlyph.lst_par[1].getValue())
         y = np.uint32(vGlyph.lst_par[2].getValue())
 
-
-
-        #################################################
-        #       CODIGO DA INFREC                        #
-        #                                               #
-        #################################################
-        Rec_imt1 = vl.create_blank_image_as(Rec_img_input)
-        Rec_buffer = vl.create_blank_image_as(Rec_img_input)
-        
-        vglClErode(Rec_img_input, Rec_img_output, elemento, x, y)
-
-        result = 0
-        count = 0
-        while (not result ):
-          if ((count % 2) == 0):
-            vglClDilate( Rec_img_output , Rec_buffer, elemento, x, y)
-            vglClMin(Rec_buffer , Rec_img_input, Rec_imt1)
-          else:
-            vglClDilate( Rec_imt1 , Rec_buffer , elemento, x, y)
-            vglClMin(Rec_buffer, Rec_img_input, Rec_img_output)
-          result = vglClEqual(Rec_imt1, Rec_img_output)
-          count = count + 1
-        #print("contador",count)
-       
 
         #Runtime
         vl.get_ocl().commandQueue.flush()
